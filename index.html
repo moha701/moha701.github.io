@@ -1,0 +1,2044 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-2/5I8aM7tC2UeBsr4hAWWIsqS8IRlI2QceocVtPzl0Y=' 'sha256-fCq2q0PrnOURiuHVBZv8N4lie8x0pNJcv2eeUBN7ibk='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://api.github.com; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Tandem · Play BeamNG.drive and Assetto Corsa with friends</title>
+<meta name="description" content="Host and join BeamNG.drive and Assetto Corsa sessions with your friends, from your own PC. Friends join with one invite and get the maps and mods they are missing. Free.">
+<meta name="theme-color" content="#080d17">
+<meta name="color-scheme" content="dark">
+<link rel="canonical" href="https://moha701.github.io/">
+<link rel="icon" type="image/png" sizes="32x32" href="img/icon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="img/icon-192.png">
+<link rel="apple-touch-icon" href="img/icon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tandem">
+<meta property="og:title" content="Tandem: drive with your friends">
+<meta property="og:description" content="Host and join BeamNG.drive and Assetto Corsa sessions with your friends, from your own PC. Friends join with one invite and get the maps and mods they are missing. Free.">
+<meta property="og:url" content="https://moha701.github.io/">
+<meta property="og:image" content="https://moha701.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://moha701.github.io/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:ital,wght@0,600;0,700;1,700;1,800&family=Russo+One&family=Tajawal:wght@400;500;700;800&display=swap">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>
+:root {
+  /* Layout: one night drive. A left-aligned reading column over asphalt. The hero's skid pad holds the one big motion
+     moment (two cars drifting in tandem, blue and orange like the emblem); the app window rises out of it, and every
+     section after it is the next stretch of road, lit by the same tail-light orange the app uses. */
+  --asphalt: #080d17; --tarmac: #111a2b; --tarmac-2: #17233a; --kerb: #25334f; --titlebar: #0b1221;
+  --lane: #f2f6fd; --worn: #a9b7d3; --faded: #8394b6;
+  --signal: #ff7a1a; --signal-hot: #ffa53a; --signal-ink: #1a0b00;
+  --red: #ff3d42; --blue: #22a8ff; --beam: #cfe6ff; --go: #46de9d; --go-ink: #04150d; --brake: #ff5f5f;
+  --edge: rgba(190, 215, 255, .09); --edge-2: rgba(190, 215, 255, .17);
+  --veil: rgba(8, 13, 23, .76); --shade: rgba(0, 0, 0, .55);
+  --dc-bg: #111214; --dc-card: #232428; --dc-line: #2e3035; --dc-text: #f2f3f5; --dc-muted: #b5bac1; --dc-btn: #4e5058; --dc-green: #23a55a;
+  --display: 'Barlow Condensed', 'Roboto Condensed', 'Arial Narrow', sans-serif;
+  --body: 'Barlow', 'Roboto', 'Segoe UI', system-ui, sans-serif;
+  --brand: 'Russo One', 'Barlow Condensed', sans-serif;
+  --fs-hero: clamp(3.1rem, 1.9rem + 5.4vw, 6.9rem);
+  --fs-h2: clamp(2.3rem, 1.6rem + 2.9vw, 4.2rem);
+  --fs-h3: clamp(1.6rem, 1.3rem + 1.1vw, 2.15rem);
+  --fs-lead: clamp(1.125rem, 1rem + .45vw, 1.34rem);
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --r-panel: 18px; --r-control: 12px;
+  color-scheme: dark;
+}
+:root:lang(ar) { --display: 'Tajawal', 'Barlow Condensed', sans-serif; --body: 'Tajawal', 'Barlow', 'Segoe UI', sans-serif; }
+:root:lang(ru) { --display: 'Roboto Condensed', 'Barlow Condensed', 'Arial Narrow', sans-serif; --body: 'Roboto', 'Barlow', 'Segoe UI', system-ui, sans-serif; }
+:root:lang(zh) { --display: 'Barlow Condensed', 'Noto Sans SC', 'Microsoft YaHei', 'PingFang SC', sans-serif; --body: 'Barlow', 'Noto Sans SC', 'Microsoft YaHei', 'PingFang SC', sans-serif; }
+:root:lang(ja) { --display: 'Barlow Condensed', 'Noto Sans JP', 'Yu Gothic', 'Hiragino Sans', sans-serif; --body: 'Barlow', 'Noto Sans JP', 'Yu Gothic', 'Hiragino Sans', sans-serif; }
+:root:lang(ko) { --display: 'Barlow Condensed', 'Noto Sans KR', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; --body: 'Barlow', 'Noto Sans KR', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; }
+:lang(ko) { word-break: keep-all; }
+:is(:lang(zh), :lang(ja)) { line-break: strict; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 84px; -webkit-text-size-adjust: 100%; }
+body { background: var(--asphalt); color: var(--lane); font: 400 1.0625rem/1.62 var(--body); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--asphalt); }
+:lang(ar) body { line-height: 1.75; }
+* { box-sizing: border-box; }
+img { display: block; height: auto; }
+a { color: inherit; }
+::selection { background: rgba(255, 122, 26, .38); }
+:focus-visible { outline: 2px solid var(--beam); outline-offset: 3px; border-radius: 6px; }
+.wrap { width: 100%; max-width: 1240px; margin-inline: auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+@media (min-width: 700px) { .wrap { padding-left: max(32px, env(safe-area-inset-left, 0px)); padding-right: max(32px, env(safe-area-inset-right, 0px)); } }
+.ic { width: 1.25em; height: 1.25em; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.skip { position: absolute; inset-inline-start: 12px; top: -60px; z-index: 100; padding: 10px 16px; border-radius: 10px; background: var(--lane); color: var(--asphalt); font-weight: 700; text-decoration: none; }
+.skip:focus { top: calc(env(safe-area-inset-top, 0px) + 12px); }
+
+/* ---------- Type ---------- */
+.display { font-family: var(--display); font-weight: 800; font-style: italic; text-transform: uppercase; letter-spacing: .004em; line-height: .93; text-wrap: balance; margin: 0; }
+:is(:lang(ar), :lang(zh), :lang(ja), :lang(ko)) .display { font-style: normal; text-transform: none; letter-spacing: 0; }
+:lang(ar) .display { line-height: 1.25; font-weight: 800; }
+:is(:lang(zh), :lang(ja), :lang(ko)) .display { line-height: 1.18; font-weight: 900; }
+h2.display { font-size: var(--fs-h2); }
+h3 { font-family: var(--display); font-weight: 700; font-style: italic; font-size: var(--fs-h3); line-height: 1.02; margin: 0; text-wrap: balance; letter-spacing: .005em; }
+:is(:lang(ar), :lang(zh), :lang(ja), :lang(ko)) h3 { font-style: normal; line-height: 1.3; }
+p { margin: 0; text-wrap: pretty; }
+.lead { font-size: var(--fs-lead); color: var(--worn); max-width: 34em; }
+.muted { color: var(--worn); }
+.sec { padding-block: clamp(60px, 8vw, 112px); position: relative; }
+.sec-head { display: grid; gap: 18px; max-width: 760px; margin-bottom: clamp(36px, 5vw, 64px); }
+.sec-head p { color: var(--worn); font-size: var(--fs-lead); max-width: 36em; }
+
+/* ---------- Buttons ---------- */
+.btn { display: inline-flex; align-items: center; gap: 10px; min-height: 46px; padding: 0 20px; border-radius: var(--r-control); font: 600 1rem/1.1 var(--body); text-decoration: none; border: 1px solid var(--edge-2); background: rgba(255, 255, 255, .03); color: var(--lane); cursor: pointer; transition: background .25s var(--ease), border-color .25s var(--ease), transform .25s var(--ease); }
+.btn:hover { background: rgba(255, 255, 255, .07); border-color: rgba(207, 230, 255, .32); }
+.btn:active { transform: translateY(1px); }
+.btn-dl { position: relative; overflow: hidden; isolation: isolate; min-height: 64px; padding: 10px 26px 10px 20px; gap: 14px; border: 0; background: linear-gradient(180deg, var(--signal-hot), var(--signal)); color: var(--signal-ink); box-shadow: 0 18px 40px -14px rgba(255, 122, 26, .75), inset 0 1px 0 rgba(255, 255, 255, .45); }
+.btn-dl:hover { background: linear-gradient(180deg, #ffb655, #ff8a2e); transform: translateY(-2px); box-shadow: 0 24px 50px -14px rgba(255, 122, 26, .85), inset 0 1px 0 rgba(255, 255, 255, .5); }
+.btn-dl::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, .55) 48%, transparent 66%); transform: translateX(-120%); }
+.btn-dl:hover::after { animation: shine 1s var(--ease); }
+@keyframes shine { to { transform: translateX(120%); } }
+.btn-dl .ic { width: 28px; height: 28px; stroke-width: 2.2; }
+.dl-text { display: grid; gap: 3px; text-align: start; }
+.dl-main { font-weight: 700; font-size: 1.125rem; }
+.dl-sub { font-weight: 500; font-size: .875rem; opacity: .78; font-variant-numeric: tabular-nums; }
+.link-quiet { display: inline-flex; align-items: center; gap: 8px; color: var(--worn); font-weight: 600; text-decoration: none; padding: 10px 2px; border-bottom: 1px solid transparent; transition: color .2s, border-color .2s; }
+.link-quiet:hover { color: var(--lane); border-color: var(--edge-2); }
+.link-quiet .ic { width: 1.1em; height: 1.1em; }
+.plats { display: flex; flex-wrap: wrap; gap: 8px; }
+.plat { display: inline-flex; align-items: center; gap: 8px; min-height: 38px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--edge); background: rgba(255, 255, 255, .025); color: var(--worn); font-weight: 600; font-size: .9rem; text-decoration: none; transition: color .2s, border-color .2s, background .2s; }
+.plat:hover { color: var(--lane); border-color: var(--edge-2); background: rgba(255, 255, 255, .06); }
+.plat .ic { width: 1.05em; height: 1.05em; }
+.plat small { font: 600 .72rem/1 var(--body); color: var(--faded); padding: 3px 6px; border-radius: 6px; background: rgba(255, 255, 255, .06); direction: ltr; }
+.plat.here { color: var(--lane); border-color: rgba(255, 122, 26, .45); }
+.cta .plats { justify-content: center; }
+.plat-gh { border-color: transparent; background: none; }
+.plat-gh:hover { background: none; border-color: transparent; text-decoration: underline; text-underline-offset: 3px; }
+.phone-note { display: grid; gap: 10px; max-width: 30em; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--edge-2); background: rgba(34, 168, 255, .07); color: var(--beam); font-size: .95rem; }
+.phone-note .btn { justify-self: start; min-height: 40px; font-size: .9375rem; }
+
+/* ---------- Header ---------- */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; background: var(--veil); backdrop-filter: blur(14px) saturate(1.3); -webkit-backdrop-filter: blur(14px) saturate(1.3); border-bottom: 1px solid var(--edge); }
+.top-in { display: flex; align-items: center; gap: 18px; min-height: 66px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; margin-inline-end: auto; }
+.brand img { width: 52px; height: auto; filter: drop-shadow(0 4px 10px rgba(0, 0, 0, .5)); }
+.wordmark { font-family: var(--brand); font-style: italic; font-size: 1.32rem; letter-spacing: .06em; color: #fff; line-height: 1; }
+.nav { display: flex; gap: 4px; }
+.nav a { padding: 8px 12px; border-radius: 9px; color: var(--worn); font-weight: 600; font-size: .9375rem; text-decoration: none; transition: color .2s, background .2s; }
+.nav a:hover { color: var(--lane); background: rgba(255, 255, 255, .05); }
+.top .btn { min-height: 40px; padding: 0 14px; font-size: .9375rem; }
+.top .btn-small-dl { background: var(--signal); color: var(--signal-ink); border: 0; font-weight: 700; }
+.top .btn-small-dl:hover { background: var(--signal-hot); }
+.progress { position: absolute; inset-inline: 0; bottom: -1px; height: 2px; background: linear-gradient(90deg, var(--blue), var(--signal)); transform: scaleX(0); transform-origin: left; opacity: .9; }
+[dir="rtl"] .progress { transform-origin: right; background: linear-gradient(270deg, var(--blue), var(--signal)); }
+@media (max-width: 980px) { .nav { display: none; } }
+@media (max-width: 520px) { .top .btn-small-dl span { display: none; } .top .btn-small-dl { padding: 0 11px; } .wordmark { font-size: 1.12rem; } .brand img { width: 44px; } .top-in { gap: 10px; } }
+
+/* Language menu */
+.lang { position: relative; }
+.lang-btn .chev { width: 14px; height: 14px; transition: transform .25s var(--ease); }
+.lang-btn[aria-expanded="true"] .chev { transform: rotate(180deg); }
+.lang-list { position: absolute; inset-inline-end: 0; top: calc(100% + 10px); min-width: 210px; margin: 0; padding: 6px; list-style: none; border-radius: 14px; border: 1px solid var(--edge-2); background: var(--tarmac); box-shadow: 0 30px 60px -20px rgba(0, 0, 0, .9); max-height: min(70vh, 520px); overflow: auto; transform-origin: top; animation: menu-in .22s var(--ease); }
+[dir="rtl"] .lang-list { inset-inline-end: auto; inset-inline-start: 0; }
+@media (max-width: 520px) { [dir="ltr"] .lang-list, .lang-list { inset-inline-end: -60px; } }
+@keyframes menu-in { from { opacity: 0; transform: translateY(-6px) scale(.98); } }
+.lang-list li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 12px; border-radius: 9px; cursor: pointer; font-weight: 600; color: var(--worn); outline: none; }
+.lang-list li:hover, .lang-list li:focus-visible { background: rgba(255, 255, 255, .06); color: var(--lane); }
+.lang-list li[aria-selected="true"] { color: var(--lane); background: rgba(255, 122, 26, .12); }
+.lang-list li[aria-selected="true"] .code { color: var(--signal-hot); }
+.lang-list .code { font: 600 .75rem/1 var(--body); color: var(--faded); letter-spacing: .06em; text-transform: uppercase; }
+
+/* ---------- Hero ---------- */
+.hero { position: relative; isolation: isolate; overflow: clip; }
+.hero::before { content: ""; position: absolute; inset: -20% -10% auto; height: 120%; z-index: -2;
+  background: radial-gradient(800px 520px at 82% 18%, rgba(255, 122, 26, .16), transparent 62%), radial-gradient(700px 520px at 6% 70%, rgba(34, 168, 255, .12), transparent 60%); }
+.streaks { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.streaks i { position: absolute; width: 38vw; max-width: 520px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, transparent, rgba(207, 230, 255, .5), transparent); top: var(--y); left: -40vw; transform: rotate(-24deg); opacity: 0; animation: streak var(--d) linear infinite; animation-delay: var(--w); }
+@keyframes streak { 0% { transform: translate(0, 0) rotate(-24deg); opacity: 0; } 10% { opacity: .55; } 60% { opacity: .3; } 100% { transform: translate(150vw, -66vw) rotate(-24deg); opacity: 0; } }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.04fr) minmax(0, .96fr); gap: clamp(20px, 4vw, 56px); align-items: center; padding-block: clamp(40px, 7vw, 92px) clamp(20px, 3vw, 36px); }
+.hero-copy { display: grid; gap: 26px; justify-items: start; min-width: 0; }
+.pill { display: inline-flex; align-items: center; gap: 10px; padding: 7px 14px 7px 8px; border-radius: 999px; border: 1px solid var(--edge-2); background: rgba(255, 255, 255, .04); color: var(--beam); font-weight: 600; font-size: .9rem; text-decoration: none; transition: border-color .2s, background .2s; }
+.pill:hover { border-color: rgba(255, 122, 26, .55); background: rgba(255, 122, 26, .08); }
+.pill b { padding: 3px 9px; border-radius: 999px; background: var(--signal); color: var(--signal-ink); font: 700 .78rem/1.2 var(--body); letter-spacing: .02em; }
+.hero h1 { font-size: var(--fs-hero); }
+:is(:lang(zh), :lang(ja), :lang(ko)) .hero h1 { font-size: clamp(2.5rem, 1.7rem + 3.6vw, 4.8rem); }
+:is(:lang(zh), :lang(ja), :lang(ko)) h2.display { font-size: clamp(2rem, 1.5rem + 2.2vw, 3.4rem); }
+.hero h1 .paint { display: block; height: 6px; width: min(260px, 60%); margin-top: 22px; border-radius: 3px; background: linear-gradient(90deg, var(--blue) 0 46%, transparent 46% 54%, var(--signal) 54%); transform-origin: left; }
+[dir="rtl"] .hero h1 .paint { transform-origin: right; background: linear-gradient(270deg, var(--blue) 0 46%, transparent 46% 54%, var(--signal) 54%); }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; }
+.facts { display: flex; flex-wrap: wrap; gap: 10px 22px; margin: 4px 0 0; padding: 0; list-style: none; color: var(--worn); font-weight: 600; font-size: .95rem; }
+.facts li { display: inline-flex; align-items: center; gap: 8px; }
+.facts .ic { color: var(--go); width: 1.1em; height: 1.1em; stroke-width: 2.4; }
+.pad { position: relative; aspect-ratio: 6 / 5; width: 100%; max-width: 100%; }
+.pad canvas { position: absolute; inset: 0; width: 100%; height: 100%; -webkit-mask-image: radial-gradient(ellipse 68% 66% at 50% 50%, #000 58%, transparent 100%); mask-image: radial-gradient(ellipse 68% 66% at 50% 50%, #000 58%, transparent 100%); }
+@media (max-width: 900px) { .hero-grid { grid-template-columns: minmax(0, 1fr); } .pad { aspect-ratio: 16 / 11; margin-top: -8px; } }
+@media (prefers-reduced-motion: no-preference) {
+  .hero-copy > * { animation: up .8s var(--ease) both; }
+  .hero-copy > :nth-child(2) { animation-delay: .06s; } .hero-copy > :nth-child(3) { animation-delay: .14s; } .hero-copy > :nth-child(4) { animation-delay: .22s; } .hero-copy > :nth-child(5) { animation-delay: .3s; } .hero-copy > :nth-child(6) { animation-delay: .38s; }
+  .hero h1 .paint { animation: paint 1s .45s var(--ease) both; }
+  .pad { animation: fade 1.2s .2s ease both; }
+}
+@keyframes up { from { opacity: 0; transform: translateY(18px); } }
+@keyframes fade { from { opacity: 0; } }
+@keyframes paint { from { transform: scaleX(0); } }
+
+/* App window rising out of the hero */
+.showcase { position: relative; padding-bottom: clamp(40px, 6vw, 80px); }
+.showcase::before { content: ""; position: absolute; inset: 12% 8% 0; z-index: -1; filter: blur(60px); background: radial-gradient(closest-side, rgba(255, 122, 26, .45), transparent); animation: glowswap 12s ease-in-out infinite; }
+@keyframes glowswap { 0%, 38% { background: radial-gradient(closest-side, rgba(255, 122, 26, .42), transparent); } 50%, 88% { background: radial-gradient(closest-side, rgba(255, 61, 66, .42), transparent); } 100% { background: radial-gradient(closest-side, rgba(255, 122, 26, .42), transparent); } }
+.win-wrap { position: relative; }
+.window { position: relative; border-radius: 14px; overflow: hidden; border: 1px solid var(--edge-2); background: var(--tarmac); box-shadow: 0 70px 120px -50px rgba(0, 0, 0, .95), 0 0 0 1px rgba(0, 0, 0, .5); transform-origin: 50% 0; }
+.win-bar { display: flex; align-items: center; gap: 9px; height: 34px; padding-inline: 12px 0; background: var(--titlebar); color: var(--worn); font: 600 .8125rem/1 var(--body); border-bottom: 1px solid var(--edge); }
+.win-bar img { width: 16px; height: 16px; border-radius: 4px; }
+.win-ctl { display: flex; margin-inline-start: auto; height: 100%; }
+.win-ctl span { width: 46px; display: grid; place-items: center; color: var(--faded); }
+.win-ctl svg { width: 11px; height: 11px; stroke: currentColor; stroke-width: 1.2; fill: none; }
+.win-shots { position: relative; aspect-ratio: 1600 / 990; background: var(--asphalt); }
+.win-shots img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.win-shots img + img { opacity: 0; animation: xfade 12s ease-in-out infinite; }
+@keyframes xfade { 0%, 38% { opacity: 0; } 46%, 88% { opacity: 1; } 96%, 100% { opacity: 0; } }
+.win-chip { position: absolute; inset-inline-start: clamp(10px, 4%, 48px); bottom: clamp(-26px, -2vw, -12px); z-index: 2; display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 16px; border: 1px solid var(--edge-2); background: rgba(17, 26, 43, .92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 30px 60px -20px rgba(0, 0, 0, .9); animation: bob 6s ease-in-out infinite; max-width: calc(100% - 20px); }
+.win-chip .vf-text { min-width: 0; }
+@keyframes bob { 50% { transform: translateY(-8px); } }
+@media (max-width: 560px) { .win-chip { position: relative; inset: auto; margin: -22px 10px 0; } .win-bar { height: 28px; } .win-ctl span { width: 34px; } }
+
+/* Scroll-linked motion (only where the browser supports it; elsewhere everything simply stays in place) */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .window { animation: tilt linear both; animation-timeline: view(); animation-range: entry 0% cover 42%; }
+    .rise { animation: rise linear both; animation-timeline: view(); animation-range: entry 0% entry 65%; }
+    .progress { animation: grow linear both; animation-timeline: scroll(root); }
+    .emblem-build .half-b { animation: from-left linear both; animation-timeline: view(); animation-range: entry 0% cover 45%; }
+    .emblem-build .half-o { animation: from-right linear both; animation-timeline: view(); animation-range: entry 0% cover 45%; }
+  }
+}
+@keyframes tilt { from { transform: perspective(1600px) rotateX(26deg) scale(.9) translateY(30px); opacity: .6; } to { transform: none; opacity: 1; } }
+@keyframes rise { from { opacity: 0; transform: translateY(42px) scale(.985); } to { opacity: 1; transform: none; } }
+@keyframes grow { to { transform: scaleX(1); } }
+@keyframes from-left { from { transform: translate(-38%, 10%) rotate(-8deg); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes from-right { from { transform: translate(38%, -10%) rotate(8deg); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* ---------- Games ---------- */
+.games { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 28px); }
+.game { position: relative; overflow: hidden; isolation: isolate; border-radius: 24px; border: 1px solid var(--edge-2); background: var(--tarmac); display: grid; grid-template-rows: auto 1fr; min-width: 0; transition: transform .45s var(--ease), border-color .3s; }
+.game:hover { transform: translateY(-6px); border-color: rgba(207, 230, 255, .3); }
+.game-img { position: relative; aspect-ratio: 16 / 9; overflow: hidden; }
+.game-img img { width: 100%; height: 100%; object-fit: cover; object-position: var(--pos, center); transform: scale(1.06); transition: transform 1.2s var(--ease); }
+.game:hover .game-img img { transform: scale(1.12); }
+.game-img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, var(--tarmac)); }
+.game-body { display: grid; gap: 10px; align-content: start; padding: 0 clamp(20px, 3vw, 34px) clamp(24px, 3vw, 34px); margin-top: -44px; position: relative; }
+.game-name { font-family: var(--display); font-weight: 800; font-style: italic; font-size: clamp(2.1rem, 1.5rem + 2.4vw, 3.4rem); line-height: .95; letter-spacing: .005em; }
+.game-tag { font-weight: 700; color: var(--g); }
+.game::before { content: ""; position: absolute; inset: auto -20% -40% -20%; height: 70%; z-index: -1; background: radial-gradient(closest-side, var(--glow), transparent); opacity: .5; transition: opacity .4s; }
+.game:hover::before { opacity: .9; }
+.g-bng { --g: var(--signal-hot); --glow: rgba(255, 122, 26, .35); }
+.g-ac { --g: #ff6a6e; --glow: rgba(255, 61, 66, .32); }
+@media (max-width: 760px) { .games { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- How it works (a real sequence) ---------- */
+.steps-wrap { position: relative; }
+.steps { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 3vw, 44px); margin: 0; padding: 0; list-style: none; counter-reset: step; }
+.steps li { position: relative; display: grid; gap: 12px; align-content: start; min-width: 0; }
+.step-num { position: relative; z-index: 1; width: 58px; height: 58px; display: grid; place-items: center; border-radius: 16px; background: var(--tarmac-2); border: 1px solid var(--edge-2); font: 800 italic 1.7rem/1 var(--display); color: var(--lane); box-shadow: 0 10px 30px -10px rgba(0, 0, 0, .8); }
+.steps li:last-child .step-num { background: var(--signal); color: var(--signal-ink); border-color: transparent; }
+.road { position: absolute; top: 28px; inset-inline: 29px; height: 2px; background: repeating-linear-gradient(90deg, rgba(242, 246, 253, .38) 0 14px, transparent 14px 26px); }
+.road .car { position: absolute; top: -9px; inset-inline-start: 0; width: 38px; height: 20px; color: var(--signal); animation: drive 6s var(--ease) infinite; filter: drop-shadow(0 0 8px rgba(255, 122, 26, .7)); }
+[dir="rtl"] .road .car { transform: scaleX(-1); }
+@keyframes drive { 0% { inset-inline-start: 0; opacity: 0; } 8% { opacity: 1; } 45% { inset-inline-start: calc(50% - 19px); } 55% { inset-inline-start: calc(50% - 19px); } 88% { opacity: 1; } 100% { inset-inline-start: calc(100% - 38px); opacity: 0; } }
+.car-svg .glass { fill: var(--asphalt); opacity: .7; }
+.car-svg .lamp { fill: var(--lane); }
+@media (max-width: 760px) {
+  .steps { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  .steps li { grid-template-columns: 58px minmax(0, 1fr); column-gap: 18px; }
+  .steps li > :not(.step-num) { grid-column: 2; }
+  .steps li .step-num { grid-row: span 2; }
+  .road { top: 29px; bottom: 29px; inset-inline: 28px auto; width: 2px; height: auto; background: repeating-linear-gradient(180deg, rgba(242, 246, 253, .38) 0 14px, transparent 14px 26px); }
+  .road .car { display: none; }
+}
+
+/* ---------- Features ---------- */
+.chip { display: inline-flex; align-items: center; gap: 7px; justify-self: start; padding: 4px 11px; border-radius: 999px; font: 700 .8rem/1.4 var(--body); letter-spacing: .02em; background: rgba(207, 230, 255, .08); color: var(--beam); border: 1px solid var(--edge-2); }
+.chip::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: linear-gradient(135deg, var(--signal) 50%, var(--red) 50%); }
+.chip.c-ac::before { background: var(--red); }
+.chip.c-bng::before { background: var(--signal); }
+.lead-feats { display: grid; gap: clamp(64px, 9vw, 120px); }
+.feat { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(28px, 5vw, 72px); align-items: center; }
+.feat:nth-child(even) .feat-text { order: 2; }
+.feat-text { display: grid; gap: 16px; align-content: center; min-width: 0; }
+.feat-text p { color: var(--worn); font-size: var(--fs-lead); }
+.feat-text h3 { font-size: clamp(2rem, 1.4rem + 2.4vw, 3.3rem); font-weight: 800; line-height: .96; }
+:is(:lang(ar), :lang(zh), :lang(ja), :lang(ko)) .feat-text h3 { line-height: 1.25; }
+@media (max-width: 860px) { .feat { grid-template-columns: minmax(0, 1fr); } .feat:nth-child(even) .feat-text { order: 0; } }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2vw, 24px); margin-top: clamp(64px, 9vw, 120px); }
+.tile { display: grid; grid-template-rows: auto 1fr; border-radius: 22px; border: 1px solid var(--edge); background: linear-gradient(180deg, rgba(255, 255, 255, .04), rgba(255, 255, 255, .012)); overflow: hidden; min-width: 0; transition: border-color .3s, transform .45s var(--ease); }
+.tile:hover { border-color: var(--edge-2); transform: translateY(-4px); }
+.tile .vig { min-height: 230px; border-bottom: 1px solid var(--edge); }
+.tile-text { display: grid; gap: 10px; align-content: start; padding: 22px 24px 26px; }
+.tile-text p { color: var(--worn); }
+@media (max-width: 1000px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .tiles { grid-template-columns: minmax(0, 1fr); } }
+
+/* Vignettes: little live pieces of the app. At rest (and with reduced motion) each shows its finished state. */
+.vig { position: relative; display: grid; place-items: center; padding: clamp(18px, 3vw, 30px); overflow: hidden; isolation: isolate; min-width: 0; }
+.vig::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(500px 300px at 70% 0%, rgba(207, 230, 255, .06), transparent 70%); }
+.v-friends { padding-bottom: 76px !important; }
+.feat .vig { border-radius: 26px; border: 1px solid var(--edge); background: linear-gradient(160deg, var(--tarmac-2), var(--tarmac) 60%); min-height: 380px; box-shadow: 0 40px 80px -40px rgba(0, 0, 0, .9); }
+.panel { width: 100%; max-width: 520px; border-radius: var(--r-panel); border: 1px solid var(--edge-2); background: rgba(8, 13, 23, .72); box-shadow: 0 24px 60px -24px rgba(0, 0, 0, .9); }
+.mini-btn { display: inline-grid; place-items: center; min-height: 34px; padding: 0 14px; border-radius: 10px; font: 700 .875rem/1 var(--body); white-space: nowrap; background: rgba(255, 255, 255, .07); color: var(--lane); border: 1px solid var(--edge-2); }
+.mini-btn.primary { background: var(--signal); color: var(--signal-ink); border-color: transparent; }
+.mini-btn.go { background: rgba(70, 222, 157, .14); color: var(--go); border-color: rgba(70, 222, 157, .35); }
+.mini-btn.bad { background: rgba(255, 95, 95, .14); color: var(--brake); border-color: rgba(255, 95, 95, .4); }
+.tag-full { padding: 5px 10px; border-radius: 8px; font: 700 .8rem/1 var(--body); color: var(--faded); background: rgba(255, 255, 255, .05); }
+
+/* friends strip */
+.vf-head { display: flex; align-items: center; gap: 9px; padding: 16px 18px 6px; font: 700 1rem/1.2 var(--body); }
+.vf-head .ic { color: var(--beam); }
+.vf-list { margin: 0; padding: 8px; list-style: none; display: grid; gap: 6px; }
+.vf-row { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 13px; background: rgba(255, 255, 255, .035); border: 1px solid var(--edge); }
+.vf-dot { position: relative; width: 10px; height: 10px; flex: none; border-radius: 50%; background: var(--go); box-shadow: 0 0 10px var(--go); }
+.vf-dot::after { content: ""; position: absolute; inset: -5px; border-radius: 50%; border: 2px solid var(--go); opacity: 0; animation: ping 2s ease-out infinite; }
+@keyframes ping { 0% { transform: scale(.5); opacity: .8; } 100% { transform: scale(1.8); opacity: 0; } }
+.vf-text { display: grid; min-width: 0; flex: 1; }
+.vf-text b { font-weight: 700; font-size: .98rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.vf-meta > * { unicode-bidi: isolate; }
+.vf-meta { color: var(--faded); font-size: .85rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (max-width: 560px) { .vf-meta { white-space: normal; } }
+.v-friends .vf-row { animation: vf-in 9s var(--ease) infinite; animation-delay: calc(var(--i) * .35s); }
+.v-friends .vf-row:first-child .mini-btn { animation: press 9s ease infinite; }
+@keyframes vf-in { 0% { opacity: 0; transform: translateY(16px); } 8%, 92% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateY(-6px); } }
+@keyframes press { 0%, 46% { transform: none; box-shadow: 0 0 0 0 rgba(255, 122, 26, .5); } 49% { transform: scale(.9); } 53% { transform: none; box-shadow: 0 0 0 4px rgba(255, 122, 26, .45); } 64%, 100% { box-shadow: 0 0 0 16px rgba(255, 122, 26, 0); } }
+.v-toast { position: absolute; bottom: clamp(14px, 3vw, 26px); inset-inline: 0; margin-inline: auto; width: max-content; max-width: calc(100% - 32px); display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: 12px; background: rgba(70, 222, 157, .12); border: 1px solid rgba(70, 222, 157, .4); color: var(--go); font-weight: 700; font-size: .92rem; opacity: 0; animation: toast 9s var(--ease) infinite; }
+@keyframes toast { 0%, 52% { opacity: 0; transform: translateY(10px); } 58%, 90% { opacity: 1; transform: none; } 96%, 100% { opacity: 0; } }
+
+/* Assetto Corsa: screenshot + a car arriving from the host */
+.v-ac { padding: 0; place-items: stretch; }
+.v-ac .shot { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; min-height: 380px; }
+.v-ac .panel { position: absolute; inset-inline: clamp(14px, 4%, 28px); bottom: clamp(14px, 4%, 28px); width: auto; max-width: none; padding: 16px 18px; display: grid; gap: 12px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); background: rgba(8, 13, 23, .84); }
+.vt-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-weight: 700; }
+.vt-label { display: grid; min-width: 0; }
+.vt-label > * { grid-area: 1 / 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.vt-get { opacity: 0; }
+.vt-done { display: inline-flex; align-items: center; gap: 8px; color: var(--go); }
+.vt-done .ic { stroke-width: 2.6; }
+.vt-num { color: var(--faded); font-size: .875rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.bar { height: 8px; border-radius: 4px; background: rgba(255, 255, 255, .08); overflow: hidden; }
+.bar i { display: block; height: 100%; width: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--red), #ff7b6b); }
+.v-ac .bar i { animation: fill 7s var(--ease) infinite; }
+.v-ac .vt-get { animation: show-a 7s infinite; }
+.v-ac .vt-done { animation: show-b 7s infinite; }
+@keyframes fill { 0%, 6% { width: 4%; } 62%, 100% { width: 100%; } }
+@keyframes show-a { 0%, 63% { opacity: 1; } 67%, 100% { opacity: 0; } }
+@keyframes show-b { 0%, 64% { opacity: 0; transform: translateY(6px); } 70%, 100% { opacity: 1; transform: none; } }
+
+/* Discord profile card */
+.dc { width: 100%; max-width: 380px; border-radius: 16px; overflow: hidden; background: var(--dc-card); color: var(--dc-text); box-shadow: 0 30px 70px -26px rgba(0, 0, 0, .95); font-family: 'Barlow', 'Segoe UI', sans-serif; direction: ltr; text-align: left; }
+.dc-banner { height: 76px; background: linear-gradient(120deg, #1f6fd1, #ff7a1a); }
+.dc-body { padding: 0 18px 18px; }
+.dc-av { position: relative; width: 84px; height: 84px; margin-top: -42px; border-radius: 50%; border: 6px solid var(--dc-card); background: var(--asphalt); display: grid; place-items: center; }
+.dc-av img { width: 60px; }
+.dc-av::after { content: ""; position: absolute; right: -4px; bottom: -2px; width: 18px; height: 18px; border-radius: 50%; background: var(--dc-green); border: 4px solid var(--dc-card); }
+.dc-name { margin-top: 8px; font-weight: 700; font-size: 1.35rem; line-height: 1.2; }
+.dc-user { color: var(--dc-muted); font-size: .9rem; }
+.dc-act { margin-top: 14px; padding: 14px; border-radius: 12px; background: var(--dc-bg); }
+.dc-label { font-weight: 700; font-size: .75rem; letter-spacing: .04em; color: var(--dc-muted); margin-bottom: 10px; }
+.dc-row { display: flex; gap: 12px; align-items: center; }
+.dc-row img { width: 64px; height: 64px; border-radius: 12px; flex: none; }
+.dc-game { font-weight: 700; font-size: 1rem; }
+.dc-line { font-size: .9rem; color: #dbdee1; line-height: 1.35; }
+.dc-time { font-size: .85rem; font-weight: 600; color: var(--dc-green); font-variant-numeric: tabular-nums; }
+.dc-btns { display: grid; gap: 8px; margin-top: 12px; }
+.dc-btn { display: grid; place-items: center; height: 36px; border-radius: 8px; background: var(--dc-btn); font-weight: 600; font-size: .9rem; }
+.dc-btn.primary { background: #248046; }
+.pop { display: inline-block; animation: pop .5s var(--ease); }
+@keyframes pop { 40% { transform: scale(1.35); color: var(--go); } }
+
+/* Public sessions */
+.v-public .panel { max-width: 340px; }
+.pub-card { display: grid; gap: 3px; margin: 4px 8px 8px; padding: 14px; border-radius: 13px; background: rgba(255, 255, 255, .035); border: 1px solid var(--edge); }
+.pub-card b { font-weight: 700; }
+.pub-card .vf-meta { white-space: normal; }
+.pub-card .state-btn { margin-top: 10px; min-height: 40px; width: 100%; }
+.v-public .state-btn { animation: st-bg 8s infinite; }
+@keyframes st-bg { 0%, 63% { background: var(--signal); color: var(--signal-ink); } 67%, 94% { background: var(--go); color: var(--go-ink); } 98%, 100% { background: var(--signal); color: var(--signal-ink); } }
+.state-btn { display: inline-grid; }
+.state-btn > * { grid-area: 1 / 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+.state-btn .s-wait, .state-btn .s-in { opacity: 0; }
+.v-public .s-ask { animation: st-1 8s infinite; }
+.v-public .s-wait { animation: st-2 8s infinite; }
+.v-public .s-in { animation: st-3 8s infinite; }
+@keyframes st-1 { 0%, 33% { opacity: 1; } 36%, 96% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes st-2 { 0%, 34% { opacity: 0; } 37%, 62% { opacity: 1; } 65%, 100% { opacity: 0; } }
+@keyframes st-3 { 0%, 63% { opacity: 0; transform: scale(.9); } 67%, 94% { opacity: 1; transform: none; } 98%, 100% { opacity: 0; } }
+.spin { width: 12px; height: 12px; border-radius: 50%; border: 2px solid currentColor; border-top-color: transparent; animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Get mods */
+.v-mods { gap: 14px; }
+.zip { display: inline-flex; align-items: center; gap: 12px; padding: 10px 14px 10px 10px; border-radius: 14px; background: var(--tarmac-2); border: 1px solid var(--edge-2); font-weight: 600; box-shadow: 0 16px 30px -14px rgba(0, 0, 0, .8); direction: ltr; }
+.zip b { display: grid; place-items: center; width: 38px; height: 44px; border-radius: 8px; background: linear-gradient(160deg, var(--signal-hot), var(--signal)); color: var(--signal-ink); font: 800 italic .78rem/1 var(--display); }
+.v-mods .bar { width: min(260px, 80%); }
+.v-mods .bar i { background: linear-gradient(90deg, var(--signal), var(--signal-hot)); }
+.done-line { display: inline-flex; align-items: center; gap: 8px; color: var(--go); font-weight: 700; font-size: .95rem; text-align: center; }
+.done-line .ic { stroke-width: 2.6; }
+.v-mods .zip { animation: drop 7s var(--ease) infinite; }
+.v-mods .bar i { animation: fill2 7s var(--ease) infinite; }
+.v-mods .done-line { animation: show-b2 7s infinite; }
+@keyframes drop { 0% { transform: translateY(-40px) rotate(-6deg); opacity: 0; } 10%, 92% { transform: none; opacity: 1; } 100% { opacity: 0; } }
+@keyframes fill2 { 0%, 14% { width: 0; } 58%, 100% { width: 100%; } }
+@keyframes show-b2 { 0%, 60% { opacity: 0; transform: translateY(6px); } 66%, 92% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+
+/* Reach check */
+.radar { position: relative; width: 120px; height: 120px; display: grid; place-items: center; }
+.radar .ring { position: absolute; inset: 0; border-radius: 50%; border: 2px solid rgba(34, 168, 255, .55); animation: ring 3s ease-out infinite; opacity: .5; transform: scale(.6); }
+.radar .ring:nth-child(2) { opacity: .3; transform: scale(.9); } .radar .ring:nth-child(3) { opacity: .15; transform: scale(1.2); }
+.radar .ring:nth-child(2) { animation-delay: 1s; } .radar .ring:nth-child(3) { animation-delay: 2s; }
+@keyframes ring { 0% { transform: scale(.35); opacity: .9; } 100% { transform: scale(1.35); opacity: 0; } }
+.radar-core { width: 58px; height: 58px; border-radius: 18px; display: grid; place-items: center; background: var(--tarmac-2); border: 1px solid var(--edge-2); color: var(--beam); position: relative; z-index: 1; }
+.radar-core .ic { width: 28px; height: 28px; }
+.radar .ok { position: absolute; z-index: 2; right: 18px; top: 18px; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--go); color: var(--go-ink); box-shadow: 0 0 16px rgba(70, 222, 157, .7); }
+.radar .ok .ic { width: 16px; height: 16px; stroke-width: 3; }
+.ok-pill { margin-top: 12px; display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 12px; background: rgba(70, 222, 157, .1); border: 1px solid rgba(70, 222, 157, .38); color: #9ff0c9; font-weight: 600; font-size: .9rem; line-height: 1.3; max-width: 320px; }
+.ok-pill .ic { color: var(--go); stroke-width: 2.6; }
+.v-reach { gap: 0; }
+.v-reach .ok, .v-reach .ok-pill { animation: show-c 6s var(--ease) infinite; }
+@keyframes show-c { 0%, 34% { opacity: 0; transform: scale(.8); } 42%, 92% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+
+/* Block */
+.knock { position: relative; width: min(300px, 100%); padding: 16px; border-radius: 16px; background: var(--tarmac-2); border: 1px solid var(--edge-2); display: grid; gap: 12px; }
+.knock-who { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.knock-av { width: 40px; height: 40px; border-radius: 12px; flex: none; display: grid; place-items: center; background: rgba(255, 95, 95, .16); color: var(--brake); font: 800 1rem/1 var(--body); }
+.knock-who > span:last-child { display: grid; min-width: 0; }
+.knock-who b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; direction: ltr; unicode-bidi: isolate; }
+.knock-who small { color: var(--faded); font-size: .85rem; }
+.knock-btns { display: flex; gap: 8px; }
+.knock-btns .mini-btn { flex: 1; }
+.stamp { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; }
+.stamp span { padding: 6px 18px; border: 4px solid var(--brake); border-radius: 12px; color: var(--brake); font: 800 italic 2rem/1 var(--display); text-transform: uppercase; letter-spacing: .04em; transform: rotate(-12deg); background: rgba(30, 6, 8, .7); box-shadow: 0 0 30px rgba(255, 95, 95, .35); }
+:is(:lang(ar), :lang(zh), :lang(ja), :lang(ko)) .stamp span { font-style: normal; text-transform: none; }
+.v-block .knock { animation: dim 7s infinite; }
+.v-block .knock-btns .bad { animation: press-b 7s infinite; }
+.v-block .stamp span { animation: stamp 7s var(--ease) infinite; }
+.v-block .knock { opacity: .55; }
+@keyframes dim { 0%, 46% { opacity: 1; } 52%, 94% { opacity: .55; } 100% { opacity: 1; } }
+@keyframes press-b { 0%, 40% { transform: none; } 43% { transform: scale(.9); } 47%, 100% { transform: none; } }
+@keyframes stamp { 0%, 46% { opacity: 0; transform: rotate(-12deg) scale(2); } 52% { opacity: 1; transform: rotate(-12deg) scale(.94); } 56%, 92% { opacity: 1; transform: rotate(-12deg) scale(1); } 98%, 100% { opacity: 0; transform: rotate(-12deg) scale(1); } }
+
+/* Languages */
+.v-lang { gap: 16px; }
+.lang-say { font-family: var(--display); font-weight: 800; font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem); line-height: 1.2; text-align: center; min-height: 2.6em; display: grid; place-items: center; text-wrap: balance; max-width: 100%; }
+.lang-dots { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; max-width: 280px; }
+.lang-dots i { font: 700 .7rem/1 var(--body); font-style: normal; padding: 5px 7px; border-radius: 7px; color: var(--faded); background: rgba(255, 255, 255, .04); text-transform: uppercase; letter-spacing: .05em; transition: color .3s, background .3s; }
+.lang-dots i.on { color: var(--signal-ink); background: var(--signal); }
+
+/* New name */
+.v-look { gap: 10px; text-align: center; }
+.old-name { position: relative; color: var(--faded); font-weight: 600; font-size: 1.05rem; direction: ltr; }
+.old-name::after { content: ""; position: absolute; left: -4px; right: -4px; top: 52%; height: 2px; background: var(--brake); transform-origin: left; }
+.new-name { display: inline-flex; align-items: center; gap: 12px; }
+.new-name img { width: 92px; }
+.new-name span { font-family: var(--brand); font-style: italic; font-size: 2.2rem; letter-spacing: .06em; color: #fff; line-height: 1; }
+.v-look .old-name::after { animation: strike 7s var(--ease) infinite; }
+.v-look .old-name { animation: fade-old 7s infinite; }
+.v-look .new-name { animation: new-in 7s var(--ease) infinite; }
+@keyframes strike { 0%, 12% { transform: scaleX(0); } 28%, 100% { transform: scaleX(1); } }
+@keyframes fade-old { 0%, 28% { opacity: 1; } 36%, 100% { opacity: .5; } }
+@keyframes new-in { 0%, 34% { opacity: 0; transform: translateY(14px) scale(.96); } 46%, 94% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+.v-look .old-name { opacity: .5; }
+
+/* Pause vignettes while they are off screen */
+.io .vig:not(.live), .io .vig:not(.live) *, .io .vig:not(.live) *::before, .io .vig:not(.live) *::after { animation-play-state: paused !important; }
+
+/* Also in 2.0 */
+.also { margin-top: clamp(56px, 8vw, 96px); padding: clamp(24px, 4vw, 44px); border-radius: 26px; border: 1px solid var(--edge); background: linear-gradient(180deg, rgba(255, 255, 255, .035), rgba(255, 255, 255, .01)); }
+.also h3 { font-size: clamp(1.8rem, 1.4rem + 1.5vw, 2.6rem); font-weight: 800; margin-bottom: 22px; }
+.also ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 32px; margin: 0; padding: 0; list-style: none; }
+.also li { display: flex; gap: 12px; align-items: flex-start; font-weight: 600; font-size: 1.04rem; }
+.tick { width: 26px; height: 26px; flex: none; border-radius: 50%; display: grid; place-items: center; background: var(--go); color: var(--go-ink); margin-top: 1px; }
+.tick .ic { width: 15px; height: 15px; stroke-width: 3.2; }
+@media (max-width: 680px) { .also ul { grid-template-columns: minmax(0, 1fr); } }
+
+/* Everything a session needs */
+.core { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; border-radius: 24px; overflow: hidden; border: 1px solid var(--edge); background: var(--edge); }
+.core > div { display: grid; gap: 10px; align-content: start; padding: 26px 24px 30px; background: var(--asphalt); transition: background .3s; min-width: 0; }
+.core > div:hover { background: var(--tarmac); }
+.core .ic-wrap { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; background: rgba(255, 122, 26, .1); color: var(--signal-hot); margin-bottom: 6px; transition: transform .4s var(--ease); }
+.core > div:hover .ic-wrap { transform: rotate(-8deg) scale(1.08); }
+.core .ic-wrap .ic { width: 24px; height: 24px; }
+.core b { font-size: 1.1rem; font-weight: 700; }
+.core p { color: var(--worn); font-size: .98rem; }
+@media (max-width: 1000px) { .core { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .core { grid-template-columns: minmax(0, 1fr); } }
+
+/* Safety */
+.safe-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: clamp(20px, 3vw, 36px); align-items: start; }
+.safe-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 32px; margin: 0; padding: 0; list-style: none; }
+.safe-list li { display: grid; gap: 8px; align-content: start; }
+.safe-list .ic-wrap { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; background: rgba(70, 222, 157, .1); color: var(--go); margin-bottom: 4px; }
+.safe-list .ic-wrap .ic { width: 24px; height: 24px; }
+.safe-list b { font-size: 1.12rem; }
+.safe-list p { color: var(--worn); }
+.win-note { position: relative; overflow: hidden; display: grid; gap: 14px; padding: 26px; border-radius: 22px; border: 1px solid rgba(34, 168, 255, .3); background: linear-gradient(180deg, rgba(34, 168, 255, .1), rgba(34, 168, 255, .03)); }
+.win-note h3 { font-size: 1.6rem; font-weight: 800; }
+.win-note p { color: var(--beam); }
+.win-note q { font-weight: 700; color: var(--lane); }
+.kbd { display: inline-block; padding: 1px 9px; margin-inline: 2px; border-radius: 7px; border: 1px solid rgba(207, 230, 255, .35); background: rgba(207, 230, 255, .1); font-weight: 700; color: var(--lane); white-space: nowrap; }
+.win-steps { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.win-steps .kbd { padding: 8px 14px; }
+.win-steps .arrow { width: 22px; height: 22px; color: var(--beam); }
+[dir="rtl"] .win-steps .arrow { transform: scaleX(-1); }
+.av-note { display: flex; gap: 12px; padding-top: 14px; border-top: 1px solid rgba(34, 168, 255, .22); color: var(--worn); font-size: .98rem; }
+.av-note .ic { color: var(--go); margin-top: 3px; }
+@media (max-width: 920px) { .safe-grid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 560px) { .safe-list { grid-template-columns: minmax(0, 1fr); } }
+
+/* FAQ */
+.faq { display: grid; gap: 10px; max-width: 860px; }
+.faq details { border-radius: 16px; border: 1px solid var(--edge); background: rgba(255, 255, 255, .02); transition: border-color .25s, background .25s; }
+.faq details[open] { border-color: var(--edge-2); background: rgba(255, 255, 255, .04); }
+.faq summary { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 18px 20px; cursor: pointer; list-style: none; font-weight: 700; font-size: 1.08rem; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary .plus { position: relative; width: 26px; height: 26px; flex: none; border-radius: 8px; background: rgba(255, 255, 255, .06); }
+.faq summary .plus::before, .faq summary .plus::after { content: ""; position: absolute; left: 7px; right: 7px; top: 12px; height: 2px; border-radius: 1px; background: var(--lane); transition: transform .3s var(--ease); }
+.faq summary .plus::after { transform: rotate(90deg); }
+.faq details[open] .plus::after { transform: rotate(0deg); }
+.faq details[open] .plus { background: var(--signal); }
+.faq details[open] .plus::before, .faq details[open] .plus::after { background: var(--signal-ink); }
+.faq .ans { padding: 0 20px 20px; color: var(--worn); max-width: 64ch; }
+@supports (interpolate-size: allow-keywords) {
+  .faq { interpolate-size: allow-keywords; }
+  .faq details::details-content { height: 0; overflow: hidden; transition: height .35s var(--ease), content-visibility .35s allow-discrete; }
+  .faq details[open]::details-content { height: auto; }
+}
+
+/* Community */
+.links { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.lk { position: relative; overflow: hidden; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 16px; padding: 20px; border-radius: 18px; border: 1px solid var(--edge); background: rgba(255, 255, 255, .025); text-decoration: none; transition: border-color .25s, transform .35s var(--ease), background .25s; }
+.lk:hover { border-color: var(--edge-2); transform: translateY(-3px); background: rgba(255, 255, 255, .05); }
+.lk-ic { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; font: 800 1.2rem/1 var(--display); color: var(--lane); background: var(--c, var(--kerb)); }
+.lk-ic .ic { width: 24px; height: 24px; }
+.lk-text { display: grid; gap: 2px; min-width: 0; }
+.lk-text b { font-size: 1.05rem; }
+.lk-text small { color: var(--worn); font-size: .9rem; line-height: 1.4; }
+.lk-text .handle { color: var(--faded); font-size: .82rem; font-weight: 600; direction: ltr; unicode-bidi: isolate; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+:dir(rtl) .lk-text .handle { text-align: right; }
+.lk .out { width: 18px; height: 18px; color: var(--faded); transition: transform .3s var(--ease), color .3s; }
+.lk:hover .out { color: var(--lane); transform: translate(2px, -2px); }
+[dir="rtl"] .lk .out { transform: scaleX(-1); }
+[dir="rtl"] .lk:hover .out { transform: scaleX(-1) translate(2px, -2px); }
+.lk.big { grid-column: span 2; background: linear-gradient(120deg, rgba(88, 101, 242, .22), rgba(88, 101, 242, .06)); border-color: rgba(88, 101, 242, .4); }
+.lk.big .lk-ic { width: 60px; height: 60px; }
+.lk.support { grid-column: 1 / -1; background: linear-gradient(120deg, rgba(255, 122, 26, .16), rgba(255, 122, 26, .04)); border-color: rgba(255, 122, 26, .35); }
+.lk.big b { font-size: 1.3rem; }
+@media (max-width: 900px) { .links { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .links { grid-template-columns: minmax(0, 1fr); } .lk.big, .lk.support { grid-column: auto; } }
+
+/* Final call */
+.cta { text-align: center; display: grid; justify-items: center; gap: 22px; padding-block: clamp(80px, 11vw, 150px); position: relative; overflow: clip; }
+.cta::before { content: ""; position: absolute; inset: 20% 10% 0; z-index: -1; filter: blur(70px); background: radial-gradient(closest-side at 35% 50%, rgba(34, 168, 255, .25), transparent), radial-gradient(closest-side at 65% 50%, rgba(255, 122, 26, .28), transparent); }
+.emblem-build { position: relative; width: min(420px, 82%); aspect-ratio: 800 / 401; }
+.emblem-build img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.cta h2 { max-width: 14em; }
+.cta p { color: var(--worn); font-size: var(--fs-lead); max-width: 30em; }
+.cta .actions { justify-content: center; }
+
+/* Footer */
+.foot { border-top: 1px solid var(--edge); padding-block: 44px 40px; color: var(--faded); font-size: .92rem; }
+.foot-in { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 26px 40px; align-items: start; }
+.foot-brand { display: grid; gap: 14px; justify-items: start; }
+.foot-brand img { width: 150px; }
+.foot-links { display: flex; flex-wrap: wrap; gap: 6px 18px; justify-content: flex-end; }
+.foot-links a { color: var(--worn); text-decoration: none; font-weight: 600; }
+.foot-links a:hover { color: var(--lane); text-decoration: underline; text-underline-offset: 3px; }
+.legal { grid-column: 1 / -1; max-width: 80ch; font-size: .85rem; line-height: 1.55; }
+@media (max-width: 700px) { .foot-in { grid-template-columns: minmax(0, 1fr); } .foot-links { justify-content: flex-start; } }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .streaks { display: none; }
+  .road .car { display: none; }
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></symbol>
+  <symbol id="i-github" viewBox="0 0 24 24"><path d="M14 3h7v7M21 3l-9 9M19 14v5a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h5"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5"/><path d="M16 4.7a3.5 3.5 0 010 6.6M18 14.8c2 .7 3.2 2.4 3.5 5.2"/></symbol>
+  <symbol id="i-pc" viewBox="0 0 24 24"><rect x="2.5" y="4" width="19" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.6-3.3 8.1-8 9-4.7-.9-8-4.4-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></symbol>
+  <symbol id="i-door" viewBox="0 0 24 24"><path d="M14 3H6a1 1 0 00-1 1v16a1 1 0 001 1h8M14 3l5 2v14l-5 2V3z"/><path d="M11 12h.01"/></symbol>
+  <symbol id="i-game" viewBox="0 0 24 24"><path d="M6 8h12a4 4 0 014 4v1a4 4 0 01-7 2.6l-.6-.6H9.6l-.6.6A4 4 0 012 13v-1a4 4 0 014-4z"/><path d="M7 11v3M5.5 12.5h3M16 12h.01M18 13.5h.01"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M14 9l2 2"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></symbol>
+  <symbol id="i-wave" viewBox="0 0 24 24"><path d="M2 12c2.5 0 2.5-5 5-5s2.5 10 5 10 2.5-10 5-10 2.5 5 5 5"/></symbol>
+  <symbol id="i-crash" viewBox="0 0 24 24"><path d="M12 2l2.2 5.2 5.6-1.6-3 5 4.2 3.8-5.6.6.2 5.6L12 17l-3.6 3.6.2-5.6-5.6-.6 4.2-3.8-3-5 5.6 1.6z"/></symbol>
+  <symbol id="i-traffic" viewBox="0 0 24 24"><path d="M5 17h14M6 17l1.4-5.2A2 2 0 019.3 10h5.4a2 2 0 011.9 1.8L18 17M7.5 17v2M16.5 17v2"/><circle cx="8.5" cy="14.3" r=".6"/><circle cx="15.5" cy="14.3" r=".6"/><path d="M10 6h4M12 3v3"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18a4 4 0 01-.6-8 5.5 5.5 0 0110.7 1.5A3.3 3.3 0 0117 18H7z"/><path d="M9 21l1-2M13 21l1-2"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></symbol>
+  <symbol id="i-rejoin" viewBox="0 0 24 24"><path d="M20 12a8 8 0 11-2.4-5.7M20 4v5h-5"/></symbol>
+  <symbol id="i-gauge" viewBox="0 0 24 24"><path d="M4 17a8 8 0 1116 0"/><path d="M12 17l4-5"/><path d="M4 17h2M18 17h2"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-9-9.4C2 7.3 4.3 4.5 7.3 4.5c2 0 3.6 1.2 4.7 2.9 1.1-1.7 2.7-2.9 4.7-2.9 3 0 5.3 2.8 4.3 6.1-1.5 4.8-9 9.4-9 9.4z"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4V5z"/><path d="M8 10h.01M12 10h.01M16 10h.01"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></symbol>
+  <symbol id="i-note" viewBox="0 0 24 24"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="4"/><path d="M10 9.5v5l4.5-2.5z"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></symbol>
+  <symbol id="i-term" viewBox="0 0 24 24"><rect x="2.5" y="4" width="19" height="16" rx="2.5"/><path d="M7 9.5l3 2.5-3 2.5M12.5 15h4.5"/></symbol>
+  <symbol id="i-out" viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 012-2h9"/></symbol>
+</svg>
+
+<a class="skip" href="#main" data-t="skip">Skip to content</a>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="#main" aria-label="Tandem">
+      <img src="img/emblem.webp" alt="" width="640" height="321">
+      <span class="wordmark">TANDEM</span>
+    </a>
+    <nav class="nav" aria-label="Main" data-t-aria="nav_label">
+      <a href="#features" data-t="nav_features">Features</a>
+      <a href="#how" data-t="nav_how">How it works</a>
+      <a href="#safety" data-t="nav_safe">Safety</a>
+      <a href="#faq" data-t="nav_faq">FAQ</a>
+      <a href="#community" data-t="nav_community">Community</a>
+    </nav>
+    <div class="lang">
+      <button class="btn lang-btn" id="lang-btn" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="lang-list">
+        <svg class="ic" aria-hidden="true"><use href="#i-globe"/></svg><span id="lang-now">English</span><svg class="ic chev" aria-hidden="true"><use href="#i-chev"/></svg>
+      </button>
+      <ul class="lang-list" id="lang-list" role="listbox" tabindex="-1" aria-labelledby="lang-btn" hidden></ul>
+    </div>
+    <a class="btn btn-small-dl dl-small" href="#download"><svg class="ic" aria-hidden="true"><use href="#i-download"/></svg><span data-t="nav_download">Download</span></a>
+  </div>
+  <div class="progress" aria-hidden="true"></div>
+</header>
+
+<main id="main">
+  <section class="hero" id="download">
+    <div class="streaks" aria-hidden="true"><i style="--y:18%;--d:7s;--w:0s"></i><i style="--y:46%;--d:9s;--w:2.4s"></i><i style="--y:72%;--d:8s;--w:4.6s"></i><i style="--y:30%;--d:10s;--w:6s"></i><i style="--y:88%;--d:9.5s;--w:1.2s"></i></div>
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <a class="pill" href="#features"><b>2.0</b><span data-t="hero_pill">New in 2.0: Assetto Corsa, friends online and more</span></a>
+        <h1 class="display"><span data-t="hero_h1">Drive with your friends.</span><span class="paint" aria-hidden="true"></span></h1>
+        <p class="lead" data-t="hero_lead">Host BeamNG.drive and Assetto Corsa sessions from your own PC. Friends join with one invite, and Tandem brings them the maps and mods they’re missing.</p>
+        <div class="actions">
+          <a class="btn btn-dl dl" href="https://github.com/moha701/beamng-friends-launcher/releases/latest" target="_blank" rel="noopener">
+            <svg class="ic" aria-hidden="true"><use href="#i-download"/></svg>
+            <span class="dl-text"><span class="dl-main" data-t="dl_win">Download for Windows</span><span class="dl-sub" data-t="dl_sub">Free · Windows 10 and 11</span></span>
+          </a>
+        </div>
+        <div class="plats">
+          <a class="plat" data-plat="win" href="https://github.com/moha701/beamng-friends-launcher/releases/latest" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pc"/></svg><span data-t="plat_win">Windows 10 and 11</span></a>
+          <a class="plat" data-plat="linux" href="https://github.com/moha701/beamng-friends-launcher/releases/latest" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-term"/></svg><span data-t="also_8">Linux and Steam Deck (beta)</span></a>
+          <a class="plat plat-gh" href="https://github.com/moha701/beamng-friends-launcher/releases" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-github"/></svg><span data-t="dl_all">All downloads on GitHub</span></a>
+        </div>
+        <div class="phone-note" hidden><span data-t="dl_phone">Tandem runs on a PC. Open this page on your computer to download it.</span><button class="btn copy-link" type="button"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg><span data-t="copy_link">Copy this page’s link</span></button></div>
+        <ul class="facts">
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span data-t="fact_free">Free</span></li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span data-t="fact_account">No account needed</span></li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span data-t="fact_players">Up to 20 players</span></li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span data-t="fact_langs">11 languages</span></li>
+        </ul>
+      </div>
+      <div class="pad" aria-hidden="true"><canvas id="drift"></canvas></div>
+    </div>
+
+    <div class="wrap showcase">
+      <div class="win-wrap">
+      <div class="window">
+        <div class="win-bar" aria-hidden="true"><img src="img/icon-32.png" alt="">Tandem<div class="win-ctl"><span><svg viewBox="0 0 10 10"><path d="M1 5h8"/></svg></span><span><svg viewBox="0 0 10 10"><rect x="1.5" y="1.5" width="7" height="7"/></svg></span><span><svg viewBox="0 0 10 10"><path d="M1.5 1.5l7 7M8.5 1.5l-7 7"/></svg></span></div></div>
+        <div class="win-shots">
+          <img src="img/win-lib.jpg" alt="The Tandem library with BeamNG.drive and Assetto Corsa" data-t-alt="shot_alt" width="1600" height="990">
+          <img src="img/win-lib-ac.jpg" alt="" width="1600" height="990" aria-hidden="true">
+        </div>
+      </div>
+      <div class="win-chip" aria-hidden="true">
+        <span class="vf-dot"></span>
+        <span class="vf-text"><b data-t="v_hosting" data-name="Sara">Sara is hosting</b><span class="vf-meta"><bdi>Friday night drive</bdi> · <bdi>BeamNG.drive</bdi></span></span>
+        <span class="mini-btn primary" data-t="v_join">Join</span>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="games" aria-labelledby="games-h">
+    <div class="wrap">
+      <div class="sec-head rise">
+        <h2 class="display" id="games-h" data-t="games_h">Two games. One launcher.</h2>
+        <p data-t="games_p">Pick a game in the library, then host or join. Everyone needs their own copy of the game.</p>
+      </div>
+      <div class="games">
+        <article class="game g-bng rise">
+          <div class="game-img"><img src="img/win-join.jpg" alt="" loading="lazy" width="1600" height="990" style="--pos: 75% 0%"></div>
+          <div class="game-body">
+            <div class="game-name">BeamNG.drive</div>
+            <div class="game-tag" data-t="bng_tag">Soft-body driving with friends</div>
+            <p class="muted" data-t="bng_p">Smooth friends’ cars, crashes that look the same on every screen, shared traffic, weather and trailers.</p>
+          </div>
+        </article>
+        <article class="game g-ac rise">
+          <div class="game-img"><img src="img/win-ac-host.jpg" alt="" loading="lazy" width="1600" height="990" style="--pos: 62% 0%"></div>
+          <div class="game-body">
+            <div class="game-name">Assetto Corsa</div>
+            <div class="game-tag" data-t="ac_tag">Track days and races with friends</div>
+            <p class="muted" data-t="ac_p">Practice, qualifying and races with live lap times, chat and host controls. Mod cars and tracks are sent for you.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="how" aria-labelledby="how-h">
+    <div class="wrap">
+      <div class="sec-head rise"><h2 class="display" id="how-h" data-t="how_h">From download to driving</h2></div>
+      <div class="steps-wrap rise">
+        <div class="road" aria-hidden="true"><svg class="car car-svg" viewBox="0 0 40 20"><rect x="1" y="2" width="38" height="16" rx="7" fill="currentColor"/><rect class="glass" x="22" y="4.5" width="8" height="11" rx="3"/><rect class="glass" x="8" y="5" width="7" height="10" rx="2.5"/><rect class="lamp" x="36" y="4" width="3" height="3" rx="1"/><rect class="lamp" x="36" y="13" width="3" height="3" rx="1"/></svg></div>
+        <ol class="steps">
+        <li><span class="step-num">1</span><h3 data-t="how_1t">Everyone installs Tandem</h3><p class="muted" data-t="how_1p">You and your friends each need Tandem and your own copy of the game.</p></li>
+        <li><span class="step-num">2</span><h3 data-t="how_2t">Host a session</h3><p class="muted" data-t="how_2p">Pick a game, a map and the mods to share, then send the invite.</p></li>
+        <li><span class="step-num">3</span><h3 data-t="how_3t">Friends paste the invite</h3><p class="muted" data-t="how_3p">You press Allow. Tandem gets their mods, starts the game and drops them into your world.</p></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="features" aria-labelledby="new-h">
+    <div class="wrap">
+      <div class="sec-head rise">
+        <h2 class="display" id="new-h" data-t="new_h">New in 2.0</h2>
+        <p data-t="new_p">Everything that changed since version 1.0.10.</p>
+      </div>
+
+      <div class="lead-feats">
+        <article class="feat">
+          <div class="feat-text rise">
+            <span class="chip" data-t="both">Both games</span>
+            <h3 data-t="f_friends_t">See when friends host</h3>
+            <p data-t="f_friends_p">Friends you always let in see when you host and join with one click. No invite to copy.</p>
+          </div>
+          <div class="vig v-friends rise" aria-hidden="true">
+            <div class="panel">
+              <div class="vf-head"><svg class="ic"><use href="#i-users"/></svg><span data-t="v_friends_now">Friends hosting now</span></div>
+              <ul class="vf-list">
+                <li class="vf-row" style="--i:0"><span class="vf-dot"></span><span class="vf-text"><b data-t="v_hosting" data-name="Sara">Sara is hosting</b><span class="vf-meta"><bdi>Friday night drive</bdi> · <bdi>BeamNG.drive</bdi> · <span data-t="v_ofmax" data-n="3" data-max="8">3 of 8</span></span></span><span class="mini-btn primary" data-t="v_join">Join</span></li>
+                <li class="vf-row" style="--i:1"><span class="vf-dot"></span><span class="vf-text"><b data-t="v_hosting" data-name="Khalid">Khalid is hosting</b><span class="vf-meta"><bdi>Sunday track day</bdi> · <bdi>Assetto Corsa</bdi> · <span data-t="v_ofmax" data-n="5" data-max="12">5 of 12</span></span></span><span class="mini-btn primary" data-t="v_join">Join</span></li>
+                <li class="vf-row" style="--i:2"><span class="vf-dot"></span><span class="vf-text"><b data-t="v_hosting" data-name="Yuki">Yuki is hosting</b><span class="vf-meta"><bdi>Drift practice</bdi> · <bdi>BeamNG.drive</bdi> · <span data-t="v_ofmax" data-n="8" data-max="8">8 of 8</span></span></span><span class="tag-full" data-t="v_full">Full</span></li>
+              </ul>
+            </div>
+            <div class="v-toast"><svg class="ic"><use href="#i-check"/></svg><span data-t="v_joining" data-name="Sara">Joining Sara’s session</span></div>
+          </div>
+        </article>
+
+        <article class="feat">
+          <div class="feat-text rise">
+            <span class="chip c-ac">Assetto Corsa</span>
+            <h3 data-t="f_ac_t">Assetto Corsa is here</h3>
+            <p data-t="f_ac_p">Host from your own PC. Mod cars and tracks a friend doesn’t have are sent from your PC and added after they say yes.</p>
+          </div>
+          <div class="vig v-ac rise" aria-hidden="true">
+            <img class="shot" src="img/win-ac-session.jpg" alt="" width="1600" height="990">
+            <div class="panel">
+              <div class="vt-top"><span class="vt-label"><span class="vt-get" data-t="v_getting" data-map="Ebisu Minami">Getting Ebisu Minami from the host</span><span class="vt-done"><svg class="ic"><use href="#i-check"/></svg><span data-t="v_added">Added to your game</span></span></span><span class="vt-num">742 MB</span></div>
+              <div class="bar"><i></i></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="feat">
+          <div class="feat-text rise">
+            <span class="chip" data-t="both">Both games</span>
+            <h3 data-t="f_discord_t">It shows on your Discord</h3>
+            <p data-t="f_discord_p">Your profile shows the game, the map and the player count, with a Join button for friends.</p>
+          </div>
+          <div class="vig v-discord rise" aria-hidden="true">
+            <div class="dc">
+              <div class="dc-banner"></div>
+              <div class="dc-body">
+                <div class="dc-av"><img src="img/emblem.webp" alt=""></div>
+                <div class="dc-name">Alex</div>
+                <div class="dc-user">alex_drives</div>
+                <div class="dc-act">
+                  <div class="dc-label">PLAYING</div>
+                  <div class="dc-row"><img src="img/icon-180.png" alt=""><div><div class="dc-game">Tandem</div><div class="dc-line">Hosting on Italy</div><div class="dc-line">BeamNG.drive (<span id="dc-n">3</span> of 8)</div><div class="dc-time"><span id="dc-t">12:04</span> elapsed</div></div></div>
+                  <div class="dc-btns"><div class="dc-btn primary">Join</div><div class="dc-btn">Get Tandem</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="tiles">
+        <article class="tile rise">
+          <div class="vig v-public" aria-hidden="true">
+            <div class="panel">
+              <div class="vf-head"><svg class="ic"><use href="#i-globe"/></svg><span data-t="v_public">Public sessions</span></div>
+              <div class="pub-card">
+                <b><bdi>Open drift night</bdi></b>
+                <span class="vf-meta"><bdi>Hirochi Raceway</bdi> · <span data-t="v_ofmax" data-n="6" data-max="8">6 of 8</span></span>
+                <span class="mini-btn primary state-btn"><span class="s-ask" data-t="v_ask">Ask to join</span><span class="s-wait"><i class="spin"></i><span data-t="v_waiting">Waiting for the host</span></span><span class="s-in"><svg class="ic"><use href="#i-check"/></svg><span data-t="v_in">You’re in</span></span></span>
+              </div>
+            </div>
+          </div>
+          <div class="tile-text"><span class="chip" data-t="both">Both games</span><h3 data-t="f_public_t">Play with anyone</h3><p data-t="f_public_p">Show a session to everyone. Players find it under Public sessions and ask to join. You still allow each one.</p></div>
+        </article>
+        <article class="tile rise">
+          <div class="vig v-mods" aria-hidden="true">
+            <div class="zip"><b>ZIP</b><span>drift_missile.zip</span></div>
+            <div class="bar"><i></i></div>
+            <div class="done-line"><svg class="ic"><use href="#i-check"/></svg><span data-t="v_installed">Installed in BeamNG.drive</span></div>
+          </div>
+          <div class="tile-text"><span class="chip" data-t="both">Both games</span><h3 data-t="f_mods_t">Download a mod. It installs itself.</h3><p data-t="f_mods_p">Open a mod site from Tandem. The ZIP you download goes into the right game, and you can take it out again.</p></div>
+        </article>
+        <article class="tile rise">
+          <div class="vig v-reach" aria-hidden="true">
+            <div class="radar"><span class="ring"></span><span class="ring"></span><span class="ring"></span><span class="radar-core"><svg class="ic"><use href="#i-pc"/></svg></span><span class="ok"><svg class="ic"><use href="#i-check"/></svg></span></div>
+            <div class="ok-pill"><svg class="ic"><use href="#i-check"/></svg><span data-t="v_reach_ok">Checked from the internet: friends can reach your PC.</span></div>
+          </div>
+          <div class="tile-text"><span class="chip" data-t="both">Both games</span><h3 data-t="f_reach_t">Can friends reach you?</h3><p data-t="f_reach_p">Seconds after you start hosting, Tandem checks from the internet whether friends can reach your PC.</p></div>
+        </article>
+        <article class="tile rise">
+          <div class="vig v-block" aria-hidden="true">
+            <div class="knock">
+              <div class="knock-who"><span class="knock-av">X</span><span><b>xX_Troll_Xx</b><small data-t="v_wants">wants to join</small></span></div>
+              <div class="knock-btns"><span class="mini-btn go" data-t="v_allow">Allow</span><span class="mini-btn bad" data-t="v_block">Block</span></div>
+            </div>
+            <div class="stamp"><span data-t="v_blocked">Blocked</span></div>
+          </div>
+          <div class="tile-text"><span class="chip" data-t="both">Both games</span><h3 data-t="f_block_t">Block trolls for good</h3><p data-t="f_block_p">A player you block never gets into your sessions again, in either game.</p></div>
+        </article>
+        <article class="tile rise">
+          <div class="vig v-lang" aria-hidden="true">
+            <div class="lang-say" id="lang-say">Drive with your friends.</div>
+            <div class="lang-dots" id="lang-dots"></div>
+          </div>
+          <div class="tile-text"><span class="chip" data-t="both">Both games</span><h3 data-t="f_lang_t">Speaks your language</h3><p data-t="f_lang_p">English, Arabic and nine more languages.</p></div>
+        </article>
+        <article class="tile rise">
+          <div class="vig v-look" aria-hidden="true">
+            <span class="old-name">BeamNG Friends Launcher</span>
+            <span class="new-name"><img src="img/emblem.webp" alt=""><span>TANDEM</span></span>
+          </div>
+          <div class="tile-text"><span class="chip" data-t="both">Both games</span><h3 data-t="f_look_t">New name, new look</h3><p data-t="f_look_p">BeamNG Friends Launcher is now Tandem. The new look stops its motion while you play, so it never costs FPS.</p></div>
+        </article>
+      </div>
+
+      <div class="also rise">
+        <h3 data-t="also_h">Also in 2.0</h3>
+        <ul>
+          <li><span class="tick"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span><span data-t="also_1">New chat, player list and name tags inside BeamNG</span></li>
+          <li><span class="tick"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span><span data-t="also_2">Faster mod downloads</span></li>
+          <li><span class="tick"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span><span data-t="also_3">Faster mod scanning</span></li>
+          <li><span class="tick"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span><span data-t="also_4">Mods that didn’t show up now work</span></li>
+          <li><span class="tick"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span><span data-t="also_5">No more upside-down cars after a car change</span></li>
+          <li><span class="tick"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span><span data-t="also_6">Your saved car setups come along</span></li>
+          <li><span class="tick"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span><span data-t="also_7">Ready for new BeamNG updates</span></li>
+          <li><span class="tick"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span><span data-t="also_8">Linux and Steam Deck (beta)</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="session" aria-labelledby="core-h">
+    <div class="wrap">
+      <div class="sec-head rise">
+        <h2 class="display" id="core-h" data-t="core_h">Everything a session needs</h2>
+        <p data-t="core_p">What you get every time you drive together.</p>
+      </div>
+      <div class="core rise">
+        <div><span class="ic-wrap"><svg class="ic" aria-hidden="true"><use href="#i-box"/></svg></span><b data-t="c1t">Mods arrive by themselves</b><p data-t="c1p">Friends get the host’s map and mods. Files they already have are never downloaded twice.</p></div>
+        <div><span class="ic-wrap"><svg class="ic" aria-hidden="true"><use href="#i-wave"/></svg></span><b data-t="c2t">Smooth friends’ cars</b><p data-t="c2p">Cars follow their real position with gentle physics instead of jumping.</p></div>
+        <div><span class="ic-wrap"><svg class="ic" aria-hidden="true"><use href="#i-crash"/></svg></span><b data-t="c3t">Damage sync</b><p data-t="c3p">When a friend crashes, the same parts bend on every screen.</p></div>
+        <div><span class="ic-wrap"><svg class="ic" aria-hidden="true"><use href="#i-traffic"/></svg></span><b data-t="c4t">Shared traffic</b><p data-t="c4p">The host’s AI traffic drives on everyone’s screen.</p></div>
+        <div><span class="ic-wrap"><svg class="ic" aria-hidden="true"><use href="#i-cloud"/></svg></span><b data-t="c5t">Time and weather</b><p data-t="c5p">Everyone gets the host’s time of day, fog, rain and wind.</p></div>
+        <div><span class="ic-wrap"><svg class="ic" aria-hidden="true"><use href="#i-mic"/></svg></span><b data-t="c6t">Voice and chat</b><p data-t="c6p">Talk in the launcher and in a small chat window inside the game.</p></div>
+        <div><span class="ic-wrap"><svg class="ic" aria-hidden="true"><use href="#i-rejoin"/></svg></span><b data-t="c7t">Rejoin in one click</b><p data-t="c7p">Reconnects after a short drop and brings you back after a crash without asking the host again.</p></div>
+        <div><span class="ic-wrap"><svg class="ic" aria-hidden="true"><use href="#i-gauge"/></svg></span><b data-t="c8t">Low-end PC mode</b><p data-t="c8p">One switch makes sessions lighter for slower PCs.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="safety" aria-labelledby="safe-h">
+    <div class="wrap">
+      <div class="sec-head rise">
+        <h2 class="display" id="safe-h" data-t="safe_h">Built so nobody messes with your PC</h2>
+        <p data-t="safe_p">Your PC, your game and your sessions stay yours.</p>
+      </div>
+      <div class="safe-grid">
+        <ul class="safe-list rise">
+          <li><span class="ic-wrap"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg></span><b data-t="s1t">Signed updates</b><p data-t="s1p">Tandem installs an update only if it is signed with the developer’s key.</p></li>
+          <li><span class="ic-wrap"><svg class="ic" aria-hidden="true"><use href="#i-door"/></svg></span><b data-t="s2t">You decide who joins</b><p data-t="s2p">Nobody gets in until you press Allow. Block a player or lock the session at any time.</p></li>
+          <li><span class="ic-wrap"><svg class="ic" aria-hidden="true"><use href="#i-game"/></svg></span><b data-t="s3t">Your game stays as it is</b><p data-t="s3p">Nothing in your game is replaced, and every addition can be taken out again.</p></li>
+          <li><span class="ic-wrap"><svg class="ic" aria-hidden="true"><use href="#i-key"/></svg></span><b data-t="s4t">No account, no password</b><p data-t="s4p">Each PC has its own key, so there is nothing to sign up for.</p></li>
+        </ul>
+        <aside class="win-note rise" aria-labelledby="win-h">
+          <h3 id="win-h" data-t="win_t">If Windows shows a blue box</h3>
+          <p id="win-p">Windows shows <q>Windows protected your PC</q> for new programs from small developers. Click <span class="kbd">More info</span>, then <span class="kbd">Run anyway</span>. Updates after that install by themselves.</p>
+          <div class="win-steps" aria-hidden="true"><span class="kbd" data-t="win_more">More info</span><svg class="ic arrow"><use href="#i-arrow"/></svg><span class="kbd" data-t="win_run">Run anyway</span></div>
+          <p class="av-note"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg><span data-t="av_p">If your antivirus asks about Tandem, choose Allow. Never turn your antivirus off.</span></p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="faq" aria-labelledby="faq-h">
+    <div class="wrap">
+      <div class="sec-head rise"><h2 class="display" id="faq-h" data-t="faq_h">Questions</h2></div>
+      <div class="faq rise">
+        <details><summary><span data-t="q1">Is Tandem free?</span><span class="plus" aria-hidden="true"></span></summary><p class="ans" data-t="a1">Yes. Tandem is free. If you like it, you can support the developer.</p></details>
+        <details><summary><span data-t="q2">Do my friends need Tandem too?</span><span class="plus" aria-hidden="true"></span></summary><p class="ans" data-t="a2">Yes. Everyone needs Tandem, the same version, and their own copy of the game.</p></details>
+        <details><summary><span data-t="q3">Which games does it work with?</span><span class="plus" aria-hidden="true"></span></summary><p class="ans" data-t="a3">BeamNG.drive and Assetto Corsa, the PC versions on Steam.</p></details>
+        <details><summary><span data-t="q4">Does it change my game files?</span><span class="plus" aria-hidden="true"></span></summary><p class="ans" data-t="a4">No. Tandem starts BeamNG with a folder of its own. In Assetto Corsa it only adds mod cars and tracks after you say yes, and it never sends Kunos content between players.</p></details>
+        <details><summary><span data-t="q5">How many players can join?</span><span class="plus" aria-hidden="true"></span></summary><p class="ans" data-t="a5">A BeamNG.drive session holds up to 20 players: you and 19 friends.</p></details>
+        <details><summary><span data-t="q6">Do I need to open ports on my router?</span><span class="plus" aria-hidden="true"></span></summary><p class="ans" data-t="a6">Usually not. Tandem links your friends’ PCs by itself and checks whether they can reach you. In the rare case that both routers block it, the app explains what to do.</p></details>
+        <details><summary><span data-t="q7">Does it work on Linux or Steam Deck?</span><span class="plus" aria-hidden="true"></span></summary><p class="ans" data-t="a7">A first Linux version exists and is still being tested. Windows 10 and 11 are fully supported.</p></details>
+        <details><summary><span data-t="q8">Is Tandem made by BeamNG or Kunos?</span><span class="plus" aria-hidden="true"></span></summary><p class="ans" data-t="a8">No. Tandem is made by mhmd8p, a player, and is not affiliated with BeamNG GmbH or Kunos Simulazioni.</p></details>
+        <details><summary><span data-t="q9">Where do I report a bug?</span><span class="plus" aria-hidden="true"></span></summary><p class="ans" data-t="a9">Press Report a bug in the app. It saves a report without your invites or passwords and opens the community Discord.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="community" aria-labelledby="comm-h">
+    <div class="wrap">
+      <div class="sec-head rise">
+        <h2 class="display" id="comm-h" data-t="comm_h">Join the community</h2>
+        <p data-t="comm_p">Find people to drive with, get help, and see what’s coming next.</p>
+      </div>
+      <div class="links rise">
+        <a class="lk big" href="https://discord.gg/DTv4Fja7rg" target="_blank" rel="noopener" style="--c: #5865f2"><span class="lk-ic"><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg></span><span class="lk-text"><b>Discord</b><small data-t="d_discord">Find sessions, ask for help and report bugs.</small><span class="handle">discord.gg/DTv4Fja7rg</span></span><svg class="ic out" aria-hidden="true"><use href="#i-out"/></svg></a>
+        <a class="lk" href="https://www.instagram.com/mhmd8p2/" target="_blank" rel="noopener" style="--c: #c13584"><span class="lk-ic"><svg class="ic" aria-hidden="true"><use href="#i-camera"/></svg></span><span class="lk-text"><b>Instagram</b><small data-t="d_instagram">Updates and clips.</small><span class="handle">@mhmd8p2</span></span><svg class="ic out" aria-hidden="true"><use href="#i-out"/></svg></a>
+        <a class="lk" href="https://www.tiktok.com/@m0ha13" target="_blank" rel="noopener" style="--c: #1f2b44"><span class="lk-ic"><svg class="ic" aria-hidden="true"><use href="#i-note"/></svg></span><span class="lk-text"><b>TikTok</b><small data-t="d_tiktok">Short clips.</small><span class="handle">@m0ha13</span></span><svg class="ic out" aria-hidden="true"><use href="#i-out"/></svg></a>
+        <a class="lk" href="https://www.youtube.com/@Moha_Bald" target="_blank" rel="noopener" style="--c: #c4302b"><span class="lk-ic"><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg></span><span class="lk-text"><b>YouTube</b><small data-t="d_youtube">Videos.</small><span class="handle">@Moha_Bald</span></span><svg class="ic out" aria-hidden="true"><use href="#i-out"/></svg></a>
+        <a class="lk" href="https://github.com/moha701/beamng-friends-launcher/releases" target="_blank" rel="noopener" style="--c: #2d3a52"><span class="lk-ic"><svg class="ic" aria-hidden="true"><use href="#i-code"/></svg></span><span class="lk-text"><b>GitHub</b><small data-t="d_github">Every release with its notes.</small><span class="handle">moha701</span></span><svg class="ic out" aria-hidden="true"><use href="#i-out"/></svg></a>
+        <a class="lk support" href="https://www.paypal.com/paypalme/porcha911" target="_blank" rel="noopener" style="--c: #b4531b"><span class="lk-ic"><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg></span><span class="lk-text"><b data-t="foot_support">Support the app</b><small data-t="d_support">Tandem is free. A tip helps keep it going.</small><span class="handle">PayPal</span></span><svg class="ic out" aria-hidden="true"><use href="#i-out"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" aria-labelledby="cta-h">
+    <div class="emblem-build" aria-hidden="true"><img class="half-o" src="img/emblem-orange.webp" alt=""><img class="half-b" src="img/emblem-blue.webp" alt=""></div>
+    <h2 class="display" id="cta-h" data-t="cta_h">Your friends are waiting.</h2>
+    <p data-t="cta_p">Download Tandem, send your friends this page, and pick a map.</p>
+    <div class="actions">
+      <a class="btn btn-dl dl" href="https://github.com/moha701/beamng-friends-launcher/releases/latest" target="_blank" rel="noopener">
+        <svg class="ic" aria-hidden="true"><use href="#i-download"/></svg>
+        <span class="dl-text"><span class="dl-main" data-t="dl_win">Download for Windows</span><span class="dl-sub" data-t="dl_sub">Free · Windows 10 and 11</span></span>
+      </a>
+    </div>
+    <div class="plats">
+      <a class="plat" data-plat="win" href="https://github.com/moha701/beamng-friends-launcher/releases/latest" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pc"/></svg><span data-t="plat_win">Windows 10 and 11</span></a>
+      <a class="plat" data-plat="linux" href="https://github.com/moha701/beamng-friends-launcher/releases/latest" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-term"/></svg><span data-t="also_8">Linux and Steam Deck (beta)</span></a>
+      <a class="plat plat-gh" href="https://github.com/moha701/beamng-friends-launcher/releases" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-github"/></svg><span data-t="dl_all">All downloads on GitHub</span></a>
+    </div>
+    <div class="phone-note" hidden><span data-t="dl_phone">Tandem runs on a PC. Open this page on your computer to download it.</span><button class="btn copy-link" type="button"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg><span data-t="copy_link">Copy this page’s link</span></button></div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="foot-brand"><img src="img/logo.webp" alt="Tandem" width="800" height="422"><span data-t="foot_made">Made by mhmd8p</span></div>
+    <nav class="foot-links" aria-label="Links" data-t-aria="links_label">
+      <a href="https://discord.gg/DTv4Fja7rg" target="_blank" rel="noopener">Discord</a>
+      <a href="https://www.instagram.com/mhmd8p2/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.tiktok.com/@m0ha13" target="_blank" rel="noopener">TikTok</a>
+      <a href="https://www.youtube.com/@Moha_Bald" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://github.com/moha701" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.paypal.com/paypalme/porcha911" target="_blank" rel="noopener" data-t="foot_support">Support the app</a>
+    </nav>
+    <p class="legal" data-t="foot_legal">BeamNG.drive is a trademark of BeamNG GmbH and Assetto Corsa of Kunos Simulazioni. Tandem is a fan-made app and is not affiliated with either.</p>
+  </div>
+</footer>
+
+<script>
+window.TANDEM_TEXT = {
+en: {
+  v_public: "Public sessions", dl_sub_linux: "Free · Linux beta",
+  plat_win: "Windows 10 and 11",
+  skip: "Skip to content", nav_label: "Main", links_label: "Links",
+  nav_features: "Features", nav_how: "How it works", nav_safe: "Safety", nav_faq: "FAQ", nav_community: "Community", nav_download: "Download",
+  hero_pill: "New in 2.0: Assetto Corsa, friends online and more",
+  hero_h1: "Drive with your friends.",
+  hero_lead: "Host BeamNG.drive and Assetto Corsa sessions from your own PC. Friends join with one invite, and Tandem brings them the maps and mods they’re missing.",
+  dl_win: "Download for Windows", dl_linux: "Download for Linux", dl_sub: "Free · Windows 10 and 11", dl_sub_v: "Version {v} · {mb} MB · Free", dl_all: "All downloads on GitHub",
+  dl_phone: "Tandem runs on a PC. Open this page on your computer to download it.", copy_link: "Copy this page’s link", copied: "Link copied",
+  fact_free: "Free", fact_account: "No account needed", fact_players: "Up to 20 players", fact_langs: "11 languages",
+  shot_alt: "The Tandem library with BeamNG.drive and Assetto Corsa",
+  games_h: "Two games. One launcher.", games_p: "Pick a game in the library, then host or join. Everyone needs their own copy of the game.",
+  bng_tag: "Soft-body driving with friends", bng_p: "Smooth friends’ cars, crashes that look the same on every screen, shared traffic, weather and trailers.",
+  ac_tag: "Track days and races with friends", ac_p: "Practice, qualifying and races with live lap times, chat and host controls. Mod cars and tracks are sent for you.",
+  how_h: "From download to driving",
+  how_1t: "Everyone installs Tandem", how_1p: "You and your friends each need Tandem and your own copy of the game.",
+  how_2t: "Host a session", how_2p: "Pick a game, a map and the mods to share, then send the invite.",
+  how_3t: "Friends paste the invite", how_3p: "You press Allow. Tandem gets their mods, starts the game and drops them into your world.",
+  new_h: "New in 2.0", new_p: "Everything that changed since version 1.0.10.", both: "Both games",
+  f_friends_t: "See when friends host", f_friends_p: "Friends you always let in see when you host and join with one click. No invite to copy.",
+  f_ac_t: "Assetto Corsa is here", f_ac_p: "Host from your own PC. Mod cars and tracks a friend doesn’t have are sent from your PC and added after they say yes.",
+  f_discord_t: "It shows on your Discord", f_discord_p: "Your profile shows the game, the map and the player count, with a Join button for friends.",
+  f_public_t: "Play with anyone", f_public_p: "Show a session to everyone. Players find it under Public sessions and ask to join. You still allow each one.",
+  f_mods_t: "Download a mod. It installs itself.", f_mods_p: "Open a mod site from Tandem. The ZIP you download goes into the right game, and you can take it out again.",
+  f_reach_t: "Can friends reach you?", f_reach_p: "Seconds after you start hosting, Tandem checks from the internet whether friends can reach your PC.",
+  f_block_t: "Block trolls for good", f_block_p: "A player you block never gets into your sessions again, in either game.",
+  f_lang_t: "Speaks your language", f_lang_p: "English, Arabic and nine more languages.",
+  f_look_t: "New name, new look", f_look_p: "BeamNG Friends Launcher is now Tandem. The new look stops its motion while you play, so it never costs FPS.",
+  also_h: "Also in 2.0",
+  also_1: "New chat, player list and name tags inside BeamNG", also_2: "Faster mod downloads", also_3: "Faster mod scanning", also_4: "Mods that didn’t show up now work",
+  also_5: "No more upside-down cars after a car change", also_6: "Your saved car setups come along", also_7: "Ready for new BeamNG updates", also_8: "Linux and Steam Deck (beta)",
+  core_h: "Everything a session needs", core_p: "What you get every time you drive together.",
+  c1t: "Mods arrive by themselves", c1p: "Friends get the host’s map and mods. Files they already have are never downloaded twice.",
+  c2t: "Smooth friends’ cars", c2p: "Cars follow their real position with gentle physics instead of jumping.",
+  c3t: "Damage sync", c3p: "When a friend crashes, the same parts bend on every screen.",
+  c4t: "Shared traffic", c4p: "The host’s AI traffic drives on everyone’s screen.",
+  c5t: "Time and weather", c5p: "Everyone gets the host’s time of day, fog, rain and wind.",
+  c6t: "Voice and chat", c6p: "Talk in the launcher and in a small chat window inside the game.",
+  c7t: "Rejoin in one click", c7p: "Reconnects after a short drop and brings you back after a crash without asking the host again.",
+  c8t: "Low-end PC mode", c8p: "One switch makes sessions lighter for slower PCs.",
+  safe_h: "Built so nobody messes with your PC", safe_p: "Your PC, your game and your sessions stay yours.",
+  s1t: "Signed updates", s1p: "Tandem installs an update only if it is signed with the developer’s key.",
+  s2t: "You decide who joins", s2p: "Nobody gets in until you press Allow. Block a player or lock the session at any time.",
+  s3t: "Your game stays as it is", s3p: "Nothing in your game is replaced, and every addition can be taken out again.",
+  s4t: "No account, no password", s4p: "Each PC has its own key, so there is nothing to sign up for.",
+  win_t: "If Windows shows a blue box", win_p: "Windows shows {shield} for new programs from small developers. Click {more}, then {run}. Updates after that install by themselves.",
+  win_shield: "Windows protected your PC", win_more: "More info", win_run: "Run anyway",
+  av_p: "If your antivirus asks about Tandem, choose Allow. Never turn your antivirus off.",
+  faq_h: "Questions",
+  q1: "Is Tandem free?", a1: "Yes. Tandem is free. If you like it, you can support the developer.",
+  q2: "Do my friends need Tandem too?", a2: "Yes. Everyone needs Tandem, the same version, and their own copy of the game.",
+  q3: "Which games does it work with?", a3: "BeamNG.drive and Assetto Corsa, the PC versions on Steam.",
+  q4: "Does it change my game files?", a4: "No. Tandem starts BeamNG with a folder of its own. In Assetto Corsa it only adds mod cars and tracks after you say yes, and it never sends Kunos content between players.",
+  q5: "How many players can join?", a5: "A BeamNG.drive session holds up to 20 players: you and 19 friends.",
+  q6: "Do I need to open ports on my router?", a6: "Usually not. Tandem links your friends’ PCs by itself and checks whether they can reach you. In the rare case that both routers block it, the app explains what to do.",
+  q7: "Does it work on Linux or Steam Deck?", a7: "A first Linux version exists and is still being tested. Windows 10 and 11 are fully supported.",
+  q8: "Is Tandem made by BeamNG or Kunos?", a8: "No. Tandem is made by mhmd8p, a player, and is not affiliated with BeamNG GmbH or Kunos Simulazioni.",
+  q9: "Where do I report a bug?", a9: "Press Report a bug in the app. It saves a report without your invites or passwords and opens the community Discord.",
+  comm_h: "Join the community", comm_p: "Find people to drive with, get help, and see what’s coming next.",
+  d_discord: "Find sessions, ask for help and report bugs.", d_instagram: "Updates and clips.", d_tiktok: "Short clips.", d_youtube: "Videos.", d_github: "Every release with its notes.", d_support: "Tandem is free. A tip helps keep it going.",
+  cta_h: "Your friends are waiting.", cta_p: "Download Tandem, send your friends this page, and pick a map.",
+  foot_made: "Made by mhmd8p", foot_support: "Support the app",
+  foot_legal: "BeamNG.drive is a trademark of BeamNG GmbH and Assetto Corsa of Kunos Simulazioni. Tandem is a fan-made app and is not affiliated with either.",
+  v_friends_now: "Friends hosting now", v_hosting: "{name} is hosting", v_join: "Join", v_full: "Full", v_ofmax: "{n} of {max}", v_joining: "Joining {name}’s session",
+  v_ask: "Ask to join", v_waiting: "Waiting for the host", v_in: "You’re in", v_getting: "Getting {map} from the host", v_added: "Added to your game",
+  v_installed: "Installed in BeamNG.drive", v_reach_ok: "Checked from the internet: friends can reach your PC.", v_wants: "wants to join", v_allow: "Allow", v_block: "Block", v_blocked: "Blocked"
+},
+ar: {
+  v_public: "الجلسات العامة", dl_sub_linux: "مجاني · نسخة لينكس التجريبية",
+  plat_win: "ويندوز 10 و11",
+  skip: "انتقل إلى المحتوى", nav_label: "القائمة الرئيسية", links_label: "الروابط",
+  nav_features: "المزايا", nav_how: "طريقة العمل", nav_safe: "الأمان", nav_faq: "الأسئلة", nav_community: "المجتمع", nav_download: "تحميل",
+  hero_pill: "جديد في 2.0: أسيتو كورسا، الأصدقاء المتصلون والمزيد",
+  hero_h1: "القيادة أحلى مع أصدقائك.",
+  hero_lead: "استضف جلسات BeamNG.drive و Assetto Corsa من جهازك. يدخل أصدقاؤك بدعوة واحدة، ويجلب لهم تاندم الخرائط والمودات التي تنقصهم.",
+  dl_win: "تحميل لويندوز", dl_linux: "تحميل للينكس", dl_sub: "مجاني · ويندوز 10 و11", dl_sub_v: "الإصدار {v} · {mb} ميغابايت · مجاني", dl_all: "كل التحميلات على GitHub",
+  dl_phone: "تاندم يعمل على الكمبيوتر. افتح هذه الصفحة على جهازك لتحميله.", copy_link: "انسخ رابط الصفحة", copied: "تم نسخ الرابط",
+  fact_free: "مجاني", fact_account: "بدون حساب", fact_players: "حتى 20 لاعبًا", fact_langs: "11 لغة",
+  shot_alt: "مكتبة تاندم مع BeamNG.drive و Assetto Corsa",
+  games_h: "لعبتان. لانشر واحد.", games_p: "اختر لعبة من المكتبة، ثم استضف أو انضم. كل لاعب يحتاج نسخته الخاصة من اللعبة.",
+  bng_tag: "قيادة وتصادمات واقعية مع الأصدقاء", bng_p: "سيارات أصدقائك تتحرك بسلاسة، والصدمات تظهر بنفس الشكل على كل الشاشات، مع زحمة مشتركة وطقس ومقطورات.",
+  ac_tag: "أيام حلبة وسباقات مع الأصدقاء", ac_p: "تدريب وتأهيل وسباقات مع أزمنة لفات مباشرة ودردشة وأدوات للمضيف. وتصل سيارات وحلبات المودات إلى أصدقائك تلقائيًا.",
+  how_h: "من التحميل إلى القيادة",
+  how_1t: "الكل يثبّت تاندم", how_1p: "أنت وأصدقاؤك تحتاجون تاندم، وكل واحد يحتاج نسخته من اللعبة.",
+  how_2t: "استضف جلسة", how_2p: "اختر اللعبة والخريطة والمودات التي تريد مشاركتها، ثم أرسل الدعوة.",
+  how_3t: "أصدقاؤك يلصقون الدعوة", how_3p: "تضغط «اسمح»، ويجلب تاندم موداتهم ويشغّل اللعبة ويدخلهم إلى عالمك.",
+  new_h: "الجديد في 2.0", new_p: "كل ما تغيّر منذ الإصدار 1.0.10.", both: "اللعبتان",
+  f_friends_t: "اعرف متى يستضيف أصدقاؤك", f_friends_p: "الأصدقاء الذين تسمح لهم دائمًا يرون متى تستضيف، ويدخلون بضغطة واحدة. بدون دعوة تنسخها.",
+  f_ac_t: "أسيتو كورسا هنا", f_ac_p: "استضف من جهازك. السيارات والحلبات المعدّلة التي لا يملكها صديقك تُرسل من جهازك وتُضاف بعد موافقته.",
+  f_discord_t: "تظهر في ديسكورد", f_discord_p: "يعرض ملفك اللعبة والخريطة وعدد اللاعبين، مع زر انضمام لأصدقائك.",
+  f_public_t: "العب مع أي أحد", f_public_p: "اعرض جلسة للجميع. يجدها اللاعبون في «الجلسات العامة» ويطلبون الانضمام، وأنت تسمح لكل واحد.",
+  f_mods_t: "حمّل المود، ويتركّب وحده", f_mods_p: "افتح موقع مودات من تاندم. ملف ZIP الذي تحمّله يدخل اللعبة الصحيحة، ويمكنك إزالته لاحقًا.",
+  f_reach_t: "هل يستطيع أصدقاؤك الوصول إليك؟", f_reach_p: "بعد ثوانٍ من بدء الاستضافة، يتأكد تاندم من الإنترنت إن كان أصدقاؤك يستطيعون الوصول إلى جهازك.",
+  f_block_t: "احظر المزعجين للأبد", f_block_p: "اللاعب الذي تحظره لن يدخل جلساتك مرة أخرى، في اللعبتين.",
+  f_lang_t: "يتكلم لغتك", f_lang_p: "الإنجليزية والعربية وتسع لغات أخرى.",
+  f_look_t: "اسم جديد وشكل جديد", f_look_p: "BeamNG Friends Launcher صار اسمه تاندم. الحركة في الشكل الجديد تتوقف أثناء اللعب، فلا تؤثر على الفريمات.",
+  also_h: "وأيضًا في 2.0",
+  also_1: "دردشة وقائمة لاعبين وأسماء بشكل جديد داخل BeamNG", also_2: "تحميل أسرع للمودات", also_3: "فحص أسرع للمودات", also_4: "المودات التي لم تكن تظهر صارت تعمل",
+  also_5: "لا مزيد من السيارات المقلوبة بعد تغيير السيارة", also_6: "إعدادات سياراتك المحفوظة تنتقل معك", also_7: "جاهز لتحديثات BeamNG الجديدة", also_8: "لينكس وستيم ديك (تجريبي)",
+  core_h: "كل ما تحتاجه الجلسة", core_p: "ما تحصل عليه في كل مرة تقودون فيها معًا.",
+  c1t: "المودات تصل وحدها", c1p: "يحصل أصدقاؤك على خريطة المضيف وموداته، والملفات الموجودة عندهم لا تُحمّل مرتين.",
+  c2t: "سيارات أصدقاء سلسة", c2p: "تتبع السيارات موقعها الحقيقي بفيزياء ناعمة بدل القفزات.",
+  c3t: "مزامنة الأضرار", c3p: "إذا صدم صديقك، تنثني نفس القطع على كل الشاشات.",
+  c4t: "حركة مرور مشتركة", c4p: "سيارات الذكاء الاصطناعي عند المضيف تسير على شاشة الجميع.",
+  c5t: "الوقت والطقس", c5p: "الكل يحصل على وقت المضيف والضباب والمطر والرياح.",
+  c6t: "صوت ودردشة", c6p: "تكلّم في اللانشر وفي نافذة دردشة صغيرة داخل اللعبة.",
+  c7t: "رجوع بضغطة واحدة", c7p: "يعيد الاتصال بعد انقطاع قصير، ويرجعك بعد تعطل اللعبة بدون أن تطلب من المضيف مرة أخرى.",
+  c8t: "وضع الأجهزة الضعيفة", c8p: "مفتاح واحد يجعل الجلسات أخف على الأجهزة البطيئة.",
+  safe_h: "مصمم بحيث لا أحد يعبث بجهازك", safe_p: "جهازك ولعبتك وجلساتك تبقى لك.",
+  s1t: "تحديثات موقّعة", s1p: "لا يثبّت تاندم أي تحديث إلا إذا كان موقّعًا بمفتاح المطوّر.",
+  s2t: "أنت تقرر من يدخل", s2p: "لا أحد يدخل حتى تضغط «اسمح». احظر أي لاعب أو اقفل الجلسة متى شئت.",
+  s3t: "لعبتك تبقى كما هي", s3p: "لا يُستبدل شيء في لعبتك، وكل إضافة يمكن إزالتها.",
+  s4t: "بدون حساب أو كلمة مرور", s4p: "لكل جهاز مفتاحه الخاص، فلا يوجد شيء تسجّل فيه.",
+  win_t: "إذا ظهر مربع أزرق من ويندوز", win_p: "يعرض ويندوز رسالة {shield} للبرامج الجديدة من المطورين الصغار. اضغط {more} ثم {run}. بعدها تُثبَّت التحديثات وحدها.",
+  win_shield: "حمى Windows الكمبيوتر الخاص بك", win_more: "مزيد من المعلومات", win_run: "التشغيل على أي حال",
+  av_p: "إذا سألك برنامج مكافحة الفيروسات عن تاندم، اختر «السماح». لا توقف برنامج الحماية أبدًا.",
+  faq_h: "أسئلة",
+  q1: "هل تاندم مجاني؟", a1: "نعم، تاندم مجاني. وإذا أعجبك، يمكنك دعم المطوّر.",
+  q2: "هل يحتاج أصدقائي تاندم أيضًا؟", a2: "نعم. كل واحد يحتاج تاندم بنفس الإصدار، ونسخته الخاصة من اللعبة.",
+  q3: "مع أي ألعاب يعمل؟", a3: "BeamNG.drive و Assetto Corsa، نسخ الكمبيوتر على Steam.",
+  q4: "هل يغيّر ملفات لعبتي؟", a4: "لا. يشغّل تاندم BeamNG بمجلد خاص به. وفي Assetto Corsa يضيف فقط سيارات وحلبات المودات بعد موافقتك، ولا يرسل محتوى Kunos بين اللاعبين أبدًا.",
+  q5: "كم عدد اللاعبين في الجلسة؟", a5: "جلسة BeamNG.drive تتسع حتى 20 لاعبًا: أنت و19 صديقًا.",
+  q6: "هل أحتاج فتح منافذ في الراوتر؟", a6: "غالبًا لا. يربط تاندم أجهزة أصدقائك وحده ويتأكد إن كانوا يستطيعون الوصول إليك. وفي الحالة النادرة التي يمنع فيها الراوتران الاتصال، يشرح لك التطبيق ما تفعله.",
+  q7: "هل يعمل على لينكس أو ستيم ديك؟", a7: "توجد نسخة أولى للينكس وما زالت قيد التجربة. ويندوز 10 و11 مدعومان بالكامل.",
+  q8: "هل تاندم من صنع BeamNG أو Kunos؟", a8: "لا. صنعه mhmd8p، لاعب مثلك، ولا علاقة له بشركة BeamNG GmbH أو Kunos Simulazioni.",
+  q9: "أين أبلّغ عن مشكلة؟", a9: "اضغط «أبلغ عن مشكلة» في التطبيق. يحفظ تقريرًا بدون دعواتك أو كلمات المرور، ويفتح ديسكورد المجتمع.",
+  comm_h: "انضم إلى المجتمع", comm_p: "اعثر على من تقود معه، واطلب المساعدة، وتابع ما هو قادم.",
+  d_discord: "اعثر على جلسات، اطلب المساعدة وأبلغ عن المشاكل.", d_instagram: "التحديثات والمقاطع.", d_tiktok: "مقاطع قصيرة.", d_youtube: "فيديوهات.", d_github: "كل إصدار مع ملاحظاته.", d_support: "تاندم مجاني، ودعمك يساعد على استمراره.",
+  cta_h: "أصدقاؤك بانتظارك.", cta_p: "حمّل تاندم، أرسل هذه الصفحة لأصدقائك، واختر خريطة.",
+  foot_made: "صنعه mhmd8p", foot_support: "ادعم التطبيق",
+  foot_legal: "BeamNG.drive علامة تجارية لشركة BeamNG GmbH، و Assetto Corsa علامة تجارية لشركة Kunos Simulazioni. تاندم تطبيق من صنع لاعب ولا يتبع أيًّا منهما.",
+  v_friends_now: "أصدقاء يستضيفون الآن", v_hosting: "{name} يستضيف", v_join: "انضمام", v_full: "ممتلئة", v_ofmax: "{n} من {max}", v_joining: "جارٍ الانضمام إلى {name}",
+  v_ask: "اطلب الانضمام", v_waiting: "بانتظار المضيف", v_in: "دخلت", v_getting: "جلب {map} من المضيف", v_added: "أُضيفت إلى لعبتك",
+  v_installed: "تم التثبيت في BeamNG.drive", v_reach_ok: "تم الفحص من الإنترنت: أصدقاؤك يستطيعون الوصول إلى جهازك.", v_wants: "يريد الانضمام", v_allow: "اسمح", v_block: "حظر", v_blocked: "محظور"
+},
+zh: {
+  v_public: "公开会话", dl_sub_linux: "免费 · Linux 测试版",
+  plat_win: "Windows 10 和 11",
+  skip: "跳到内容", nav_label: "主导航", links_label: "链接",
+  nav_features: "功能", nav_how: "怎么用", nav_safe: "安全", nav_faq: "常见问题", nav_community: "社区", nav_download: "下载",
+  hero_pill: "2.0 新内容：Assetto Corsa、朋友在线等",
+  hero_h1: "和朋友一起开车。",
+  hero_lead: "在你自己的电脑上开 BeamNG.drive 和 Assetto Corsa 的房间。朋友用一条邀请就能加入，Tandem 会把他们缺少的地图和模组送过去。",
+  dl_win: "下载 Windows 版", dl_linux: "下载 Linux 版", dl_sub: "免费 · Windows 10 和 11", dl_sub_v: "版本 {v} · {mb} MB · 免费", dl_all: "在 GitHub 上查看全部下载",
+  dl_phone: "Tandem 在电脑上运行。请在电脑上打开此页面下载。", copy_link: "复制本页链接", copied: "链接已复制",
+  fact_free: "免费", fact_account: "无需账号", fact_players: "最多 20 名玩家", fact_langs: "11 种语言",
+  shot_alt: "Tandem 游戏库，包含 BeamNG.drive 和 Assetto Corsa",
+  games_h: "两款游戏，一个启动器。", games_p: "在游戏库里选一款游戏，然后开房或加入。每个人都需要自己的一份游戏。",
+  bng_tag: "与朋友一起进行软体物理驾驶", bng_p: "朋友的车流畅跟随，撞车效果在每个屏幕上都一样，还有共享交通、天气和拖车。",
+  ac_tag: "与朋友一起跑赛道日和比赛", ac_p: "练习、排位和正赛，带实时圈速、聊天和房主控制。模组车辆和赛道会自动发给朋友。",
+  how_h: "从下载到上路",
+  how_1t: "每个人都安装 Tandem", how_1p: "你和朋友都需要 Tandem，以及各自的一份游戏。",
+  how_2t: "开一个房间", how_2p: "选择游戏、地图和要分享的模组，然后发送邀请。",
+  how_3t: "朋友粘贴邀请", how_3p: "你按下“允许”。Tandem 为他们下载模组、启动游戏，把他们带进你的世界。",
+  new_h: "2.0 新内容", new_p: "自 1.0.10 版本以来的所有变化。", both: "两款游戏",
+  f_friends_t: "看到朋友何时开房", f_friends_p: "你总是放行的朋友能看到你何时开房，一键加入。不用复制邀请。",
+  f_ac_t: "Assetto Corsa 来了", f_ac_p: "在你自己的电脑上开房。朋友没有的模组车辆和赛道会从你的电脑发送，在他同意后添加。",
+  f_discord_t: "显示在你的 Discord 上", f_discord_p: "你的个人资料会显示游戏、地图和玩家人数，还有给朋友的加入按钮。",
+  f_public_t: "和任何人一起玩", f_public_p: "把房间公开给所有人。玩家在“公开会话”中找到它并请求加入，仍然由你逐个允许。",
+  f_mods_t: "下载模组，自动安装", f_mods_p: "从 Tandem 打开模组网站。下载的 ZIP 会进入对应的游戏，之后也可以移除。",
+  f_reach_t: "朋友能连上你吗？", f_reach_p: "开房几秒后，Tandem 会从互联网检查朋友能否连接到你的电脑。",
+  f_block_t: "永久拉黑捣乱的人", f_block_p: "被你拉黑的玩家再也进不了你的房间，两款游戏都一样。",
+  f_lang_t: "说你的语言", f_lang_p: "英语、阿拉伯语和另外九种语言。",
+  f_look_t: "新名字，新外观", f_look_p: "BeamNG Friends Launcher 现在叫 Tandem。游戏运行时动画会停止，不占用帧数。",
+  also_h: "2.0 还有",
+  also_1: "BeamNG 内全新的聊天、玩家列表和名字标签", also_2: "模组下载更快", also_3: "模组扫描更快", also_4: "以前不显示的模组现在能用了",
+  also_5: "换车后不再翻车", also_6: "你保存的车辆配置会一起带上", also_7: "已为 BeamNG 新版本做好准备", also_8: "Linux 和 Steam Deck（测试版）",
+  core_h: "一场会话需要的一切", core_p: "每次和朋友一起开车都能用到。",
+  c1t: "模组自动送达", c1p: "朋友会拿到房主的地图和模组。已有的文件不会重复下载。",
+  c2t: "朋友的车很流畅", c2p: "车辆用柔和的物理跟随真实位置，不会瞬移跳动。",
+  c3t: "损伤同步", c3p: "朋友撞车时，每个屏幕上都会弯折相同的部件。",
+  c4t: "共享交通", c4p: "房主的 AI 交通会出现在每个人的屏幕上。",
+  c5t: "时间和天气", c5p: "所有人都同步房主的时间、雾、雨和风。",
+  c6t: "语音和聊天", c6p: "在启动器里和游戏内的小聊天窗口中交流。",
+  c7t: "一键重新加入", c7p: "短暂断线后自动重连，游戏崩溃后也能回来，不用再问房主。",
+  c8t: "低配电脑模式", c8p: "一个开关让较慢的电脑也能轻松运行会话。",
+  safe_h: "让谁都动不了你的电脑", safe_p: "你的电脑、你的游戏和你的会话都只属于你。",
+  s1t: "签名更新", s1p: "Tandem 只安装用开发者密钥签名的更新。",
+  s2t: "由你决定谁能进", s2p: "在你按下“允许”之前，谁都进不来。随时可以拉黑玩家或锁定会话。",
+  s3t: "游戏保持原样", s3p: "不会替换游戏中的任何内容，每项添加都可以移除。",
+  s4t: "无需账号和密码", s4p: "每台电脑都有自己的密钥，不需要注册任何东西。",
+  win_t: "如果 Windows 弹出蓝色窗口", win_p: "对于小开发者的新程序，Windows 会显示 {shield}。点击 {more}，然后点击 {run}。之后更新会自动安装。",
+  win_shield: "Windows 已保护你的电脑", win_more: "更多信息", win_run: "仍要运行",
+  av_p: "如果杀毒软件询问 Tandem，请选择允许。千万不要关闭杀毒软件。",
+  faq_h: "常见问题",
+  q1: "Tandem 免费吗？", a1: "是的，Tandem 免费。如果喜欢，你可以支持开发者。",
+  q2: "我的朋友也需要 Tandem 吗？", a2: "需要。每个人都要装相同版本的 Tandem，并拥有自己的一份游戏。",
+  q3: "支持哪些游戏？", a3: "BeamNG.drive 和 Assetto Corsa，Steam 上的电脑版。",
+  q4: "它会修改我的游戏文件吗？", a4: "不会。Tandem 用单独的文件夹启动 BeamNG。在 Assetto Corsa 中，它只在你同意后添加模组车辆和赛道，并且从不在玩家之间发送 Kunos 的内容。",
+  q5: "最多能有多少玩家？", a5: "一场 BeamNG.drive 会话最多 20 名玩家：你和 19 位朋友。",
+  q6: "需要在路由器上开放端口吗？", a6: "通常不需要。Tandem 会自动连接朋友的电脑，并检查他们能否连上你。少数情况下两边的路由器都拦截时，应用会告诉你怎么做。",
+  q7: "支持 Linux 或 Steam Deck 吗？", a7: "已有第一个 Linux 版本，仍在测试中。Windows 10 和 11 完全支持。",
+  q8: "Tandem 是 BeamNG 或 Kunos 做的吗？", a8: "不是。Tandem 由玩家 mhmd8p 制作，与 BeamNG GmbH 和 Kunos Simulazioni 均无关联。",
+  q9: "在哪里报告问题？", a9: "在应用中按“报告问题”。它会保存一份不含邀请和密码的报告，并打开社区 Discord。",
+  comm_h: "加入社区", comm_p: "找人一起开车、获得帮助，看看接下来有什么。",
+  d_discord: "找房间、求助和报告问题。", d_instagram: "更新和短片。", d_tiktok: "短视频。", d_youtube: "视频。", d_github: "每个版本及其更新说明。", d_support: "Tandem 免费。打赏能让它继续下去。",
+  cta_h: "朋友们在等你。", cta_p: "下载 Tandem，把这个页面发给朋友，然后选一张地图。",
+  foot_made: "由 mhmd8p 制作", foot_support: "支持本应用",
+  foot_legal: "BeamNG.drive 是 BeamNG GmbH 的商标，Assetto Corsa 是 Kunos Simulazioni 的商标。Tandem 是玩家制作的应用，与两者均无关联。",
+  v_friends_now: "正在开房的朋友", v_hosting: "{name} 正在开房", v_join: "加入", v_full: "已满", v_ofmax: "{n}/{max}", v_joining: "正在加入 {name} 的房间",
+  v_ask: "请求加入", v_waiting: "等待房主", v_in: "你已进入", v_getting: "正在从房主获取 {map}", v_added: "已添加到你的游戏",
+  v_installed: "已安装到 BeamNG.drive", v_reach_ok: "已从互联网检查：朋友可以连接到你的电脑。", v_wants: "想加入", v_allow: "允许", v_block: "拉黑", v_blocked: "已拉黑"
+},
+fr: {
+  v_public: "Sessions publiques", dl_sub_linux: "Gratuit · Linux, version bêta",
+  plat_win: "Windows 10 et 11",
+  skip: "Aller au contenu", nav_label: "Navigation principale", links_label: "Liens",
+  nav_features: "Fonctions", nav_how: "Comment ça marche", nav_safe: "Sécurité", nav_faq: "FAQ", nav_community: "Communauté", nav_download: "Télécharger",
+  hero_pill: "Nouveau dans la 2.0 : Assetto Corsa, amis en ligne et plus encore",
+  hero_h1: "Roulez avec vos amis.",
+  hero_lead: "Hébergez des sessions BeamNG.drive et Assetto Corsa depuis votre propre PC. Vos amis rejoignent avec une seule invitation, et Tandem leur apporte les cartes et les mods qui leur manquent.",
+  dl_win: "Télécharger pour Windows", dl_linux: "Télécharger pour Linux", dl_sub: "Gratuit · Windows 10 et 11", dl_sub_v: "Version {v} · {mb} Mo · Gratuit", dl_all: "Tous les téléchargements sur GitHub",
+  dl_phone: "Tandem fonctionne sur PC. Ouvrez cette page sur votre ordinateur pour le télécharger.", copy_link: "Copier le lien de la page", copied: "Lien copié",
+  fact_free: "Gratuit", fact_account: "Aucun compte requis", fact_players: "Jusqu’à 20 joueurs", fact_langs: "11 langues",
+  shot_alt: "La bibliothèque de Tandem avec BeamNG.drive et Assetto Corsa",
+  games_h: "Deux jeux. Un seul launcher.", games_p: "Choisissez un jeu dans la bibliothèque, puis hébergez ou rejoignez. Chacun a besoin de sa propre copie du jeu.",
+  bng_tag: "Conduite à carrosserie souple entre amis", bng_p: "Des voitures d’amis fluides, des accidents identiques sur chaque écran, du trafic partagé, la météo et les remorques.",
+  ac_tag: "Journées circuit et courses entre amis", ac_p: "Essais, qualifications et courses avec temps au tour en direct, chat et contrôles de l’hôte. Les voitures et circuits moddés sont envoyés pour vous.",
+  how_h: "Du téléchargement à la conduite",
+  how_1t: "Tout le monde installe Tandem", how_1p: "Vous et vos amis avez chacun besoin de Tandem et de votre propre copie du jeu.",
+  how_2t: "Hébergez une session", how_2p: "Choisissez un jeu, une carte et les mods à partager, puis envoyez l’invitation.",
+  how_3t: "Vos amis collent l’invitation", how_3p: "Vous appuyez sur Autoriser. Tandem récupère leurs mods, lance le jeu et les dépose dans votre monde.",
+  new_h: "Nouveau dans la 2.0", new_p: "Tout ce qui a changé depuis la version 1.0.10.", both: "Les deux jeux",
+  f_friends_t: "Voyez quand vos amis hébergent", f_friends_p: "Les amis que vous laissez toujours entrer voient quand vous hébergez et rejoignent en un clic. Aucune invitation à copier.",
+  f_ac_t: "Assetto Corsa est arrivé", f_ac_p: "Hébergez depuis votre PC. Les voitures et circuits moddés qu’un ami n’a pas sont envoyés depuis votre PC et ajoutés après son accord.",
+  f_discord_t: "Ça s’affiche sur Discord", f_discord_p: "Votre profil montre le jeu, la carte et le nombre de joueurs, avec un bouton Rejoindre pour vos amis.",
+  f_public_t: "Jouez avec tout le monde", f_public_p: "Montrez une session à tous. Les joueurs la trouvent dans Sessions publiques et demandent à rejoindre. Vous autorisez toujours chacun.",
+  f_mods_t: "Téléchargez un mod, il s’installe tout seul", f_mods_p: "Ouvrez un site de mods depuis Tandem. Le ZIP téléchargé va dans le bon jeu, et vous pouvez le retirer plus tard.",
+  f_reach_t: "Vos amis peuvent-ils vous joindre ?", f_reach_p: "Quelques secondes après le début de l’hébergement, Tandem vérifie depuis Internet si vos amis peuvent atteindre votre PC.",
+  f_block_t: "Bloquez les trolls pour de bon", f_block_p: "Un joueur que vous bloquez n’entre plus jamais dans vos sessions, dans aucun des deux jeux.",
+  f_lang_t: "Il parle votre langue", f_lang_p: "Anglais, arabe et neuf autres langues.",
+  f_look_t: "Nouveau nom, nouveau look", f_look_p: "BeamNG Friends Launcher s’appelle maintenant Tandem. Les animations s’arrêtent pendant que vous jouez, donc vos FPS restent intacts.",
+  also_h: "Aussi dans la 2.0",
+  also_1: "Nouveaux chat, liste des joueurs et pseudos dans BeamNG", also_2: "Téléchargement des mods plus rapide", also_3: "Analyse des mods plus rapide", also_4: "Les mods qui n’apparaissaient pas fonctionnent",
+  also_5: "Plus de voitures à l’envers après un changement de voiture", also_6: "Vos réglages de voiture enregistrés vous suivent", also_7: "Prêt pour les nouvelles mises à jour de BeamNG", also_8: "Linux et Steam Deck (bêta)",
+  core_h: "Tout ce qu’une session demande", core_p: "Ce que vous avez chaque fois que vous roulez ensemble.",
+  c1t: "Les mods arrivent tout seuls", c1p: "Vos amis reçoivent la carte et les mods de l’hôte. Les fichiers qu’ils ont déjà ne sont jamais retéléchargés.",
+  c2t: "Voitures d’amis fluides", c2p: "Les voitures suivent leur vraie position avec une physique douce, sans sauts.",
+  c3t: "Dégâts synchronisés", c3p: "Quand un ami a un accident, les mêmes pièces se plient sur chaque écran.",
+  c4t: "Trafic partagé", c4p: "Le trafic IA de l’hôte roule sur l’écran de tout le monde.",
+  c5t: "Heure et météo", c5p: "Tout le monde a l’heure, le brouillard, la pluie et le vent de l’hôte.",
+  c6t: "Voix et chat", c6p: "Parlez dans le launcher et dans une petite fenêtre de chat dans le jeu.",
+  c7t: "Revenir en un clic", c7p: "Reconnexion après une courte coupure, et retour après un crash sans redemander à l’hôte.",
+  c8t: "Mode PC modeste", c8p: "Un seul interrupteur allège les sessions pour les PC plus lents.",
+  safe_h: "Conçu pour que personne ne touche à votre PC", safe_p: "Votre PC, votre jeu et vos sessions restent à vous.",
+  s1t: "Mises à jour signées", s1p: "Tandem n’installe une mise à jour que si elle est signée avec la clé du développeur.",
+  s2t: "Vous décidez qui entre", s2p: "Personne n’entre avant que vous appuyiez sur Autoriser. Bloquez un joueur ou verrouillez la session quand vous voulez.",
+  s3t: "Votre jeu reste tel quel", s3p: "Rien n’est remplacé dans votre jeu, et chaque ajout peut être retiré.",
+  s4t: "Ni compte ni mot de passe", s4p: "Chaque PC a sa propre clé, il n’y a donc rien à créer.",
+  win_t: "Si Windows affiche une fenêtre bleue", win_p: "Windows affiche {shield} pour les nouveaux programmes de petits développeurs. Cliquez sur {more}, puis sur {run}. Ensuite, les mises à jour s’installent toutes seules.",
+  win_shield: "Windows a protégé votre ordinateur", win_more: "Informations complémentaires", win_run: "Exécuter quand même",
+  av_p: "Si votre antivirus pose la question pour Tandem, choisissez Autoriser. Ne désactivez jamais votre antivirus.",
+  faq_h: "Questions",
+  q1: "Tandem est-il gratuit ?", a1: "Oui. Tandem est gratuit. S’il vous plaît, vous pouvez soutenir le développeur.",
+  q2: "Mes amis ont-ils aussi besoin de Tandem ?", a2: "Oui. Chacun a besoin de Tandem, dans la même version, et de sa propre copie du jeu.",
+  q3: "Avec quels jeux fonctionne-t-il ?", a3: "BeamNG.drive et Assetto Corsa, les versions PC sur Steam.",
+  q4: "Modifie-t-il les fichiers de mon jeu ?", a4: "Non. Tandem lance BeamNG avec son propre dossier. Dans Assetto Corsa, il ajoute seulement des voitures et circuits moddés après votre accord, et n’envoie jamais de contenu Kunos entre joueurs.",
+  q5: "Combien de joueurs peuvent rejoindre ?", a5: "Une session BeamNG.drive accueille jusqu’à 20 joueurs : vous et 19 amis.",
+  q6: "Dois-je ouvrir des ports sur ma box ?", a6: "En général, non. Tandem relie les PC de vos amis tout seul et vérifie s’ils peuvent vous joindre. Dans le cas rare où les deux box bloquent, l’app explique quoi faire.",
+  q7: "Fonctionne-t-il sous Linux ou sur Steam Deck ?", a7: "Une première version Linux existe et est encore en test. Windows 10 et 11 sont entièrement pris en charge.",
+  q8: "Tandem est-il fait par BeamNG ou Kunos ?", a8: "Non. Tandem est fait par mhmd8p, un joueur, et n’est affilié ni à BeamNG GmbH ni à Kunos Simulazioni.",
+  q9: "Où signaler un bug ?", a9: "Appuyez sur Signaler un bug dans l’app. Elle enregistre un rapport sans vos invitations ni mots de passe et ouvre le Discord de la communauté.",
+  comm_h: "Rejoignez la communauté", comm_p: "Trouvez des gens avec qui rouler, obtenez de l’aide et découvrez la suite.",
+  d_discord: "Trouvez des sessions, demandez de l’aide et signalez des bugs.", d_instagram: "Nouveautés et vidéos.", d_tiktok: "Vidéos courtes.", d_youtube: "Vidéos.", d_github: "Chaque version avec ses notes.", d_support: "Tandem est gratuit. Un don l’aide à continuer.",
+  cta_h: "Vos amis vous attendent.", cta_p: "Téléchargez Tandem, envoyez cette page à vos amis et choisissez une carte.",
+  foot_made: "Créé par mhmd8p", foot_support: "Soutenir l’app",
+  foot_legal: "BeamNG.drive est une marque de BeamNG GmbH et Assetto Corsa une marque de Kunos Simulazioni. Tandem est une app faite par un fan, sans lien avec l’un ou l’autre.",
+  v_friends_now: "Amis qui hébergent en ce moment", v_hosting: "{name} héberge", v_join: "Rejoindre", v_full: "Complet", v_ofmax: "{n} sur {max}", v_joining: "Connexion à la session de {name}",
+  v_ask: "Demander à rejoindre", v_waiting: "En attente de l’hôte", v_in: "Vous êtes dedans", v_getting: "Récupération de {map} depuis l’hôte", v_added: "Ajouté à votre jeu",
+  v_installed: "Installé dans BeamNG.drive", v_reach_ok: "Vérifié depuis Internet : vos amis peuvent atteindre votre PC.", v_wants: "veut rejoindre", v_allow: "Autoriser", v_block: "Bloquer", v_blocked: "Bloqué"
+},
+de: {
+  v_public: "Öffentliche Sitzungen", dl_sub_linux: "Kostenlos · Linux-Beta",
+  plat_win: "Windows 10 und 11",
+  skip: "Zum Inhalt springen", nav_label: "Hauptnavigation", links_label: "Links",
+  nav_features: "Funktionen", nav_how: "So funktioniert’s", nav_safe: "Sicherheit", nav_faq: "FAQ", nav_community: "Community", nav_download: "Download",
+  hero_pill: "Neu in 2.0: Assetto Corsa, Freunde online und mehr",
+  hero_h1: "Fahr mit deinen Freunden.",
+  hero_lead: "Hoste Sitzungen in BeamNG.drive und Assetto Corsa auf deinem eigenen PC. Freunde treten mit einer Einladung bei, und Tandem bringt ihnen die Karten und Mods, die ihnen fehlen.",
+  dl_win: "Für Windows herunterladen", dl_linux: "Für Linux herunterladen", dl_sub: "Kostenlos · Windows 10 und 11", dl_sub_v: "Version {v} · {mb} MB · Kostenlos", dl_all: "Alle Downloads auf GitHub",
+  dl_phone: "Tandem läuft auf dem PC. Öffne diese Seite auf deinem Computer, um es herunterzuladen.", copy_link: "Link zu dieser Seite kopieren", copied: "Link kopiert",
+  fact_free: "Kostenlos", fact_account: "Kein Konto nötig", fact_players: "Bis zu 20 Spieler", fact_langs: "11 Sprachen",
+  shot_alt: "Die Tandem-Bibliothek mit BeamNG.drive und Assetto Corsa",
+  games_h: "Zwei Spiele. Ein Launcher.", games_p: "Wähle ein Spiel in der Bibliothek, dann hoste oder tritt bei. Jeder braucht eine eigene Kopie des Spiels.",
+  bng_tag: "Soft-Body-Fahren mit Freunden", bng_p: "Flüssige Autos deiner Freunde, Unfälle, die auf jedem Bildschirm gleich aussehen, geteilter Verkehr, Wetter und Anhänger.",
+  ac_tag: "Trackdays und Rennen mit Freunden", ac_p: "Training, Qualifying und Rennen mit Live-Rundenzeiten, Chat und Host-Steuerung. Mod-Autos und -Strecken werden für dich verschickt.",
+  how_h: "Vom Download auf die Straße",
+  how_1t: "Alle installieren Tandem", how_1p: "Du und deine Freunde braucht jeweils Tandem und eine eigene Kopie des Spiels.",
+  how_2t: "Sitzung hosten", how_2p: "Wähle ein Spiel, eine Karte und die Mods zum Teilen, dann schick die Einladung.",
+  how_3t: "Freunde fügen die Einladung ein", how_3p: "Du drückst Erlauben. Tandem holt ihre Mods, startet das Spiel und bringt sie in deine Welt.",
+  new_h: "Neu in 2.0", new_p: "Alles, was sich seit Version 1.0.10 geändert hat.", both: "Beide Spiele",
+  f_friends_t: "Sieh, wann Freunde hosten", f_friends_p: "Freunde, die du immer hereinlässt, sehen, wann du hostest, und treten mit einem Klick bei. Keine Einladung zum Kopieren.",
+  f_ac_t: "Assetto Corsa ist da", f_ac_p: "Hoste auf deinem eigenen PC. Mod-Autos und -Strecken, die ein Freund nicht hat, werden von deinem PC geschickt und nach seinem Ja hinzugefügt.",
+  f_discord_t: "Es erscheint auf Discord", f_discord_p: "Dein Profil zeigt Spiel, Karte und Spielerzahl, mit einem Beitreten-Knopf für Freunde.",
+  f_public_t: "Spiel mit allen", f_public_p: "Zeig eine Sitzung allen. Spieler finden sie unter Öffentliche Sitzungen und fragen an. Du erlaubst trotzdem jeden einzeln.",
+  f_mods_t: "Mod laden, er installiert sich selbst", f_mods_p: "Öffne eine Mod-Seite aus Tandem. Die heruntergeladene ZIP landet im richtigen Spiel, und du kannst sie wieder entfernen.",
+  f_reach_t: "Erreichen dich deine Freunde?", f_reach_p: "Sekunden nach dem Start des Hostings prüft Tandem aus dem Internet, ob Freunde deinen PC erreichen.",
+  f_block_t: "Trolle für immer blockieren", f_block_p: "Ein Spieler, den du blockierst, kommt nie wieder in deine Sitzungen, in keinem der beiden Spiele.",
+  f_lang_t: "Spricht deine Sprache", f_lang_p: "Englisch, Arabisch und neun weitere Sprachen.",
+  f_look_t: "Neuer Name, neuer Look", f_look_p: "Aus BeamNG Friends Launcher wird Tandem. Die Animationen stoppen, während du spielst, und kosten so keine FPS.",
+  also_h: "Außerdem in 2.0",
+  also_1: "Neuer Chat, Spielerliste und Namensschilder in BeamNG", also_2: "Schnellere Mod-Downloads", also_3: "Schnelleres Einlesen der Mods", also_4: "Mods, die nicht auftauchten, funktionieren jetzt",
+  also_5: "Keine Autos mehr auf dem Dach nach einem Autowechsel", also_6: "Deine gespeicherten Fahrzeug-Setups kommen mit", also_7: "Bereit für neue BeamNG-Updates", also_8: "Linux und Steam Deck (Beta)",
+  core_h: "Alles, was eine Sitzung braucht", core_p: "Das bekommst du jedes Mal, wenn ihr zusammen fahrt.",
+  c1t: "Mods kommen von selbst", c1p: "Freunde bekommen Karte und Mods des Hosts. Dateien, die sie schon haben, werden nie doppelt geladen.",
+  c2t: "Flüssige Autos der Freunde", c2p: "Autos folgen ihrer echten Position mit sanfter Physik statt zu springen.",
+  c3t: "Schadens-Sync", c3p: "Baut ein Freund einen Unfall, verbiegen sich auf jedem Bildschirm dieselben Teile.",
+  c4t: "Geteilter Verkehr", c4p: "Der KI-Verkehr des Hosts fährt auf allen Bildschirmen.",
+  c5t: "Tageszeit und Wetter", c5p: "Alle bekommen die Uhrzeit, den Nebel, Regen und Wind des Hosts.",
+  c6t: "Sprache und Chat", c6p: "Rede im Launcher und in einem kleinen Chatfenster im Spiel.",
+  c7t: "Mit einem Klick zurück", c7p: "Verbindet sich nach kurzen Aussetzern neu und bringt dich nach einem Absturz zurück, ohne den Host erneut zu fragen.",
+  c8t: "Modus für schwache PCs", c8p: "Ein Schalter macht Sitzungen leichter für langsamere PCs.",
+  safe_h: "So gebaut, dass niemand an deinen PC kommt", safe_p: "Dein PC, dein Spiel und deine Sitzungen bleiben deine.",
+  s1t: "Signierte Updates", s1p: "Tandem installiert ein Update nur, wenn es mit dem Schlüssel des Entwicklers signiert ist.",
+  s2t: "Du entscheidest, wer reinkommt", s2p: "Niemand kommt rein, bevor du Erlauben drückst. Blockiere Spieler oder sperre die Sitzung jederzeit.",
+  s3t: "Dein Spiel bleibt, wie es ist", s3p: "Nichts in deinem Spiel wird ersetzt, und jede Ergänzung lässt sich wieder entfernen.",
+  s4t: "Kein Konto, kein Passwort", s4p: "Jeder PC hat seinen eigenen Schlüssel, also musst du dich nirgends anmelden.",
+  win_t: "Wenn Windows ein blaues Fenster zeigt", win_p: "Windows zeigt {shield} bei neuen Programmen kleiner Entwickler. Klicke auf {more} und dann auf {run}. Danach installieren sich Updates von selbst.",
+  win_shield: "Der Computer wurde durch Windows geschützt", win_more: "Weitere Informationen", win_run: "Trotzdem ausführen",
+  av_p: "Wenn dein Virenschutz nach Tandem fragt, wähle Zulassen. Schalte deinen Virenschutz nie aus.",
+  faq_h: "Fragen",
+  q1: "Ist Tandem kostenlos?", a1: "Ja. Tandem ist kostenlos. Wenn es dir gefällt, kannst du den Entwickler unterstützen.",
+  q2: "Brauchen meine Freunde auch Tandem?", a2: "Ja. Alle brauchen Tandem in derselben Version und eine eigene Kopie des Spiels.",
+  q3: "Mit welchen Spielen funktioniert es?", a3: "BeamNG.drive und Assetto Corsa, die PC-Versionen auf Steam.",
+  q4: "Ändert es meine Spieldateien?", a4: "Nein. Tandem startet BeamNG mit einem eigenen Ordner. In Assetto Corsa fügt es nur Mod-Autos und -Strecken nach deinem Ja hinzu und verschickt nie Kunos-Inhalte zwischen Spielern.",
+  q5: "Wie viele Spieler können beitreten?", a5: "Eine BeamNG.drive-Sitzung fasst bis zu 20 Spieler: dich und 19 Freunde.",
+  q6: "Muss ich Ports im Router öffnen?", a6: "Meist nicht. Tandem verbindet die PCs deiner Freunde selbst und prüft, ob sie dich erreichen. Im seltenen Fall, dass beide Router blockieren, erklärt die App, was zu tun ist.",
+  q7: "Läuft es unter Linux oder auf dem Steam Deck?", a7: "Eine erste Linux-Version gibt es, sie wird noch getestet. Windows 10 und 11 werden voll unterstützt.",
+  q8: "Ist Tandem von BeamNG oder Kunos?", a8: "Nein. Tandem ist von mhmd8p, einem Spieler, und gehört weder zu BeamNG GmbH noch zu Kunos Simulazioni.",
+  q9: "Wo melde ich einen Fehler?", a9: "Drück in der App auf Fehler melden. Sie speichert einen Bericht ohne deine Einladungen oder Passwörter und öffnet den Community-Discord.",
+  comm_h: "Werde Teil der Community", comm_p: "Finde Leute zum Fahren, hol dir Hilfe und sieh, was als Nächstes kommt.",
+  d_discord: "Sitzungen finden, Hilfe holen und Fehler melden.", d_instagram: "Neuigkeiten und Clips.", d_tiktok: "Kurze Clips.", d_youtube: "Videos.", d_github: "Jede Version mit ihren Notizen.", d_support: "Tandem ist kostenlos. Eine Spende hilft, dass es weitergeht.",
+  cta_h: "Deine Freunde warten.", cta_p: "Lade Tandem herunter, schick deinen Freunden diese Seite und such dir eine Karte aus.",
+  foot_made: "Gemacht von mhmd8p", foot_support: "Die App unterstützen",
+  foot_legal: "BeamNG.drive ist eine Marke der BeamNG GmbH, Assetto Corsa eine Marke von Kunos Simulazioni. Tandem ist eine Fan-App und mit keinem von beiden verbunden.",
+  v_friends_now: "Freunde, die gerade hosten", v_hosting: "{name} hostet", v_join: "Beitreten", v_full: "Voll", v_ofmax: "{n} von {max}", v_joining: "Trete {name} bei",
+  v_ask: "Beitritt anfragen", v_waiting: "Warte auf den Host", v_in: "Du bist drin", v_getting: "{map} wird vom Host geholt", v_added: "Zu deinem Spiel hinzugefügt",
+  v_installed: "In BeamNG.drive installiert", v_reach_ok: "Aus dem Internet geprüft: Freunde erreichen deinen PC.", v_wants: "möchte beitreten", v_allow: "Erlauben", v_block: "Blockieren", v_blocked: "Blockiert"
+},
+ja: {
+  v_public: "公開セッション", dl_sub_linux: "無料 · Linux ベータ版",
+  plat_win: "Windows 10 と 11",
+  skip: "本文へ移動", nav_label: "メインメニュー", links_label: "リンク",
+  nav_features: "機能", nav_how: "使い方", nav_safe: "安全性", nav_faq: "よくある質問", nav_community: "コミュニティ", nav_download: "ダウンロード",
+  hero_pill: "2.0 の新機能：Assetto Corsa、フレンドのオンライン表示など",
+  hero_h1: "フレンドと一緒に走ろう。",
+  hero_lead: "BeamNG.drive と Assetto Corsa のセッションを自分の PC でホスト。フレンドは招待ひとつで参加でき、足りないマップや MOD は Tandem が届けます。",
+  dl_win: "Windows 版をダウンロード", dl_linux: "Linux 版をダウンロード", dl_sub: "無料 · Windows 10 と 11", dl_sub_v: "バージョン {v} · {mb} MB · 無料", dl_all: "すべてのダウンロードは GitHub で",
+  dl_phone: "Tandem は PC で動きます。ダウンロードするにはパソコンでこのページを開いてください。", copy_link: "このページのリンクをコピー", copied: "リンクをコピーしました",
+  fact_free: "無料", fact_account: "アカウント不要", fact_players: "最大 20 人", fact_langs: "11 言語",
+  shot_alt: "BeamNG.drive と Assetto Corsa が並ぶ Tandem のライブラリ",
+  games_h: "2 つのゲーム。1 つのランチャー。", games_p: "ライブラリでゲームを選び、ホストするか参加するだけ。ゲームは各自で持っている必要があります。",
+  bng_tag: "フレンドと楽しむソフトボディ ドライビング", bng_p: "なめらかに動くフレンドの車、どの画面でも同じクラッシュ、共有トラフィック、天候、トレーラー。",
+  ac_tag: "フレンドと走行会やレース", ac_p: "練習、予選、決勝。リアルタイムのラップタイム、チャット、ホスト用の操作つき。MOD の車やコースは自動で送られます。",
+  how_h: "ダウンロードから走り出すまで",
+  how_1t: "みんなで Tandem をインストール", how_1p: "あなたもフレンドも、Tandem と自分のゲームが必要です。",
+  how_2t: "セッションをホスト", how_2p: "ゲーム、マップ、共有する MOD を選んで、招待を送ります。",
+  how_3t: "フレンドが招待を貼り付け", how_3p: "あなたが「許可」を押すと、Tandem が MOD を取得し、ゲームを起動して、フレンドをあなたの世界へ連れてきます。",
+  new_h: "2.0 の新機能", new_p: "バージョン 1.0.10 からの変更点すべて。", both: "両方のゲーム",
+  f_friends_t: "フレンドのホストがわかる", f_friends_p: "いつも入れているフレンドには、あなたがホストしているのが見え、ワンクリックで参加できます。招待のコピーは不要です。",
+  f_ac_t: "Assetto Corsa に対応", f_ac_p: "自分の PC でホスト。フレンドが持っていない MOD の車やコースはあなたの PC から送られ、本人が同意すると追加されます。",
+  f_discord_t: "Discord に表示", f_discord_p: "プロフィールにゲーム、マップ、人数が表示され、フレンド用の参加ボタンもつきます。",
+  f_public_t: "誰とでも遊べる", f_public_p: "セッションをみんなに公開。プレイヤーは「公開セッション」で見つけて参加をリクエストします。許可するのは毎回あなたです。",
+  f_mods_t: "MOD をダウンロードすれば自動でインストール", f_mods_p: "Tandem から MOD サイトを開くだけ。ダウンロードした ZIP は正しいゲームに入り、あとで外すこともできます。",
+  f_reach_t: "フレンドはつながれる？", f_reach_p: "ホストを始めて数秒後、フレンドがあなたの PC に接続できるかを Tandem がインターネット側から確かめます。",
+  f_block_t: "荒らしは永久にブロック", f_block_p: "ブロックしたプレイヤーは、どちらのゲームでも二度とあなたのセッションに入れません。",
+  f_lang_t: "あなたの言語で", f_lang_p: "英語、アラビア語、ほか 9 言語。",
+  f_look_t: "新しい名前、新しいデザイン", f_look_p: "BeamNG Friends Launcher は Tandem になりました。プレイ中はアニメーションが止まるので、FPS に影響しません。",
+  also_h: "2.0 ではほかにも",
+  also_1: "BeamNG 内のチャット、プレイヤーリスト、名前表示を一新", also_2: "MOD のダウンロードが高速に", also_3: "MOD の読み込みが高速に", also_4: "表示されなかった MOD が使えるように",
+  also_5: "車を変えたあとに車がひっくり返らなくなった", also_6: "保存した車のセッティングもそのまま", also_7: "BeamNG の新しいアップデートにも対応", also_8: "Linux と Steam Deck（ベータ）",
+  core_h: "セッションに必要なものすべて", core_p: "一緒に走るたびに使える機能です。",
+  c1t: "MOD は自動で届く", c1p: "フレンドはホストのマップと MOD を受け取ります。持っているファイルを二度ダウンロードすることはありません。",
+  c2t: "なめらかなフレンドの車", c2p: "車はやさしい物理で本当の位置を追いかけ、瞬間移動しません。",
+  c3t: "ダメージ同期", c3p: "フレンドがクラッシュすると、どの画面でも同じ部品が曲がります。",
+  c4t: "共有トラフィック", c4p: "ホストの AI トラフィックが全員の画面を走ります。",
+  c5t: "時間と天候", c5p: "全員にホストの時間帯、霧、雨、風が反映されます。",
+  c6t: "ボイスとチャット", c6p: "ランチャーでも、ゲーム内の小さなチャット画面でも話せます。",
+  c7t: "ワンクリックで再参加", c7p: "短い切断後は自動で再接続。ゲームが落ちても、ホストに頼み直さずに戻れます。",
+  c8t: "低スペック PC モード", c8p: "スイッチひとつで、遅い PC でもセッションが軽くなります。",
+  safe_h: "誰にもあなたの PC をいじらせない設計", safe_p: "あなたの PC、ゲーム、セッションはあなたのものです。",
+  s1t: "署名つきアップデート", s1p: "Tandem は開発者の鍵で署名されたアップデートだけをインストールします。",
+  s2t: "入れる人はあなたが決める", s2p: "あなたが「許可」を押すまで誰も入れません。いつでもブロックやセッションのロックができます。",
+  s3t: "ゲームはそのまま", s3p: "ゲーム内のものは何も置き換えず、追加したものはすべて外せます。",
+  s4t: "アカウントもパスワードも不要", s4p: "PC ごとに専用の鍵があるので、登録するものはありません。",
+  win_t: "Windows に青い画面が出たら", win_p: "小さな開発者の新しいプログラムには、Windows が {shield} と表示します。{more} をクリックし、続けて {run} をクリックしてください。以後のアップデートは自動でインストールされます。",
+  win_shield: "Windows によって PC が保護されました", win_more: "詳細情報", win_run: "実行",
+  av_p: "ウイルス対策ソフトに Tandem について聞かれたら、許可を選んでください。ウイルス対策ソフトは絶対に切らないでください。",
+  faq_h: "よくある質問",
+  q1: "Tandem は無料？", a1: "はい、無料です。気に入ったら開発者を応援できます。",
+  q2: "フレンドにも Tandem が必要？", a2: "はい。全員が同じバージョンの Tandem と、自分のゲームを持っている必要があります。",
+  q3: "どのゲームで使える？", a3: "BeamNG.drive と Assetto Corsa（Steam の PC 版）です。",
+  q4: "ゲームのファイルは変わる？", a4: "いいえ。Tandem は専用のフォルダで BeamNG を起動します。Assetto Corsa では、あなたが同意したときだけ MOD の車やコースを追加し、Kunos のコンテンツをプレイヤー間で送ることはありません。",
+  q5: "何人まで参加できる？", a5: "BeamNG.drive のセッションは最大 20 人、あなたとフレンド 19 人です。",
+  q6: "ルーターのポート開放は必要？", a6: "たいていは不要です。Tandem がフレンドの PC と自動でつなぎ、接続できるかも確かめます。まれに両方のルーターがブロックする場合は、アプリが対処法を説明します。",
+  q7: "Linux や Steam Deck で動く？", a7: "Linux の最初のバージョンはありますが、まだテスト中です。Windows 10 と 11 は完全に対応しています。",
+  q8: "Tandem は BeamNG や Kunos が作っているの？", a8: "いいえ。Tandem はプレイヤーの mhmd8p が作っていて、BeamNG GmbH や Kunos Simulazioni とは関係ありません。",
+  q9: "不具合はどこで報告する？", a9: "アプリの「不具合を報告」を押してください。招待やパスワードを含まないレポートを保存し、コミュニティの Discord を開きます。",
+  comm_h: "コミュニティに参加", comm_p: "一緒に走る仲間を見つけたり、助けてもらったり、次の予定をチェックしたり。",
+  d_discord: "セッション探し、質問、不具合の報告はここで。", d_instagram: "最新情報とクリップ。", d_tiktok: "ショート動画。", d_youtube: "動画。", d_github: "すべてのリリースと変更点。", d_support: "Tandem は無料です。応援が開発の支えになります。",
+  cta_h: "フレンドが待っています。", cta_p: "Tandem をダウンロードして、このページをフレンドに送り、マップを選びましょう。",
+  foot_made: "制作：mhmd8p", foot_support: "アプリを応援する",
+  foot_legal: "BeamNG.drive は BeamNG GmbH の商標、Assetto Corsa は Kunos Simulazioni の商標です。Tandem はファンが作ったアプリで、いずれの会社とも関係ありません。",
+  v_friends_now: "ホスト中のフレンド", v_hosting: "{name} がホスト中", v_join: "参加", v_full: "満員", v_ofmax: "{n} / {max}", v_joining: "{name} のセッションに参加中",
+  v_ask: "参加をリクエスト", v_waiting: "ホストを待っています", v_in: "参加しました", v_getting: "ホストから {map} を取得中", v_added: "ゲームに追加しました",
+  v_installed: "BeamNG.drive にインストールしました", v_reach_ok: "インターネット側から確認済み：フレンドはあなたの PC に接続できます。", v_wants: "が参加を希望しています", v_allow: "許可", v_block: "ブロック", v_blocked: "ブロック済み"
+},
+ko: {
+  v_public: "공개 세션", dl_sub_linux: "무료 · Linux 베타",
+  plat_win: "Windows 10 및 11",
+  skip: "본문으로 건너뛰기", nav_label: "주 메뉴", links_label: "링크",
+  nav_features: "기능", nav_how: "사용 방법", nav_safe: "안전", nav_faq: "자주 묻는 질문", nav_community: "커뮤니티", nav_download: "다운로드",
+  hero_pill: "2.0 새 기능: Assetto Corsa, 친구 온라인 등",
+  hero_h1: "친구와 함께 달리세요.",
+  hero_lead: "내 PC에서 BeamNG.drive와 Assetto Corsa 세션을 호스트하세요. 친구는 초대 하나로 참가하고, 없는 맵과 모드는 Tandem이 가져다줍니다.",
+  dl_win: "Windows용 다운로드", dl_linux: "Linux용 다운로드", dl_sub: "무료 · Windows 10 및 11", dl_sub_v: "버전 {v} · {mb}MB · 무료", dl_all: "GitHub에서 모든 다운로드 보기",
+  dl_phone: "Tandem은 PC에서 실행됩니다. 다운로드하려면 컴퓨터에서 이 페이지를 여세요.", copy_link: "이 페이지 링크 복사", copied: "링크를 복사했습니다",
+  fact_free: "무료", fact_account: "계정 필요 없음", fact_players: "최대 20명", fact_langs: "11개 언어",
+  shot_alt: "BeamNG.drive와 Assetto Corsa가 있는 Tandem 라이브러리",
+  games_h: "두 게임. 하나의 런처.", games_p: "라이브러리에서 게임을 고르고, 호스트하거나 참가하세요. 게임은 각자 가지고 있어야 합니다.",
+  bng_tag: "친구와 함께하는 소프트 보디 드라이빙", bng_p: "부드럽게 움직이는 친구 차, 모든 화면에서 똑같은 충돌, 공유 교통, 날씨와 트레일러.",
+  ac_tag: "친구와 함께하는 트랙 데이와 레이스", ac_p: "연습, 예선, 레이스를 실시간 랩 타임, 채팅, 호스트 조작과 함께. 모드 차량과 트랙은 알아서 보내집니다.",
+  how_h: "다운로드부터 주행까지",
+  how_1t: "모두 Tandem을 설치", how_1p: "나와 친구 모두 Tandem과 각자의 게임이 필요합니다.",
+  how_2t: "세션 호스트", how_2p: "게임, 맵, 공유할 모드를 고른 뒤 초대를 보내세요.",
+  how_3t: "친구가 초대를 붙여넣기", how_3p: "내가 허용을 누르면, Tandem이 모드를 받고 게임을 실행해 친구를 내 세계로 데려옵니다.",
+  new_h: "2.0 새 기능", new_p: "버전 1.0.10 이후 바뀐 모든 것.", both: "두 게임 모두",
+  f_friends_t: "친구가 호스트하면 바로 보여요", f_friends_p: "항상 들여보내는 친구는 내가 호스트할 때 이를 보고 한 번의 클릭으로 참가합니다. 초대를 복사할 필요가 없습니다.",
+  f_ac_t: "Assetto Corsa 지원", f_ac_p: "내 PC에서 호스트하세요. 친구에게 없는 모드 차량과 트랙은 내 PC에서 보내지고, 친구가 동의하면 추가됩니다.",
+  f_discord_t: "Discord에 표시돼요", f_discord_p: "프로필에 게임, 맵, 플레이어 수가 표시되고 친구용 참가 버튼도 생깁니다.",
+  f_public_t: "누구와도 함께", f_public_p: "세션을 모두에게 공개하세요. 플레이어는 공개 세션에서 찾아 참가를 요청하고, 허용은 여전히 내가 합니다.",
+  f_mods_t: "모드를 받으면 알아서 설치", f_mods_p: "Tandem에서 모드 사이트를 여세요. 다운로드한 ZIP은 맞는 게임에 들어가고, 나중에 뺄 수도 있습니다.",
+  f_reach_t: "친구가 나에게 접속할 수 있나요?", f_reach_p: "호스트를 시작하고 몇 초 뒤, Tandem이 인터넷에서 친구가 내 PC에 접속할 수 있는지 확인합니다.",
+  f_block_t: "트롤은 영원히 차단", f_block_p: "차단한 플레이어는 두 게임 모두에서 다시는 내 세션에 들어올 수 없습니다.",
+  f_lang_t: "내 언어로", f_lang_p: "영어, 아랍어 그리고 9개 언어 더.",
+  f_look_t: "새 이름, 새 디자인", f_look_p: "BeamNG Friends Launcher가 Tandem이 되었습니다. 플레이 중에는 애니메이션이 멈춰서 FPS를 잡아먹지 않습니다.",
+  also_h: "2.0에는 이것도",
+  also_1: "BeamNG 안의 새 채팅, 플레이어 목록, 이름표", also_2: "더 빨라진 모드 다운로드", also_3: "더 빨라진 모드 검사", also_4: "안 보이던 모드가 이제 작동",
+  also_5: "차를 바꾼 뒤 차가 뒤집히지 않음", also_6: "저장한 차량 세팅도 그대로", also_7: "BeamNG 새 업데이트에도 준비 완료", also_8: "Linux와 Steam Deck (베타)",
+  core_h: "세션에 필요한 모든 것", core_p: "함께 달릴 때마다 누리는 기능입니다.",
+  c1t: "모드는 알아서 도착", c1p: "친구는 호스트의 맵과 모드를 받습니다. 이미 있는 파일은 다시 받지 않습니다.",
+  c2t: "부드러운 친구 차", c2p: "차가 순간이동 없이 부드러운 물리로 실제 위치를 따라갑니다.",
+  c3t: "손상 동기화", c3p: "친구가 충돌하면 모든 화면에서 같은 부품이 휘어집니다.",
+  c4t: "공유 교통", c4p: "호스트의 AI 교통이 모두의 화면에서 달립니다.",
+  c5t: "시간과 날씨", c5p: "모두가 호스트의 시간대, 안개, 비, 바람을 함께합니다.",
+  c6t: "음성과 채팅", c6p: "런처와 게임 안의 작은 채팅 창에서 대화하세요.",
+  c7t: "한 번에 다시 참가", c7p: "잠깐 끊겨도 다시 연결되고, 게임이 꺼져도 호스트에게 다시 묻지 않고 돌아옵니다.",
+  c8t: "저사양 PC 모드", c8p: "스위치 하나로 느린 PC에서도 세션이 가벼워집니다.",
+  safe_h: "아무도 내 PC를 건드리지 못하게", safe_p: "내 PC, 내 게임, 내 세션은 나의 것입니다.",
+  s1t: "서명된 업데이트", s1p: "Tandem은 개발자의 키로 서명된 업데이트만 설치합니다.",
+  s2t: "누가 들어올지는 내가 결정", s2p: "내가 허용을 누르기 전엔 아무도 못 들어옵니다. 언제든 플레이어를 차단하거나 세션을 잠글 수 있습니다.",
+  s3t: "게임은 그대로", s3p: "게임의 어떤 것도 바꾸지 않으며, 추가한 것은 모두 뺄 수 있습니다.",
+  s4t: "계정도 비밀번호도 없음", s4p: "PC마다 고유한 키가 있어서 가입할 것이 없습니다.",
+  win_t: "Windows에 파란 창이 뜨면", win_p: "작은 개발자의 새 프로그램에는 Windows가 {shield} 창을 띄웁니다. {more}를 누른 다음 {run}을 누르세요. 그 뒤로 업데이트는 알아서 설치됩니다.",
+  win_shield: "Windows의 PC 보호", win_more: "추가 정보", win_run: "실행",
+  av_p: "백신 프로그램이 Tandem에 대해 물으면 허용을 고르세요. 백신은 절대 끄지 마세요.",
+  faq_h: "자주 묻는 질문",
+  q1: "Tandem은 무료인가요?", a1: "네, 무료입니다. 마음에 들면 개발자를 후원할 수 있어요.",
+  q2: "친구도 Tandem이 필요한가요?", a2: "네. 모두 같은 버전의 Tandem과 각자의 게임이 필요합니다.",
+  q3: "어떤 게임에서 되나요?", a3: "BeamNG.drive와 Assetto Corsa(Steam PC 버전)입니다.",
+  q4: "게임 파일을 바꾸나요?", a4: "아니요. Tandem은 전용 폴더로 BeamNG를 실행합니다. Assetto Corsa에서는 동의했을 때만 모드 차량과 트랙을 추가하고, Kunos 콘텐츠를 플레이어끼리 보내지 않습니다.",
+  q5: "몇 명까지 참가할 수 있나요?", a5: "BeamNG.drive 세션은 최대 20명, 나와 친구 19명입니다.",
+  q6: "공유기 포트를 열어야 하나요?", a6: "대부분은 아닙니다. Tandem이 친구 PC와 알아서 연결하고 접속 가능한지도 확인합니다. 드물게 양쪽 공유기가 모두 막는 경우엔 앱이 방법을 알려줍니다.",
+  q7: "Linux나 Steam Deck에서 되나요?", a7: "첫 Linux 버전이 있지만 아직 테스트 중입니다. Windows 10과 11은 완전히 지원합니다.",
+  q8: "Tandem은 BeamNG나 Kunos가 만드나요?", a8: "아니요. Tandem은 플레이어 mhmd8p가 만들며, BeamNG GmbH나 Kunos Simulazioni와 관계가 없습니다.",
+  q9: "버그는 어디에 신고하나요?", a9: "앱에서 버그 신고를 누르세요. 초대나 비밀번호가 빠진 보고서를 저장하고 커뮤니티 Discord를 엽니다.",
+  comm_h: "커뮤니티에 참여하세요", comm_p: "함께 달릴 사람을 찾고, 도움을 받고, 다음 소식을 확인하세요.",
+  d_discord: "세션 찾기, 도움 요청, 버그 신고.", d_instagram: "업데이트와 클립.", d_tiktok: "짧은 영상.", d_youtube: "영상.", d_github: "모든 릴리스와 변경 사항.", d_support: "Tandem은 무료입니다. 후원이 개발을 이어가게 합니다.",
+  cta_h: "친구들이 기다리고 있어요.", cta_p: "Tandem을 다운로드하고, 이 페이지를 친구에게 보낸 뒤 맵을 고르세요.",
+  foot_made: "만든 사람: mhmd8p", foot_support: "앱 후원하기",
+  foot_legal: "BeamNG.drive는 BeamNG GmbH의 상표이고 Assetto Corsa는 Kunos Simulazioni의 상표입니다. Tandem은 팬이 만든 앱으로 두 회사와 관계가 없습니다.",
+  v_friends_now: "지금 호스트 중인 친구", v_hosting: "{name} 님이 호스트 중", v_join: "참가", v_full: "가득 참", v_ofmax: "{n} / {max}", v_joining: "{name} 님의 세션에 참가 중",
+  v_ask: "참가 요청", v_waiting: "호스트를 기다리는 중", v_in: "참가 완료", v_getting: "호스트에게서 {map} 받는 중", v_added: "게임에 추가됨",
+  v_installed: "BeamNG.drive에 설치됨", v_reach_ok: "인터넷에서 확인함: 친구가 내 PC에 접속할 수 있습니다.", v_wants: "님이 참가하려고 합니다", v_allow: "허용", v_block: "차단", v_blocked: "차단됨"
+},
+pl: {
+  v_public: "Sesje publiczne", dl_sub_linux: "Za darmo · Linux, wersja beta",
+  plat_win: "Windows 10 i 11",
+  skip: "Przejdź do treści", nav_label: "Menu główne", links_label: "Linki",
+  nav_features: "Funkcje", nav_how: "Jak to działa", nav_safe: "Bezpieczeństwo", nav_faq: "Pytania", nav_community: "Społeczność", nav_download: "Pobierz",
+  hero_pill: "Nowość w 2.0: Assetto Corsa, znajomi online i więcej",
+  hero_h1: "Jeźdź ze znajomymi.",
+  hero_lead: "Hostuj sesje BeamNG.drive i Assetto Corsa na własnym komputerze. Znajomi dołączają jednym zaproszeniem, a Tandem dostarcza im brakujące mapy i mody.",
+  dl_win: "Pobierz dla Windows", dl_linux: "Pobierz dla Linuksa", dl_sub: "Za darmo · Windows 10 i 11", dl_sub_v: "Wersja {v} · {mb} MB · Za darmo", dl_all: "Wszystkie pliki na GitHubie",
+  dl_phone: "Tandem działa na komputerze. Otwórz tę stronę na komputerze, aby go pobrać.", copy_link: "Skopiuj link do tej strony", copied: "Skopiowano link",
+  fact_free: "Za darmo", fact_account: "Bez konta", fact_players: "Do 20 graczy", fact_langs: "11 języków",
+  shot_alt: "Biblioteka Tandem z BeamNG.drive i Assetto Corsa",
+  games_h: "Dwie gry. Jeden launcher.", games_p: "Wybierz grę w bibliotece, a potem hostuj albo dołącz. Każdy potrzebuje własnej kopii gry.",
+  bng_tag: "Jazda z fizyką miękkich brył ze znajomymi", bng_p: "Płynne auta znajomych, zderzenia wyglądające tak samo na każdym ekranie, wspólny ruch uliczny, pogoda i przyczepy.",
+  ac_tag: "Track daye i wyścigi ze znajomymi", ac_p: "Treningi, kwalifikacje i wyścigi z czasami okrążeń na żywo, czatem i narzędziami hosta. Modowane auta i tory są wysyłane za ciebie.",
+  how_h: "Od pobrania do jazdy",
+  how_1t: "Wszyscy instalują Tandem", how_1p: "Ty i twoi znajomi potrzebujecie Tandem i każdy własnej kopii gry.",
+  how_2t: "Hostuj sesję", how_2p: "Wybierz grę, mapę i mody do udostępnienia, a potem wyślij zaproszenie.",
+  how_3t: "Znajomi wklejają zaproszenie", how_3p: "Naciskasz Wpuść. Tandem pobiera ich mody, uruchamia grę i przenosi ich do twojego świata.",
+  new_h: "Nowość w 2.0", new_p: "Wszystko, co zmieniło się od wersji 1.0.10.", both: "Obie gry",
+  f_friends_t: "Zobacz, kiedy znajomi hostują", f_friends_p: "Znajomi, których zawsze wpuszczasz, widzą, kiedy hostujesz, i dołączają jednym kliknięciem. Bez kopiowania zaproszeń.",
+  f_ac_t: "Assetto Corsa już jest", f_ac_p: "Hostuj na własnym komputerze. Modowane auta i tory, których znajomy nie ma, są wysyłane z twojego PC i dodawane po jego zgodzie.",
+  f_discord_t: "Widać to na Discordzie", f_discord_p: "Twój profil pokazuje grę, mapę i liczbę graczy, z przyciskiem Dołącz dla znajomych.",
+  f_public_t: "Graj z każdym", f_public_p: "Pokaż sesję wszystkim. Gracze znajdą ją w Sesjach publicznych i poproszą o dołączenie. Ty nadal wpuszczasz każdego.",
+  f_mods_t: "Pobierz moda, zainstaluje się sam", f_mods_p: "Otwórz stronę z modami z poziomu Tandem. Pobrany ZIP trafia do właściwej gry, a później możesz go usunąć.",
+  f_reach_t: "Czy znajomi mogą się z tobą połączyć?", f_reach_p: "Kilka sekund po rozpoczęciu hostowania Tandem sprawdza z internetu, czy znajomi mogą dotrzeć do twojego komputera.",
+  f_block_t: "Zablokuj trolli na dobre", f_block_p: "Zablokowany gracz już nigdy nie wejdzie do twoich sesji, w żadnej z gier.",
+  f_lang_t: "Mówi w twoim języku", f_lang_p: "Angielski, arabski i dziewięć innych języków.",
+  f_look_t: "Nowa nazwa, nowy wygląd", f_look_p: "BeamNG Friends Launcher to teraz Tandem. Animacje zatrzymują się podczas gry, więc nie zabierają FPS.",
+  also_h: "Także w 2.0",
+  also_1: "Nowy czat, lista graczy i nazwy nad autami w BeamNG", also_2: "Szybsze pobieranie modów", also_3: "Szybsze skanowanie modów", also_4: "Mody, które się nie pokazywały, teraz działają",
+  also_5: "Koniec z autami do góry kołami po zmianie auta", also_6: "Twoje zapisane ustawienia aut idą z tobą", also_7: "Gotowy na nowe aktualizacje BeamNG", also_8: "Linux i Steam Deck (beta)",
+  core_h: "Wszystko, czego potrzebuje sesja", core_p: "To dostajesz za każdym razem, gdy jeździsz ze znajomymi.",
+  c1t: "Mody docierają same", c1p: "Znajomi dostają mapę i mody hosta. Plików, które już mają, nigdy nie pobierają drugi raz.",
+  c2t: "Płynne auta znajomych", c2p: "Auta podążają za prawdziwą pozycją dzięki łagodnej fizyce, bez skoków.",
+  c3t: "Synchronizacja uszkodzeń", c3p: "Gdy znajomy się rozbije, te same części gną się na każdym ekranie.",
+  c4t: "Wspólny ruch uliczny", c4p: "Ruch AI hosta jeździ na ekranie każdego.",
+  c5t: "Pora dnia i pogoda", c5p: "Wszyscy mają porę dnia, mgłę, deszcz i wiatr hosta.",
+  c6t: "Głos i czat", c6p: "Rozmawiaj w launcherze i w małym oknie czatu w grze.",
+  c7t: "Powrót jednym kliknięciem", c7p: "Łączy ponownie po krótkiej przerwie i wraca po awarii gry bez ponownego pytania hosta.",
+  c8t: "Tryb słabego komputera", c8p: "Jeden przełącznik odciąża sesje na wolniejszych komputerach.",
+  safe_h: "Zbudowany tak, by nikt nie grzebał w twoim PC", safe_p: "Twój komputer, twoja gra i twoje sesje zostają twoje.",
+  s1t: "Podpisane aktualizacje", s1p: "Tandem instaluje aktualizację tylko wtedy, gdy jest podpisana kluczem twórcy.",
+  s2t: "Ty decydujesz, kto wchodzi", s2p: "Nikt nie wejdzie, dopóki nie naciśniesz Wpuść. Zablokuj gracza albo zamknij sesję w każdej chwili.",
+  s3t: "Twoja gra zostaje bez zmian", s3p: "Nic w twojej grze nie jest podmieniane, a każdy dodatek można usunąć.",
+  s4t: "Bez konta i hasła", s4p: "Każdy komputer ma własny klucz, więc nie trzeba się nigdzie rejestrować.",
+  win_t: "Jeśli Windows pokaże niebieskie okno", win_p: "Windows pokazuje {shield} przy nowych programach od małych twórców. Kliknij {more}, a potem {run}. Później aktualizacje instalują się same.",
+  win_shield: "System Windows ochronił ten komputer", win_more: "Więcej informacji", win_run: "Uruchom mimo to",
+  av_p: "Jeśli antywirus zapyta o Tandem, wybierz Zezwól. Nigdy nie wyłączaj antywirusa.",
+  faq_h: "Pytania",
+  q1: "Czy Tandem jest darmowy?", a1: "Tak. Tandem jest darmowy. Jeśli ci się podoba, możesz wesprzeć twórcę.",
+  q2: "Czy moi znajomi też potrzebują Tandem?", a2: "Tak. Każdy potrzebuje Tandem w tej samej wersji i własnej kopii gry.",
+  q3: "Z jakimi grami działa?", a3: "Z BeamNG.drive i Assetto Corsa w wersjach na PC ze Steama.",
+  q4: "Czy zmienia pliki mojej gry?", a4: "Nie. Tandem uruchamia BeamNG z własnym folderem. W Assetto Corsa dodaje tylko modowane auta i tory po twojej zgodzie i nigdy nie przesyła treści Kunos między graczami.",
+  q5: "Ilu graczy może dołączyć?", a5: "Sesja BeamNG.drive mieści do 20 graczy: ciebie i 19 znajomych.",
+  q6: "Czy muszę otwierać porty w routerze?", a6: "Zwykle nie. Tandem sam łączy komputery znajomych i sprawdza, czy mogą do ciebie dotrzeć. W rzadkim przypadku, gdy oba routery blokują połączenie, aplikacja wyjaśnia, co zrobić.",
+  q7: "Czy działa na Linuksie lub Steam Decku?", a7: "Istnieje pierwsza wersja na Linuksa, wciąż testowana. Windows 10 i 11 są w pełni obsługiwane.",
+  q8: "Czy Tandem robi BeamNG albo Kunos?", a8: "Nie. Tandem tworzy mhmd8p, gracz, i nie jest powiązany z BeamNG GmbH ani Kunos Simulazioni.",
+  q9: "Gdzie zgłosić błąd?", a9: "Naciśnij Zgłoś błąd w aplikacji. Zapisze raport bez twoich zaproszeń i haseł i otworzy Discorda społeczności.",
+  comm_h: "Dołącz do społeczności", comm_p: "Znajdź ludzi do wspólnej jazdy, uzyskaj pomoc i zobacz, co nadchodzi.",
+  d_discord: "Znajdź sesje, poproś o pomoc i zgłoś błędy.", d_instagram: "Nowości i klipy.", d_tiktok: "Krótkie klipy.", d_youtube: "Filmy.", d_github: "Każde wydanie z opisem zmian.", d_support: "Tandem jest darmowy. Napiwek pomaga go rozwijać.",
+  cta_h: "Znajomi czekają.", cta_p: "Pobierz Tandem, wyślij znajomym tę stronę i wybierz mapę.",
+  foot_made: "Stworzone przez mhmd8p", foot_support: "Wesprzyj aplikację",
+  foot_legal: "BeamNG.drive jest znakiem towarowym BeamNG GmbH, a Assetto Corsa znakiem Kunos Simulazioni. Tandem to aplikacja fana, niezwiązana z żadną z tych firm.",
+  v_friends_now: "Znajomi, którzy teraz hostują", v_hosting: "{name} hostuje", v_join: "Dołącz", v_full: "Pełne", v_ofmax: "{n} z {max}", v_joining: "Dołączanie do {name}",
+  v_ask: "Poproś o dołączenie", v_waiting: "Czekanie na hosta", v_in: "Jesteś w środku", v_getting: "Pobieranie {map} od hosta", v_added: "Dodano do twojej gry",
+  v_installed: "Zainstalowano w BeamNG.drive", v_reach_ok: "Sprawdzone z internetu: znajomi mogą dotrzeć do twojego PC.", v_wants: "chce dołączyć", v_allow: "Wpuść", v_block: "Zablokuj", v_blocked: "Zablokowany"
+},
+pt: {
+  v_public: "Sessões públicas", dl_sub_linux: "Grátis · Linux beta",
+  plat_win: "Windows 10 e 11",
+  skip: "Pular para o conteúdo", nav_label: "Menu principal", links_label: "Links",
+  nav_features: "Recursos", nav_how: "Como funciona", nav_safe: "Segurança", nav_faq: "Perguntas", nav_community: "Comunidade", nav_download: "Baixar",
+  hero_pill: "Novo na 2.0: Assetto Corsa, amigos online e mais",
+  hero_h1: "Dirija com seus amigos.",
+  hero_lead: "Hospede sessões de BeamNG.drive e Assetto Corsa no seu próprio PC. Seus amigos entram com um convite, e o Tandem leva para eles os mapas e mods que faltam.",
+  dl_win: "Baixar para Windows", dl_linux: "Baixar para Linux", dl_sub: "Grátis · Windows 10 e 11", dl_sub_v: "Versão {v} · {mb} MB · Grátis", dl_all: "Todos os downloads no GitHub",
+  dl_phone: "O Tandem roda no PC. Abra esta página no seu computador para baixar.", copy_link: "Copiar o link desta página", copied: "Link copiado",
+  fact_free: "Grátis", fact_account: "Sem conta", fact_players: "Até 20 jogadores", fact_langs: "11 idiomas",
+  shot_alt: "A biblioteca do Tandem com BeamNG.drive e Assetto Corsa",
+  games_h: "Dois jogos. Um launcher.", games_p: "Escolha um jogo na biblioteca e depois hospede ou entre. Cada um precisa da sua própria cópia do jogo.",
+  bng_tag: "Direção com física de corpo macio entre amigos", bng_p: "Carros dos amigos suaves, batidas iguais em todas as telas, tráfego compartilhado, clima e reboques.",
+  ac_tag: "Track days e corridas com amigos", ac_p: "Treino, classificação e corridas com tempos de volta ao vivo, chat e controles do anfitrião. Carros e pistas de mods são enviados para você.",
+  how_h: "Do download à pista",
+  how_1t: "Todo mundo instala o Tandem", how_1p: "Você e seus amigos precisam do Tandem e cada um da sua própria cópia do jogo.",
+  how_2t: "Hospede uma sessão", how_2p: "Escolha um jogo, um mapa e os mods para compartilhar, e envie o convite.",
+  how_3t: "Os amigos colam o convite", how_3p: "Você pressiona Permitir. O Tandem pega os mods deles, abre o jogo e coloca todos no seu mundo.",
+  new_h: "Novo na 2.0", new_p: "Tudo o que mudou desde a versão 1.0.10.", both: "Os dois jogos",
+  f_friends_t: "Veja quando amigos hospedam", f_friends_p: "Amigos que você sempre deixa entrar veem quando você hospeda e entram com um clique. Sem convite para copiar.",
+  f_ac_t: "Assetto Corsa chegou", f_ac_p: "Hospede no seu próprio PC. Carros e pistas de mods que um amigo não tem são enviados do seu PC e adicionados depois que ele aceita.",
+  f_discord_t: "Aparece no seu Discord", f_discord_p: "Seu perfil mostra o jogo, o mapa e o número de jogadores, com um botão Entrar para os amigos.",
+  f_public_t: "Jogue com qualquer pessoa", f_public_p: "Mostre uma sessão para todos. Os jogadores a encontram em Sessões públicas e pedem para entrar. Você ainda permite cada um.",
+  f_mods_t: "Baixe um mod e ele se instala sozinho", f_mods_p: "Abra um site de mods pelo Tandem. O ZIP que você baixa vai para o jogo certo, e dá para removê-lo depois.",
+  f_reach_t: "Seus amigos conseguem chegar até você?", f_reach_p: "Segundos depois de começar a hospedar, o Tandem verifica pela internet se seus amigos conseguem alcançar seu PC.",
+  f_block_t: "Bloqueie trolls de vez", f_block_p: "Um jogador que você bloqueia nunca mais entra nas suas sessões, em nenhum dos dois jogos.",
+  f_lang_t: "Fala a sua língua", f_lang_p: "Inglês, árabe e mais nove idiomas.",
+  f_look_t: "Nome novo, visual novo", f_look_p: "O BeamNG Friends Launcher agora é Tandem. As animações param enquanto você joga, então não custam FPS.",
+  also_h: "Também na 2.0",
+  also_1: "Novo chat, lista de jogadores e nomes dentro do BeamNG", also_2: "Downloads de mods mais rápidos", also_3: "Leitura de mods mais rápida", also_4: "Mods que não apareciam agora funcionam",
+  also_5: "Chega de carros de cabeça para baixo depois de trocar de carro", also_6: "Seus ajustes de carro salvos vão junto", also_7: "Pronto para as novas atualizações do BeamNG", also_8: "Linux e Steam Deck (beta)",
+  core_h: "Tudo o que uma sessão precisa", core_p: "O que você ganha toda vez que dirige com amigos.",
+  c1t: "Os mods chegam sozinhos", c1p: "Seus amigos recebem o mapa e os mods do anfitrião. Arquivos que eles já têm nunca são baixados de novo.",
+  c2t: "Carros dos amigos suaves", c2p: "Os carros seguem a posição real com física suave, sem pulos.",
+  c3t: "Danos sincronizados", c3p: "Quando um amigo bate, as mesmas peças amassam em todas as telas.",
+  c4t: "Tráfego compartilhado", c4p: "O tráfego de IA do anfitrião roda na tela de todo mundo.",
+  c5t: "Hora e clima", c5p: "Todos recebem a hora do dia, a neblina, a chuva e o vento do anfitrião.",
+  c6t: "Voz e chat", c6p: "Converse no launcher e numa pequena janela de chat dentro do jogo.",
+  c7t: "Volte com um clique", c7p: "Reconecta depois de uma queda rápida e volta depois de um crash sem pedir de novo ao anfitrião.",
+  c8t: "Modo PC fraco", c8p: "Um botão deixa as sessões mais leves para PCs mais lentos.",
+  safe_h: "Feito para ninguém mexer no seu PC", safe_p: "Seu PC, seu jogo e suas sessões continuam seus.",
+  s1t: "Atualizações assinadas", s1p: "O Tandem só instala uma atualização se ela for assinada com a chave do desenvolvedor.",
+  s2t: "Você decide quem entra", s2p: "Ninguém entra antes de você pressionar Permitir. Bloqueie um jogador ou tranque a sessão quando quiser.",
+  s3t: "Seu jogo continua como está", s3p: "Nada no seu jogo é substituído, e cada adição pode ser removida.",
+  s4t: "Sem conta, sem senha", s4p: "Cada PC tem sua própria chave, então não há cadastro.",
+  win_t: "Se o Windows mostrar uma janela azul", win_p: "O Windows mostra {shield} para programas novos de desenvolvedores pequenos. Clique em {more} e depois em {run}. Depois disso, as atualizações se instalam sozinhas.",
+  win_shield: "O Windows protegeu o computador", win_more: "Mais informações", win_run: "Executar assim mesmo",
+  av_p: "Se o seu antivírus perguntar sobre o Tandem, escolha Permitir. Nunca desligue o antivírus.",
+  faq_h: "Perguntas",
+  q1: "O Tandem é grátis?", a1: "Sim. O Tandem é grátis. Se você gostar, pode apoiar o desenvolvedor.",
+  q2: "Meus amigos também precisam do Tandem?", a2: "Sim. Todos precisam do Tandem, na mesma versão, e da sua própria cópia do jogo.",
+  q3: "Com quais jogos ele funciona?", a3: "BeamNG.drive e Assetto Corsa, as versões de PC na Steam.",
+  q4: "Ele muda os arquivos do meu jogo?", a4: "Não. O Tandem abre o BeamNG com uma pasta própria. No Assetto Corsa, ele só adiciona carros e pistas de mods depois que você aceita, e nunca envia conteúdo da Kunos entre jogadores.",
+  q5: "Quantos jogadores podem entrar?", a5: "Uma sessão de BeamNG.drive tem até 20 jogadores: você e 19 amigos.",
+  q6: "Preciso abrir portas no roteador?", a6: "Normalmente não. O Tandem conecta os PCs dos seus amigos sozinho e verifica se eles conseguem chegar até você. No caso raro de os dois roteadores bloquearem, o app explica o que fazer.",
+  q7: "Funciona no Linux ou no Steam Deck?", a7: "Existe uma primeira versão para Linux, ainda em testes. Windows 10 e 11 têm suporte completo.",
+  q8: "O Tandem é feito pela BeamNG ou pela Kunos?", a8: "Não. O Tandem é feito por mhmd8p, um jogador, e não tem ligação com a BeamNG GmbH nem com a Kunos Simulazioni.",
+  q9: "Onde relato um bug?", a9: "Toque em Relatar um bug no app. Ele salva um relatório sem seus convites ou senhas e abre o Discord da comunidade.",
+  comm_h: "Entre na comunidade", comm_p: "Encontre com quem dirigir, peça ajuda e veja o que vem por aí.",
+  d_discord: "Encontre sessões, peça ajuda e relate bugs.", d_instagram: "Novidades e clipes.", d_tiktok: "Clipes curtos.", d_youtube: "Vídeos.", d_github: "Cada versão com suas notas.", d_support: "O Tandem é grátis. Uma contribuição ajuda a mantê-lo.",
+  cta_h: "Seus amigos estão esperando.", cta_p: "Baixe o Tandem, mande esta página para seus amigos e escolha um mapa.",
+  foot_made: "Feito por mhmd8p", foot_support: "Apoiar o app",
+  foot_legal: "BeamNG.drive é marca da BeamNG GmbH e Assetto Corsa é marca da Kunos Simulazioni. O Tandem é um app feito por um fã, sem ligação com nenhuma delas.",
+  v_friends_now: "Amigos hospedando agora", v_hosting: "{name} está hospedando", v_join: "Entrar", v_full: "Lotado", v_ofmax: "{n} de {max}", v_joining: "Entrando na sessão de {name}",
+  v_ask: "Pedir para entrar", v_waiting: "Aguardando o anfitrião", v_in: "Você entrou", v_getting: "Baixando {map} do anfitrião", v_added: "Adicionado ao seu jogo",
+  v_installed: "Instalado no BeamNG.drive", v_reach_ok: "Verificado pela internet: seus amigos conseguem alcançar seu PC.", v_wants: "quer entrar", v_allow: "Permitir", v_block: "Bloquear", v_blocked: "Bloqueado"
+},
+ru: {
+  v_public: "Публичные сессии", dl_sub_linux: "Бесплатно · бета для Linux",
+  plat_win: "Windows 10 и 11",
+  skip: "Перейти к содержимому", nav_label: "Главное меню", links_label: "Ссылки",
+  nav_features: "Возможности", nav_how: "Как это работает", nav_safe: "Безопасность", nav_faq: "Вопросы", nav_community: "Сообщество", nav_download: "Скачать",
+  hero_pill: "Новое в 2.0: Assetto Corsa, друзья онлайн и не только",
+  hero_h1: "Катайся с друзьями.",
+  hero_lead: "Создавай сессии BeamNG.drive и Assetto Corsa на своём ПК. Друзья заходят по одному приглашению, а Tandem сам доставит им недостающие карты и моды.",
+  dl_win: "Скачать для Windows", dl_linux: "Скачать для Linux", dl_sub: "Бесплатно · Windows 10 и 11", dl_sub_v: "Версия {v} · {mb} МБ · Бесплатно", dl_all: "Все загрузки на GitHub",
+  dl_phone: "Tandem работает на ПК. Открой эту страницу на компьютере, чтобы скачать его.", copy_link: "Скопировать ссылку на страницу", copied: "Ссылка скопирована",
+  fact_free: "Бесплатно", fact_account: "Без аккаунта", fact_players: "До 20 игроков", fact_langs: "11 языков",
+  shot_alt: "Библиотека Tandem с BeamNG.drive и Assetto Corsa",
+  games_h: "Две игры. Один лаунчер.", games_p: "Выбери игру в библиотеке, затем создай сессию или войди. Каждому нужна своя копия игры.",
+  bng_tag: "Езда с физикой мягких тел вместе с друзьями", bng_p: "Плавные машины друзей, аварии, одинаковые на каждом экране, общий трафик, погода и прицепы.",
+  ac_tag: "Трек-дни и гонки с друзьями", ac_p: "Практика, квалификация и гонки со временем кругов в реальном времени, чатом и управлением для хоста. Модовые машины и трассы отправляются за тебя.",
+  how_h: "От загрузки до заезда",
+  how_1t: "Все ставят Tandem", how_1p: "Тебе и друзьям нужен Tandem, и у каждого своя копия игры.",
+  how_2t: "Создай сессию", how_2p: "Выбери игру, карту и моды, которыми поделиться, и отправь приглашение.",
+  how_3t: "Друзья вставляют приглашение", how_3p: "Ты нажимаешь «Впустить». Tandem скачивает им моды, запускает игру и переносит их в твой мир.",
+  new_h: "Новое в 2.0", new_p: "Всё, что изменилось с версии 1.0.10.", both: "Обе игры",
+  f_friends_t: "Видно, когда друзья хостят", f_friends_p: "Друзья, которых ты всегда впускаешь, видят, когда ты хостишь, и заходят в один клик. Никаких приглашений для копирования.",
+  f_ac_t: "Assetto Corsa уже здесь", f_ac_p: "Хость на своём ПК. Модовые машины и трассы, которых нет у друга, отправляются с твоего ПК и добавляются после его согласия.",
+  f_discord_t: "Это видно в Discord", f_discord_p: "Твой профиль показывает игру, карту и число игроков, с кнопкой «Войти» для друзей.",
+  f_public_t: "Играй с кем угодно", f_public_p: "Покажи сессию всем. Игроки найдут её в «Публичных сессиях» и попросятся войти. Каждого впускаешь ты.",
+  f_mods_t: "Скачай мод, и он установится сам", f_mods_p: "Открой сайт с модами из Tandem. Скачанный ZIP попадёт в нужную игру, и его можно убрать позже.",
+  f_reach_t: "Друзья могут до тебя достучаться?", f_reach_p: "Через пару секунд после начала хостинга Tandem проверяет из интернета, могут ли друзья подключиться к твоему ПК.",
+  f_block_t: "Блокируй троллей навсегда", f_block_p: "Заблокированный игрок больше никогда не попадёт в твои сессии, ни в одной из игр.",
+  f_lang_t: "Говорит на твоём языке", f_lang_p: "Английский, арабский и ещё девять языков.",
+  f_look_t: "Новое имя, новый вид", f_look_p: "BeamNG Friends Launcher теперь называется Tandem. Анимации замирают, пока ты играешь, поэтому не отнимают FPS.",
+  also_h: "Ещё в 2.0",
+  also_1: "Новые чат, список игроков и ники в BeamNG", also_2: "Моды скачиваются быстрее", also_3: "Моды проверяются быстрее", also_4: "Моды, которые не появлялись, теперь работают",
+  also_5: "Больше никаких перевёрнутых машин после смены машины", also_6: "Твои сохранённые настройки машин переносятся", also_7: "Готов к новым обновлениям BeamNG", also_8: "Linux и Steam Deck (бета)",
+  core_h: "Всё, что нужно для сессии", core_p: "Это есть каждый раз, когда вы катаетесь вместе.",
+  c1t: "Моды приходят сами", c1p: "Друзья получают карту и моды хоста. Файлы, которые у них уже есть, никогда не скачиваются повторно.",
+  c2t: "Плавные машины друзей", c2p: "Машины следуют за реальной позицией с мягкой физикой, без рывков.",
+  c3t: "Синхронизация повреждений", c3p: "Когда друг разбивается, те же детали мнутся на каждом экране.",
+  c4t: "Общий трафик", c4p: "ИИ-трафик хоста ездит на экране у всех.",
+  c5t: "Время и погода", c5p: "У всех время суток, туман, дождь и ветер хоста.",
+  c6t: "Голос и чат", c6p: "Общайся в лаунчере и в маленьком окне чата в игре.",
+  c7t: "Возврат в один клик", c7p: "Переподключается после короткого обрыва и возвращает после вылета игры, не спрашивая хоста снова.",
+  c8t: "Режим слабого ПК", c8p: "Один переключатель облегчает сессии для медленных ПК.",
+  safe_h: "Сделан так, чтобы никто не лез в твой ПК", safe_p: "Твой ПК, твоя игра и твои сессии остаются твоими.",
+  s1t: "Подписанные обновления", s1p: "Tandem ставит обновление, только если оно подписано ключом разработчика.",
+  s2t: "Ты решаешь, кто войдёт", s2p: "Никто не войдёт, пока ты не нажмёшь «Впустить». Блокируй игрока или закрой сессию в любой момент.",
+  s3t: "Игра остаётся как есть", s3p: "В твоей игре ничего не заменяется, а любое добавление можно убрать.",
+  s4t: "Без аккаунта и пароля", s4p: "У каждого ПК свой ключ, так что регистрироваться негде.",
+  win_t: "Если Windows показывает синее окно", win_p: "Windows показывает {shield} для новых программ от небольших разработчиков. Нажми {more}, затем {run}. После этого обновления ставятся сами.",
+  win_shield: "Система Windows защитила ваш компьютер", win_more: "Подробнее", win_run: "Выполнить в любом случае",
+  av_p: "Если антивирус спросит про Tandem, выбери «Разрешить». Никогда не отключай антивирус.",
+  faq_h: "Вопросы",
+  q1: "Tandem бесплатный?", a1: "Да. Tandem бесплатный. Если понравится, можно поддержать разработчика.",
+  q2: "Друзьям тоже нужен Tandem?", a2: "Да. Всем нужен Tandem одной версии и своя копия игры.",
+  q3: "С какими играми он работает?", a3: "С BeamNG.drive и Assetto Corsa, версиями для ПК в Steam.",
+  q4: "Он меняет файлы моей игры?", a4: "Нет. Tandem запускает BeamNG со своей папкой. В Assetto Corsa он только добавляет модовые машины и трассы после твоего согласия и никогда не передаёт контент Kunos между игроками.",
+  q5: "Сколько игроков может войти?", a5: "В сессии BeamNG.drive до 20 игроков: ты и 19 друзей.",
+  q6: "Нужно ли открывать порты на роутере?", a6: "Обычно нет. Tandem сам соединяет ПК друзей и проверяет, могут ли они до тебя достучаться. В редком случае, когда блокируют оба роутера, приложение объяснит, что делать.",
+  q7: "Работает ли он на Linux или Steam Deck?", a7: "Есть первая версия для Linux, она ещё тестируется. Windows 10 и 11 поддерживаются полностью.",
+  q8: "Tandem сделан BeamNG или Kunos?", a8: "Нет. Tandem делает mhmd8p, обычный игрок, и он не связан с BeamNG GmbH или Kunos Simulazioni.",
+  q9: "Куда сообщить об ошибке?", a9: "Нажми «Сообщить об ошибке» в приложении. Оно сохранит отчёт без твоих приглашений и паролей и откроет Discord сообщества.",
+  comm_h: "Присоединяйся к сообществу", comm_p: "Найди, с кем покататься, получи помощь и узнай, что будет дальше.",
+  d_discord: "Ищи сессии, проси помощи и сообщай об ошибках.", d_instagram: "Новости и клипы.", d_tiktok: "Короткие клипы.", d_youtube: "Видео.", d_github: "Каждый выпуск с описанием изменений.", d_support: "Tandem бесплатный. Поддержка помогает ему развиваться.",
+  cta_h: "Друзья ждут.", cta_p: "Скачай Tandem, отправь друзьям эту страницу и выбери карту.",
+  foot_made: "Создано mhmd8p", foot_support: "Поддержать приложение",
+  foot_legal: "BeamNG.drive является товарным знаком BeamNG GmbH, Assetto Corsa является товарным знаком Kunos Simulazioni. Tandem сделан фанатом и не связан ни с одной из этих компаний.",
+  v_friends_now: "Друзья, которые сейчас хостят", v_hosting: "{name} хостит", v_join: "Войти", v_full: "Заполнено", v_ofmax: "{n} из {max}", v_joining: "Входим к {name}",
+  v_ask: "Попроситься войти", v_waiting: "Ждём хоста", v_in: "Ты внутри", v_getting: "Получаем {map} от хоста", v_added: "Добавлено в твою игру",
+  v_installed: "Установлено в BeamNG.drive", v_reach_ok: "Проверено из интернета: друзья могут подключиться к твоему ПК.", v_wants: "хочет войти", v_allow: "Впустить", v_block: "Заблокировать", v_blocked: "Заблокирован"
+},
+es: {
+  v_public: "Sesiones públicas", dl_sub_linux: "Gratis · Linux beta",
+  plat_win: "Windows 10 y 11",
+  skip: "Saltar al contenido", nav_label: "Menú principal", links_label: "Enlaces",
+  nav_features: "Funciones", nav_how: "Cómo funciona", nav_safe: "Seguridad", nav_faq: "Preguntas", nav_community: "Comunidad", nav_download: "Descargar",
+  hero_pill: "Novedades de la 2.0: Assetto Corsa, amigos en línea y más",
+  hero_h1: "Conduce con tus amigos.",
+  hero_lead: "Aloja sesiones de BeamNG.drive y Assetto Corsa desde tu propio PC. Tus amigos se unen con una sola invitación y Tandem les lleva los mapas y mods que les faltan.",
+  dl_win: "Descargar para Windows", dl_linux: "Descargar para Linux", dl_sub: "Gratis · Windows 10 y 11", dl_sub_v: "Versión {v} · {mb} MB · Gratis", dl_all: "Todas las descargas en GitHub",
+  dl_phone: "Tandem funciona en PC. Abre esta página en tu ordenador para descargarlo.", copy_link: "Copiar el enlace de esta página", copied: "Enlace copiado",
+  fact_free: "Gratis", fact_account: "Sin cuenta", fact_players: "Hasta 20 jugadores", fact_langs: "11 idiomas",
+  shot_alt: "La biblioteca de Tandem con BeamNG.drive y Assetto Corsa",
+  games_h: "Dos juegos. Un launcher.", games_p: "Elige un juego en la biblioteca y luego aloja o únete. Cada uno necesita su propia copia del juego.",
+  bng_tag: "Conducción con física de cuerpos blandos entre amigos", bng_p: "Coches de amigos fluidos, choques que se ven igual en cada pantalla, tráfico compartido, clima y remolques.",
+  ac_tag: "Track days y carreras entre amigos", ac_p: "Prácticas, clasificación y carreras con tiempos por vuelta en directo, chat y controles del anfitrión. Los coches y circuitos mod se envían por ti.",
+  how_h: "De la descarga a la carretera",
+  how_1t: "Todos instalan Tandem", how_1p: "Cada uno necesita Tandem y su propia copia del juego.",
+  how_2t: "Aloja una sesión", how_2p: "Elige un juego, un mapa y los mods que quieres compartir, y envía la invitación.",
+  how_3t: "Tus amigos pegan la invitación", how_3p: "Pulsas Permitir. Tandem consigue sus mods, inicia el juego y los lleva a tu mundo.",
+  new_h: "Novedades de la 2.0", new_p: "Todo lo que cambió desde la versión 1.0.10.", both: "Ambos juegos",
+  f_friends_t: "Mira cuándo alojan tus amigos", f_friends_p: "Los amigos a los que siempre dejas entrar ven cuándo alojas y se unen con un clic. Sin invitación que copiar.",
+  f_ac_t: "Llegó Assetto Corsa", f_ac_p: "Aloja desde tu propio PC. Los coches y circuitos mod que un amigo no tiene se envían desde tu PC y se añaden cuando dice que sí.",
+  f_discord_t: "Se ve en tu Discord", f_discord_p: "Tu perfil muestra el juego, el mapa y el número de jugadores, con un botón Unirse para tus amigos.",
+  f_public_t: "Juega con cualquiera", f_public_p: "Muestra una sesión a todo el mundo. Los jugadores la encuentran en Sesiones públicas y piden unirse. Tú sigues permitiendo a cada uno.",
+  f_mods_t: "Descarga un mod y se instala solo", f_mods_p: "Abre una web de mods desde Tandem. El ZIP que descargas va al juego correcto y puedes quitarlo después.",
+  f_reach_t: "¿Pueden tus amigos llegar a ti?", f_reach_p: "Segundos después de empezar a alojar, Tandem comprueba desde internet si tus amigos pueden llegar a tu PC.",
+  f_block_t: "Bloquea a los trolls para siempre", f_block_p: "Un jugador que bloqueas nunca vuelve a entrar en tus sesiones, en ninguno de los dos juegos.",
+  f_lang_t: "Habla tu idioma", f_lang_p: "Inglés, árabe y nueve idiomas más.",
+  f_look_t: "Nuevo nombre, nuevo aspecto", f_look_p: "BeamNG Friends Launcher ahora es Tandem. Las animaciones se detienen mientras juegas, así que no te cuestan FPS.",
+  also_h: "También en la 2.0",
+  also_1: "Nuevo chat, lista de jugadores y nombres dentro de BeamNG", also_2: "Descargas de mods más rápidas", also_3: "Escaneo de mods más rápido", also_4: "Los mods que no aparecían ahora funcionan",
+  also_5: "Se acabaron los coches boca abajo tras cambiar de coche", also_6: "Tus configuraciones de coche guardadas te acompañan", also_7: "Listo para las nuevas actualizaciones de BeamNG", also_8: "Linux y Steam Deck (beta)",
+  core_h: "Todo lo que necesita una sesión", core_p: "Lo que obtienes cada vez que conduces con amigos.",
+  c1t: "Los mods llegan solos", c1p: "Tus amigos reciben el mapa y los mods del anfitrión. Los archivos que ya tienen nunca se descargan dos veces.",
+  c2t: "Coches de amigos fluidos", c2p: "Los coches siguen su posición real con física suave, sin saltos.",
+  c3t: "Daños sincronizados", c3p: "Cuando un amigo choca, las mismas piezas se doblan en cada pantalla.",
+  c4t: "Tráfico compartido", c4p: "El tráfico de IA del anfitrión circula en la pantalla de todos.",
+  c5t: "Hora y clima", c5p: "Todos tienen la hora, la niebla, la lluvia y el viento del anfitrión.",
+  c6t: "Voz y chat", c6p: "Habla en el launcher y en una pequeña ventana de chat dentro del juego.",
+  c7t: "Vuelve con un clic", c7p: "Se reconecta tras un corte breve y te devuelve tras un cierre del juego sin volver a pedirlo al anfitrión.",
+  c8t: "Modo PC modesto", c8p: "Un solo interruptor aligera las sesiones en PC más lentos.",
+  safe_h: "Hecho para que nadie toque tu PC", safe_p: "Tu PC, tu juego y tus sesiones siguen siendo tuyos.",
+  s1t: "Actualizaciones firmadas", s1p: "Tandem solo instala una actualización si está firmada con la clave del desarrollador.",
+  s2t: "Tú decides quién entra", s2p: "Nadie entra hasta que pulsas Permitir. Bloquea a un jugador o cierra la sesión cuando quieras.",
+  s3t: "Tu juego se queda como está", s3p: "No se reemplaza nada en tu juego y cada añadido se puede quitar.",
+  s4t: "Sin cuenta ni contraseña", s4p: "Cada PC tiene su propia clave, así que no hay nada que registrar.",
+  win_t: "Si Windows muestra una ventana azul", win_p: "Windows muestra {shield} con programas nuevos de desarrolladores pequeños. Haz clic en {more} y luego en {run}. Después, las actualizaciones se instalan solas.",
+  win_shield: "Windows protegió su PC", win_more: "Más información", win_run: "Ejecutar de todas formas",
+  av_p: "Si tu antivirus pregunta por Tandem, elige Permitir. Nunca desactives tu antivirus.",
+  faq_h: "Preguntas",
+  q1: "¿Tandem es gratis?", a1: "Sí. Tandem es gratis. Si te gusta, puedes apoyar al desarrollador.",
+  q2: "¿Mis amigos también necesitan Tandem?", a2: "Sí. Todos necesitan Tandem, en la misma versión, y su propia copia del juego.",
+  q3: "¿Con qué juegos funciona?", a3: "BeamNG.drive y Assetto Corsa, las versiones de PC en Steam.",
+  q4: "¿Cambia los archivos de mi juego?", a4: "No. Tandem inicia BeamNG con una carpeta propia. En Assetto Corsa solo añade coches y circuitos mod cuando dices que sí, y nunca envía contenido de Kunos entre jugadores.",
+  q5: "¿Cuántos jugadores pueden unirse?", a5: "Una sesión de BeamNG.drive admite hasta 20 jugadores: tú y 19 amigos.",
+  q6: "¿Tengo que abrir puertos en el router?", a6: "Normalmente no. Tandem conecta los PC de tus amigos por sí solo y comprueba si pueden llegar a ti. En el raro caso de que ambos routers lo bloqueen, la app explica qué hacer.",
+  q7: "¿Funciona en Linux o Steam Deck?", a7: "Existe una primera versión para Linux que aún se está probando. Windows 10 y 11 tienen soporte completo.",
+  q8: "¿Tandem lo hace BeamNG o Kunos?", a8: "No. Tandem lo hace mhmd8p, un jugador, y no está afiliado a BeamNG GmbH ni a Kunos Simulazioni.",
+  q9: "¿Dónde informo de un error?", a9: "Pulsa Informar de un error en la app. Guarda un informe sin tus invitaciones ni contraseñas y abre el Discord de la comunidad.",
+  comm_h: "Únete a la comunidad", comm_p: "Encuentra con quién conducir, pide ayuda y mira lo que viene.",
+  d_discord: "Encuentra sesiones, pide ayuda e informa de errores.", d_instagram: "Novedades y clips.", d_tiktok: "Clips cortos.", d_youtube: "Vídeos.", d_github: "Cada versión con sus notas.", d_support: "Tandem es gratis. Una propina ayuda a que siga adelante.",
+  cta_h: "Tus amigos te esperan.", cta_p: "Descarga Tandem, envía esta página a tus amigos y elige un mapa.",
+  foot_made: "Hecho por mhmd8p", foot_support: "Apoyar la app",
+  foot_legal: "BeamNG.drive es una marca de BeamNG GmbH y Assetto Corsa de Kunos Simulazioni. Tandem es una app hecha por un fan y no está afiliada a ninguna de ellas.",
+  v_friends_now: "Amigos alojando ahora", v_hosting: "{name} está alojando", v_join: "Unirse", v_full: "Completo", v_ofmax: "{n} de {max}", v_joining: "Uniéndote a {name}",
+  v_ask: "Pedir unirse", v_waiting: "Esperando al anfitrión", v_in: "Ya estás dentro", v_getting: "Obteniendo {map} del anfitrión", v_added: "Añadido a tu juego",
+  v_installed: "Instalado en BeamNG.drive", v_reach_ok: "Comprobado desde internet: tus amigos pueden llegar a tu PC.", v_wants: "quiere unirse", v_allow: "Permitir", v_block: "Bloquear", v_blocked: "Bloqueado"
+}
+};
+
+</script>
+<script>
+(() => {
+  'use strict';
+  const T = window.TANDEM_TEXT;
+  const LANGS = [['en', 'English'], ['ar', 'العربية'], ['zh', '中文'], ['fr', 'Français'], ['de', 'Deutsch'], ['ja', '日本語'], ['ko', '한국어'], ['pl', 'Polski'], ['pt', 'Português'], ['ru', 'Русский'], ['es', 'Español']];
+  const FONTS = {
+    ru: 'family=Roboto:wght@400;500;600;700&family=Roboto+Condensed:ital,wght@0,700;0,800;1,700;1,800',
+    zh: 'family=Noto+Sans+SC:wght@400;500;700;900',
+    ja: 'family=Noto+Sans+JP:wght@400;500;700;900',
+    ko: 'family=Noto+Sans+KR:wght@400;500;700;900',
+  };
+  const REPO = 'moha701/beamng-friends-launcher';
+  const PAGE = `https://github.com/${REPO}/releases/latest`;
+  const ASSET_PREFIX = `https://github.com/${REPO}/releases/download/`;
+  const root = document.documentElement;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const store = { get(k) { try { return localStorage.getItem(k); } catch { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch { /* private window */ } } };
+  let lang = 'en';
+
+  const fmt = (text, data) => text.replace(/\{(\w+)\}/g, (all, key) => (data && data[key] != null ? data[key] : all));
+  const say = (key, data) => fmt((T[lang] && T[lang][key]) ?? T.en[key] ?? '', data);
+
+  /* ---------- Languages ---------- */
+  function pickLanguage() {
+    const fromHash = location.hash.slice(1).toLowerCase();
+    if (T[fromHash]) return fromHash;
+    try { const fromQuery = new URLSearchParams(location.search).get('lang'); if (fromQuery && T[fromQuery]) return fromQuery; } catch { /* no query */ }
+    const saved = store.get('tandem-lang'); if (saved && T[saved]) return saved;
+    for (const item of navigator.languages || [navigator.language || 'en']) { const code = String(item).toLowerCase().split('-')[0]; if (T[code]) return code; }
+    return 'en';
+  }
+  const loadedFonts = new Set();
+  function loadFonts(code) {
+    if (!FONTS[code] || loadedFonts.has(code)) return;
+    loadedFonts.add(code);
+    const link = document.createElement('link'); link.rel = 'stylesheet'; link.href = `https://fonts.googleapis.com/css2?${FONTS[code]}&display=swap`;
+    document.head.appendChild(link);
+  }
+  function windowsNote() {
+    const box = document.getElementById('win-p'); if (!box) return;
+    const parts = say('win_p').split(/(\{shield\}|\{more\}|\{run\})/);
+    box.textContent = '';
+    for (const part of parts) {
+      if (part === '{shield}') { const q = document.createElement('q'); q.textContent = say('win_shield'); box.appendChild(q); }
+      else if (part === '{more}' || part === '{run}') { const k = document.createElement('span'); k.className = 'kbd'; k.textContent = say(part === '{more}' ? 'win_more' : 'win_run'); box.appendChild(k); }
+      else if (part) box.appendChild(document.createTextNode(part));
+    }
+  }
+  function apply(code) {
+    lang = T[code] ? code : 'en';
+    root.lang = lang; root.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    loadFonts(lang);
+    document.querySelectorAll('[data-t]').forEach(el => { const text = say(el.dataset.t, el.dataset); if (text) el.textContent = text; });
+    document.querySelectorAll('[data-t-alt]').forEach(el => { el.alt = say(el.dataset.tAlt); });
+    document.querySelectorAll('[data-t-aria]').forEach(el => { el.setAttribute('aria-label', say(el.dataset.tAria)); });
+    windowsNote();
+    const now = LANGS.find(item => item[0] === lang); document.getElementById('lang-now').textContent = now ? now[1] : 'English';
+    document.querySelectorAll('#lang-list li').forEach(li => li.setAttribute('aria-selected', String(li.dataset.lang === lang)));
+    const meta = document.querySelector('meta[name="description"]'); if (meta) meta.setAttribute('content', say('hero_lead'));
+  }
+
+  // The menu
+  const button = document.getElementById('lang-btn');
+  const list = document.getElementById('lang-list');
+  for (const [code, name] of LANGS) {
+    const li = document.createElement('li'); li.setAttribute('role', 'option'); li.tabIndex = -1; li.dataset.lang = code; li.lang = code;
+    const label = document.createElement('span'); label.textContent = name; const tag = document.createElement('span'); tag.className = 'code'; tag.textContent = code;
+    li.append(label, tag); list.appendChild(li);
+  }
+  const items = () => [...list.querySelectorAll('li')];
+  function openMenu() { list.hidden = false; button.setAttribute('aria-expanded', 'true'); (items().find(li => li.dataset.lang === lang) || items()[0]).focus(); }
+  function closeMenu(focusButton) { list.hidden = true; button.setAttribute('aria-expanded', 'false'); if (focusButton) button.focus(); }
+  function choose(code) { apply(code); store.set('tandem-lang', code); closeMenu(true); }
+  button.addEventListener('click', () => (list.hidden ? openMenu() : closeMenu(false)));
+  list.addEventListener('click', event => { const li = event.target.closest('li'); if (li) choose(li.dataset.lang); });
+  list.addEventListener('keydown', event => {
+    const all = items(); const at = all.indexOf(document.activeElement);
+    if (event.key === 'ArrowDown') { event.preventDefault(); all[(at + 1) % all.length].focus(); }
+    else if (event.key === 'ArrowUp') { event.preventDefault(); all[(at - 1 + all.length) % all.length].focus(); }
+    else if (event.key === 'Home') { event.preventDefault(); all[0].focus(); }
+    else if (event.key === 'End') { event.preventDefault(); all[all.length - 1].focus(); }
+    else if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); if (at >= 0) choose(all[at].dataset.lang); }
+    else if (event.key === 'Escape' || event.key === 'Tab') closeMenu(event.key === 'Escape');
+  });
+  document.addEventListener('click', event => { if (!list.hidden && !event.target.closest('.lang')) closeMenu(false); });
+
+  apply(pickLanguage());
+  window.addEventListener('hashchange', () => { const code = location.hash.slice(1).toLowerCase(); if (T[code] && code !== lang) apply(code); });
+
+  /* ---------- Download: the newest installer straight from GitHub ---------- */
+  const ua = navigator.userAgent || '';
+  const isPhone = /Android|iPhone|iPad|iPod|Mobile/i.test(ua) || (navigator.maxTouchPoints > 1 && /Macintosh/.test(ua));
+  const isLinux = /Linux|X11|CrOS/i.test(ua) && !/Android/i.test(ua);
+  if (isPhone) document.querySelectorAll('.phone-note').forEach(el => { el.hidden = false; });
+  // A Linux PC is offered the Linux version first (the release page until a Linux file is in the release)
+  const setLabel = (el, key, data) => { el.dataset.t = key; if (data) Object.assign(el.dataset, data); el.textContent = say(key, el.dataset); };
+  if (isLinux) document.querySelectorAll('a.dl').forEach(link => { setLabel(link.querySelector('.dl-main'), 'dl_linux'); setLabel(link.querySelector('.dl-sub'), 'dl_sub_linux'); });
+  document.querySelectorAll(`.plat[data-plat="${isLinux ? 'linux' : 'win'}"]`).forEach(el => el.classList.add('here'));
+  document.querySelectorAll('.copy-link').forEach(copy => copy.addEventListener('click', () => {
+    const label = copy.querySelector('span'); const url = location.href.split('#')[0];
+    const done = () => { label.dataset.t = 'copied'; label.textContent = say('copied'); setTimeout(() => { label.dataset.t = 'copy_link'; label.textContent = say('copy_link'); }, 2200); };
+    const fallback = () => { label.textContent = url; const range = document.createRange(); range.selectNodeContents(label); const pick = getSelection(); pick.removeAllRanges(); pick.addRange(range); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done, fallback); else fallback();
+  }));
+
+  async function latestRelease() {
+    try { const cached = JSON.parse(store.get('tandem-release') || 'null'); if (cached && Date.now() - cached.at < 30 * 60 * 1000 && cached.r) return cached.r; } catch { /* ignore */ }
+    const response = await fetch(`https://api.github.com/repos/${REPO}/releases/latest`, { headers: { Accept: 'application/vnd.github+json' }, cache: 'no-store' });
+    if (!response.ok) throw new Error(String(response.status));
+    const data = await response.json();
+    const find = pattern => {
+      const asset = (Array.isArray(data.assets) ? data.assets : []).find(item => item && typeof item.name === 'string' && pattern.test(item.name) && typeof item.browser_download_url === 'string' && item.browser_download_url.startsWith(ASSET_PREFIX) && !/[\s"'<>]/.test(item.browser_download_url));
+      return asset ? { url: asset.browser_download_url, mb: Math.max(1, Math.round((Number(asset.size) || 0) / 1048576)) } : null;
+    };
+    const version = String(data.tag_name || '').replace(/^v/i, '');
+    const release = { v: /^[0-9][0-9A-Za-z.-]{0,20}$/.test(version) ? version : '', win: find(/-Setup\.exe$/i), linux: find(/\.AppImage$/i) };
+    store.set('tandem-release', JSON.stringify({ at: Date.now(), r: release }));
+    return release;
+  }
+  const point = (link, asset) => { if (asset) { link.href = asset.url; link.removeAttribute('target'); } else { link.href = PAGE; link.target = '_blank'; } };
+  latestRelease().then(release => {
+    document.querySelectorAll('.plat[data-plat="win"]').forEach(link => point(link, release.win));
+    document.querySelectorAll('.plat[data-plat="linux"]').forEach(link => point(link, release.linux));
+    const asset = isLinux ? release.linux : release.win;
+    if (!asset) return;
+    document.querySelectorAll('a.dl').forEach(link => {
+      point(link, asset);
+      if (release.v) setLabel(link.querySelector('.dl-sub'), 'dl_sub_v', { v: release.v, mb: String(asset.mb) });
+    });
+  }).catch(() => { /* every button already opens the release page on GitHub */ });
+
+  /* ---------- Vignettes run only while on screen ---------- */
+  const live = new Set();
+  if ('IntersectionObserver' in window) {
+    root.classList.add('io');
+    const seen = new IntersectionObserver(entries => entries.forEach(entry => {
+      entry.target.classList.toggle('live', entry.isIntersecting);
+      if (entry.isIntersecting) live.add(entry.target); else live.delete(entry.target);
+    }), { rootMargin: '80px 0px' });
+    document.querySelectorAll('.vig').forEach(el => seen.observe(el));
+  } else document.querySelectorAll('.vig').forEach(el => live.add(el));
+  const onScreen = selector => { const el = document.querySelector(selector); return el && (live.has(el) || !root.classList.contains('io')); };
+
+  // Discord: the time since the session started, and friends coming in
+  const dcTime = document.getElementById('dc-t'); const dcCount = document.getElementById('dc-n');
+  let seconds = 12 * 60 + 4; let players = 3; let tick = 0;
+  if (!reduced) setInterval(() => {
+    if (!onScreen('.v-discord') || document.hidden) return;
+    seconds += 1; tick += 1;
+    dcTime.textContent = `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
+    if (tick % 7 === 0) { players = players >= 6 ? 3 : players + 1; dcCount.textContent = String(players); dcCount.classList.remove('pop'); void dcCount.offsetWidth; dcCount.classList.add('pop'); }
+  }, 1000);
+
+  // Languages: the headline in every language, one after another
+  const sayBox = document.getElementById('lang-say'); const dots = document.getElementById('lang-dots');
+  LANGS.forEach(([code]) => { const i = document.createElement('i'); i.textContent = code; i.dataset.code = code; dots.appendChild(i); });
+  let shown = 0;
+  function showLanguage(index) {
+    const [code] = LANGS[index];
+    sayBox.textContent = T[code].hero_h1; sayBox.lang = code; sayBox.dir = code === 'ar' ? 'rtl' : 'ltr';
+    sayBox.style.fontFamily = code === 'ar' ? "'Tajawal', sans-serif" : '';
+    dots.querySelectorAll('i').forEach(i => i.classList.toggle('on', i.dataset.code === code));
+  }
+  showLanguage(0);
+  if (!reduced) setInterval(() => {
+    if (!onScreen('.v-lang') || document.hidden) return;
+    shown = (shown + 1) % LANGS.length;
+    if (sayBox.animate) {
+      sayBox.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-14px)' }], { duration: 220, easing: 'ease-in' }).finished.then(() => {
+        showLanguage(shown); sayBox.animate([{ opacity: 0, transform: 'translateY(14px)' }, { opacity: 1, transform: 'none' }], { duration: 320, easing: 'cubic-bezier(.2,.8,.2,1)' });
+      });
+    } else showLanguage(shown);
+  }, 1900);
+
+  /* ---------- The skid pad: two cars drifting in tandem around two cones ---------- */
+  const canvas = document.getElementById('drift');
+  if (canvas && canvas.getContext) {
+    const ctx = canvas.getContext('2d');
+    const css = getComputedStyle(root);
+    const color = name => css.getPropertyValue(name).trim();
+    const BLUE = color('--blue') || '#22a8ff', ORANGE = color('--signal') || '#ff7a1a', LANE = color('--lane') || '#f2f6fd';
+    const marks = []; let clock = 0; const LIFE = 2.6; let tracks = null;
+    const puff = document.createElement('canvas'); puff.width = puff.height = 64;
+    { const p = puff.getContext('2d'); const g = p.createRadialGradient(32, 32, 0, 32, 32, 32); g.addColorStop(0, 'rgba(225,232,245,.9)'); g.addColorStop(.5, 'rgba(225,232,245,.35)'); g.addColorStop(1, 'rgba(225,232,245,0)'); p.fillStyle = g; p.fillRect(0, 0, 64, 64); }
+    let W = 0, H = 0, dpr = 1, scale = 1, path = [], lengths = [], total = 1, cones = [];
+    let distance = 0, last = 0, running = false, visible = true;
+    const smoke = [];
+    const cars = [
+      { body: BLUE, gap: 0, drift: 0, prev: null },
+      { body: ORANGE, gap: .085, drift: 0, prev: null },
+    ];
+    function build() {
+      const box = canvas.getBoundingClientRect();
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = Math.max(1, Math.round(box.width)); H = Math.max(1, Math.round(box.height));
+      canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+      scale = Math.max(.62, Math.min(1.15, W / 560));
+      const a = W * .4, squash = Math.min(2.1, (H * .62) / (a * .707));
+      path = []; lengths = []; total = 0;
+      const steps = 900;
+      for (let i = 0; i <= steps; i += 1) {
+        const t = (i / steps) * Math.PI * 2, s = Math.sin(t), c = Math.cos(t), d = 1 + s * s;
+        const point = { x: W / 2 + (a * c) / d, y: H / 2 + (a * s * c * squash) / d };
+        if (i) total += Math.hypot(point.x - path[i - 1].x, point.y - path[i - 1].y);
+        path.push(point); lengths.push(total);
+      }
+      cones = [{ x: W / 2 - a * .64, y: H / 2 }, { x: W / 2 + a * .64, y: H / 2 }];
+      // the rubbered-in line of the pad: two faint tracks along the path
+      tracks = new Path2D();
+      for (const side of [-1, 1]) {
+        for (let i = 0; i < path.length; i += 3) {
+          const p0 = path[Math.max(0, i - 1)], p1 = path[Math.min(path.length - 1, i + 1)], dx = p1.x - p0.x, dy = p1.y - p0.y, len = Math.hypot(dx, dy) || 1;
+          const x = path[i].x - (dy / len) * side * 8 * scale, y = path[i].y + (dx / len) * side * 8 * scale;
+          if (i === 0) tracks.moveTo(x, y); else tracks.lineTo(x, y);
+        }
+        tracks.closePath();
+      }
+      marks.length = 0; smoke.length = 0;
+      cars.forEach(car => { car.prev = null; });
+    }
+    function at(d) {
+      d = ((d % total) + total) % total;
+      let lo = 0, hi = lengths.length - 1;
+      while (lo < hi) { const mid = (lo + hi) >> 1; if (lengths[mid] < d) lo = mid + 1; else hi = mid; }
+      const i = Math.max(1, lo), p0 = path[i - 1], p1 = path[i], span = lengths[i] - lengths[i - 1] || 1, f = (d - lengths[i - 1]) / span;
+      return { x: p0.x + (p1.x - p0.x) * f, y: p0.y + (p1.y - p0.y) * f };
+    }
+    function pose(d) {
+      const p = at(d), a = at(d - 4), b = at(d + 4), a2 = at(d - 22), b2 = at(d + 22);
+      const tx = b.x - a.x, ty = b.y - a.y, angle = Math.atan2(ty, tx);
+      const t1x = p.x - a2.x, t1y = p.y - a2.y, t2x = b2.x - p.x, t2y = b2.y - p.y;
+      const cross = t1x * t2y - t1y * t2x;
+      return { x: p.x, y: p.y, angle, turn: Math.sign(cross) * Math.min(1, Math.abs(cross) / 120) };
+    }
+    function wheels(x, y, heading, L, Wd) {
+      const c = Math.cos(heading), s = Math.sin(heading), rx = -L * .32, side = Wd * .44;
+      return [-1, 1].map(k => ({ x: x + c * rx - s * side * k, y: y + s * rx + c * side * k }));
+    }
+    function drawCar(x, y, heading, body) {
+      const L = 46 * scale, Wd = 21 * scale;
+      ctx.save(); ctx.translate(x, y); ctx.rotate(heading);
+      // headlight beams
+      const beam = ctx.createLinearGradient(L * .5, 0, L * 2.4, 0); beam.addColorStop(0, 'rgba(235,244,255,.32)'); beam.addColorStop(1, 'rgba(235,244,255,0)');
+      ctx.fillStyle = beam; ctx.beginPath(); ctx.moveTo(L * .48, -Wd * .36); ctx.lineTo(L * 2.4, -Wd * 1.3); ctx.lineTo(L * 2.4, Wd * 1.3); ctx.lineTo(L * .48, Wd * .36); ctx.closePath(); ctx.fill();
+      // shadow
+      ctx.fillStyle = 'rgba(0,0,0,.45)'; ctx.beginPath(); ctx.ellipse(2, 3, L * .56, Wd * .62, 0, 0, Math.PI * 2); ctx.fill();
+      // body
+      const g = ctx.createLinearGradient(0, -Wd / 2, 0, Wd / 2); g.addColorStop(0, body); g.addColorStop(.5, LANE); g.addColorStop(.56, body); g.addColorStop(1, body);
+      ctx.fillStyle = body; roundRect(-L / 2, -Wd / 2, L, Wd, Wd * .42); ctx.fill();
+      ctx.globalAlpha = .28; ctx.fillStyle = g; roundRect(-L / 2, -Wd / 2, L, Wd, Wd * .42); ctx.fill(); ctx.globalAlpha = 1;
+      // glass and roof
+      ctx.fillStyle = 'rgba(8,13,23,.82)'; roundRect(L * .02, -Wd * .36, L * .2, Wd * .72, 3 * scale); ctx.fill();
+      roundRect(-L * .3, -Wd * .33, L * .12, Wd * .66, 3 * scale); ctx.fill();
+      ctx.fillStyle = body; roundRect(-L * .16, -Wd * .36, L * .18, Wd * .72, 3 * scale); ctx.fill();
+      // lights
+      ctx.fillStyle = '#fffbe8'; ctx.fillRect(L * .44, -Wd * .42, 2.6 * scale, Wd * .2); ctx.fillRect(L * .44, Wd * .22, 2.6 * scale, Wd * .2);
+      ctx.fillStyle = '#ff3b3b'; ctx.shadowColor = '#ff3b3b'; ctx.shadowBlur = 10 * scale; ctx.fillRect(-L * .5, -Wd * .42, 2.4 * scale, Wd * .22); ctx.fillRect(-L * .5, Wd * .2, 2.4 * scale, Wd * .22); ctx.shadowBlur = 0;
+      ctx.restore();
+    }
+    function roundRect(x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
+    function drawCone(c) {
+      const r = 8 * scale;
+      ctx.fillStyle = 'rgba(0,0,0,.4)'; ctx.beginPath(); ctx.ellipse(c.x + 2, c.y + 3, r * 1.25, r * 1.1, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = ORANGE; ctx.beginPath(); ctx.arc(c.x, c.y, r, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = LANE; ctx.lineWidth = 2.2 * scale; ctx.beginPath(); ctx.arc(c.x, c.y, r * .58, 0, Math.PI * 2); ctx.stroke();
+      ctx.fillStyle = '#ffd3a8'; ctx.beginPath(); ctx.arc(c.x, c.y, r * .22, 0, Math.PI * 2); ctx.fill();
+    }
+    function step(dt) {
+      const speed = total / 7.2;
+      distance += speed * dt;
+      clock += dt;
+      while (marks.length && clock - marks[0].t > LIFE) marks.shift();
+      for (const car of cars) {
+        const p = pose(distance - car.gap * total);
+        const target = p.turn * .62;
+        car.drift += (target - car.drift) * Math.min(1, dt * 3.2);
+        car.heading = p.angle + car.drift; car.x = p.x; car.y = p.y;
+        const L = 46 * scale, Wd = 21 * scale;
+        const now = wheels(p.x, p.y, car.heading, L, Wd);
+        if (car.prev && Math.hypot(now[0].x - car.prev[0].x, now[0].y - car.prev[0].y) > 3.5 * scale) {
+          now.forEach((w, k) => marks.push({ ax: car.prev[k].x, ay: car.prev[k].y, bx: w.x, by: w.y, t: clock, c: car.body }));
+          car.prev = now;
+        } else if (!car.prev) car.prev = now;
+        {
+          const amount = Math.abs(car.drift) > .25 ? 2 : 1;
+          for (let i = 0; i < amount; i += 1) {
+            const w = now[i % 2], out = car.heading + Math.PI + (Math.random() - .5) * 1.2;
+            if (smoke.length < 170) smoke.push({ x: w.x, y: w.y, vx: Math.cos(out) * 28 * scale, vy: Math.sin(out) * 28 * scale, r: 7 * scale, life: 0, max: 1 + Math.random() * .7 });
+          }
+        }
+      }
+      for (let i = smoke.length - 1; i >= 0; i -= 1) { const s = smoke[i]; s.life += dt; s.x += s.vx * dt; s.y += s.vy * dt; s.vx *= .97; s.vy *= .97; s.r += 34 * scale * dt; if (s.life > s.max) smoke.splice(i, 1); }
+    }
+    function draw() {
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+      // painted pad marks
+      ctx.strokeStyle = 'rgba(242,246,253,.07)'; ctx.lineWidth = 2; ctx.setLineDash([10, 12]);
+      cones.forEach(c => { ctx.beginPath(); ctx.arc(c.x, c.y, Math.min(W, H) * .2, 0, Math.PI * 2); ctx.stroke(); });
+      ctx.setLineDash([]);
+      if (tracks) { ctx.strokeStyle = 'rgba(242,246,253,.05)'; ctx.lineWidth = 2.4 * scale; ctx.stroke(tracks); }
+      ctx.lineCap = 'round';
+      for (const m of marks) {
+        const life = 1 - (clock - m.t) / LIFE;
+        ctx.strokeStyle = m.c;
+        ctx.globalAlpha = .16 * life; ctx.lineWidth = 7 * scale; ctx.beginPath(); ctx.moveTo(m.ax, m.ay); ctx.lineTo(m.bx, m.by); ctx.stroke();
+        ctx.globalAlpha = .75 * life; ctx.lineWidth = 1.8 * scale; ctx.beginPath(); ctx.moveTo(m.ax, m.ay); ctx.lineTo(m.bx, m.by); ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+      cones.forEach(drawCone);
+      for (const car of cars) if (car.x != null) drawCar(car.x, car.y, car.heading, car.body);
+      for (const s of smoke) { ctx.globalAlpha = .2 * (1 - s.life / s.max); ctx.drawImage(puff, s.x - s.r, s.y - s.r, s.r * 2, s.r * 2); }
+      ctx.globalAlpha = 1;
+    }
+    function frame(time) {
+      if (!running) return;
+      const dt = Math.min(.05, last ? (time - last) / 1000 : 1 / 60); last = time;
+      step(dt); draw();
+      requestAnimationFrame(frame);
+    }
+    function start() { if (running || reduced || !visible || document.hidden) return; running = true; last = 0; requestAnimationFrame(frame); }
+    function stop() { running = false; }
+    function still() { distance = total * .18; for (let i = 0; i < 150; i += 1) step(1 / 60); smoke.length = Math.min(smoke.length, 40); draw(); }
+    build();
+    if (reduced) still(); else { still(); start(); }
+    if ('ResizeObserver' in window) { let first = true; new ResizeObserver(() => { if (first) { first = false; return; } build(); if (reduced || !running) still(); }).observe(canvas); }
+    if ('IntersectionObserver' in window) new IntersectionObserver(entries => { visible = entries[0].isIntersecting; if (visible) start(); else stop(); }).observe(canvas);
+    document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); else start(); });
+  }
+})();
+
+</script>
+
+</body>
+</html>
