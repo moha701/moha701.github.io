@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-DFJ7IdB0tBNmLmuRNgpEo9u5m9uYJSu1+aFsD5wwr3M=' 'sha256-4DuXHdYDW4SnoT/hApZRKMQR2EP5yMigk2EDWf3FkoM='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://api.github.com https://tandem-sessions.mhmd8p.workers.dev; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-rr+CU4CTS0DhmYzhseCMCVIdELuMRO6U5qrVOrFmO/4=' 'sha256-9Z7rIgtJrlvz41TMFQfvQstqX2kZbAK03ZI4oCOuJbI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://api.github.com https://play.tandembeamng.com https://tandem-sessions.mhmd8p.workers.dev; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<title>Tandem · Play BeamNG.drive and Assetto Corsa with friends</title>
-<meta name="description" content="Host and join BeamNG.drive and Assetto Corsa sessions with your friends, from your own PC. Friends join with one invite and get the maps and mods they are missing. Free.">
+<title>Tandem · BeamNG.drive multiplayer and Assetto Corsa with friends</title>
+<meta name="description" content="Free BeamNG.drive multiplayer: host and join sessions with your friends from your own PC, in BeamNG.drive and Assetto Corsa. Friends join with one invite and get the maps and mods they are missing.">
 <meta name="theme-color" content="#080d17">
 <meta name="color-scheme" content="dark">
 <link rel="canonical" href="https://tandembeamng.com/">
@@ -16,13 +16,14 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Tandem">
 <meta property="og:title" content="Tandem: drive with your friends">
-<meta property="og:description" content="Host and join BeamNG.drive and Assetto Corsa sessions with your friends, from your own PC. Friends join with one invite and get the maps and mods they are missing. Free.">
+<meta property="og:description" content="Free BeamNG.drive multiplayer: host and join sessions with your friends from your own PC, in BeamNG.drive and Assetto Corsa. Friends join with one invite and get the maps and mods they are missing.">
 <meta property="og:url" content="https://tandembeamng.com/">
 <meta property="og:image" content="https://tandembeamng.com/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://tandembeamng.com/og.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Tandem","alternateName":"Tandem launcher","applicationCategory":"GameApplication","operatingSystem":"Windows, Linux","description":"Free BeamNG.drive multiplayer: host and join sessions with your friends from your own PC, in BeamNG.drive and Assetto Corsa. Friends join with one invite and get the maps and mods they are missing.","url":"https://tandembeamng.com/","image":"https://tandembeamng.com/og.png","author":{"@type":"Person","name":"mhmd8p"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":["en","ar","zh","fr","de","ja","ko","pl","pt","ru","es","tr","fa"],"email":"support@tandembeamng.com"}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:ital,wght@0,600;0,700;1,700;1,800&family=Russo+One&family=Tajawal:wght@400;500;700;800&display=swap">
@@ -605,6 +606,7 @@ html[dir="rtl"] .now-list b { text-align: right; }
 .foot-links { display: flex; flex-wrap: wrap; gap: 6px 18px; justify-content: flex-end; }
 .foot-links a { color: var(--worn); text-decoration: none; font-weight: 600; }
 .foot-links a:hover { color: var(--lane); text-decoration: underline; text-underline-offset: 3px; }
+.foot-small { grid-column: 1 / -1; justify-content: flex-start; font-size: .9rem; }
 .legal { grid-column: 1 / -1; max-width: 80ch; font-size: .85rem; line-height: 1.55; }
 @media (max-width: 700px) { .foot-in { grid-template-columns: minmax(0, 1fr); } .foot-links { justify-content: flex-start; } }
 
@@ -1108,6 +1110,11 @@ html[dir="rtl"] .now-list b { text-align: right; }
       <a href="https://github.com/moha701" target="_blank" rel="noopener">GitHub</a>
       <a href="https://www.paypal.com/paypalme/porcha911" target="_blank" rel="noopener" data-t="foot_support">Support the app</a>
     </nav>
+    <nav class="foot-links foot-small" aria-label="About" data-t-aria="about_label">
+      <a href="privacy.html" data-t="foot_privacy">Privacy</a>
+      <a href="terms.html" data-t="foot_terms">Terms of use</a>
+      <a href="mailto:support@tandembeamng.com"><span data-t="foot_mail">E-mail</span>: <bdi dir="ltr">support@tandembeamng.com</bdi></a>
+    </nav>
     <p class="legal" data-t="foot_legal">BeamNG.drive is a trademark of BeamNG GmbH and Assetto Corsa of Kunos Simulazioni. Tandem is a fan-made app and is not affiliated with either.</p>
   </div>
 </footer>
@@ -1185,7 +1192,7 @@ en: {
   comm_h: "Join the community", comm_p: "Find people to drive with, get help, and see what’s coming next.",
   d_discord: "Find sessions, ask for help and report bugs.", d_instagram: "Updates and clips.", d_tiktok: "Short clips.", d_youtube: "Videos.", d_github: "Every release with its notes.", d_support: "Tandem is free. A tip helps keep it going.",
   cta_h: "Your friends are waiting.", cta_p: "Download Tandem, send your friends this page, and pick a map.",
-  foot_made: "Made by mhmd8p", foot_support: "Support the app",
+  foot_made: "Made by mhmd8p", foot_support: "Support the app", foot_privacy: "Privacy", foot_terms: "Terms of use", foot_mail: "E-mail", about_label: "About",
   foot_legal: "BeamNG.drive is a trademark of BeamNG GmbH and Assetto Corsa of Kunos Simulazioni. Tandem is a fan-made app and is not affiliated with either.",
   v_friends_now: "Friends hosting now", v_hosting: "{name} is hosting", v_join: "Join", v_full: "Full", v_ofmax: "{n} of {max}", v_joining: "Joining {name}’s session",
   v_ask: "Ask to join", v_waiting: "Waiting for the host", v_in: "You’re in", v_getting: "Getting {map} from the host", v_added: "Added to your game",
@@ -1263,7 +1270,7 @@ ar: {
   comm_h: "انضم إلى المجتمع", comm_p: "اعثر على من تقود معه، واطلب المساعدة، وتابع ما هو قادم.",
   d_discord: "اعثر على جلسات، اطلب المساعدة وأبلغ عن المشاكل.", d_instagram: "التحديثات والمقاطع.", d_tiktok: "مقاطع قصيرة.", d_youtube: "فيديوهات.", d_github: "كل إصدار مع ملاحظاته.", d_support: "تاندم مجاني، ودعمك يساعد على استمراره.",
   cta_h: "أصدقاؤك بانتظارك.", cta_p: "حمّل تاندم، أرسل هذه الصفحة لأصدقائك، واختر خريطة.",
-  foot_made: "صنعه mhmd8p", foot_support: "ادعم التطبيق",
+  foot_made: "صنعه mhmd8p", foot_support: "ادعم التطبيق", foot_privacy: "الخصوصية", foot_terms: "شروط الاستخدام", foot_mail: "البريد", about_label: "عن التطبيق",
   foot_legal: "BeamNG.drive علامة تجارية لشركة BeamNG GmbH، و Assetto Corsa علامة تجارية لشركة Kunos Simulazioni. تاندم تطبيق من صنع لاعب ولا يتبع أيًّا منهما.",
   v_friends_now: "أصدقاء يستضيفون الآن", v_hosting: "{name} يستضيف", v_join: "انضمام", v_full: "ممتلئة", v_ofmax: "{n} من {max}", v_joining: "جارٍ الانضمام إلى {name}",
   v_ask: "اطلب الانضمام", v_waiting: "بانتظار المضيف", v_in: "دخلت", v_getting: "جلب {map} من المضيف", v_added: "أُضيفت إلى لعبتك",
@@ -1341,7 +1348,7 @@ zh: {
   comm_h: "加入社区", comm_p: "找人一起开车、获得帮助，看看接下来有什么。",
   d_discord: "找房间、求助和报告问题。", d_instagram: "更新和短片。", d_tiktok: "短视频。", d_youtube: "视频。", d_github: "每个版本及其更新说明。", d_support: "Tandem 免费。打赏能让它继续下去。",
   cta_h: "朋友们在等你。", cta_p: "下载 Tandem，把这个页面发给朋友，然后选一张地图。",
-  foot_made: "由 mhmd8p 制作", foot_support: "支持本应用",
+  foot_made: "由 mhmd8p 制作", foot_support: "支持本应用", foot_privacy: "隐私", foot_terms: "使用条款", foot_mail: "电子邮件", about_label: "关于",
   foot_legal: "BeamNG.drive 是 BeamNG GmbH 的商标，Assetto Corsa 是 Kunos Simulazioni 的商标。Tandem 是玩家制作的应用，与两者均无关联。",
   v_friends_now: "正在开房的朋友", v_hosting: "{name} 正在开房", v_join: "加入", v_full: "已满", v_ofmax: "{n}/{max}", v_joining: "正在加入 {name} 的房间",
   v_ask: "请求加入", v_waiting: "等待房主", v_in: "你已进入", v_getting: "正在从房主获取 {map}", v_added: "已添加到你的游戏",
@@ -1419,7 +1426,7 @@ fr: {
   comm_h: "Rejoignez la communauté", comm_p: "Trouvez des gens avec qui rouler, obtenez de l’aide et découvrez la suite.",
   d_discord: "Trouvez des sessions, demandez de l’aide et signalez des bugs.", d_instagram: "Nouveautés et vidéos.", d_tiktok: "Vidéos courtes.", d_youtube: "Vidéos.", d_github: "Chaque version avec ses notes.", d_support: "Tandem est gratuit. Un don l’aide à continuer.",
   cta_h: "Vos amis vous attendent.", cta_p: "Téléchargez Tandem, envoyez cette page à vos amis et choisissez une carte.",
-  foot_made: "Créé par mhmd8p", foot_support: "Soutenir l’app",
+  foot_made: "Créé par mhmd8p", foot_support: "Soutenir l’app", foot_privacy: "Confidentialité", foot_terms: "Conditions d’utilisation", foot_mail: "E-mail", about_label: "À propos",
   foot_legal: "BeamNG.drive est une marque de BeamNG GmbH et Assetto Corsa une marque de Kunos Simulazioni. Tandem est une app faite par un fan, sans lien avec l’un ou l’autre.",
   v_friends_now: "Amis qui hébergent en ce moment", v_hosting: "{name} héberge", v_join: "Rejoindre", v_full: "Complet", v_ofmax: "{n} sur {max}", v_joining: "Connexion à la session de {name}",
   v_ask: "Demander à rejoindre", v_waiting: "En attente de l’hôte", v_in: "Vous êtes dedans", v_getting: "Récupération de {map} depuis l’hôte", v_added: "Ajouté à votre jeu",
@@ -1497,7 +1504,7 @@ de: {
   comm_h: "Werde Teil der Community", comm_p: "Finde Leute zum Fahren, hol dir Hilfe und sieh, was als Nächstes kommt.",
   d_discord: "Sitzungen finden, Hilfe holen und Fehler melden.", d_instagram: "Neuigkeiten und Clips.", d_tiktok: "Kurze Clips.", d_youtube: "Videos.", d_github: "Jede Version mit ihren Notizen.", d_support: "Tandem ist kostenlos. Eine Spende hilft, dass es weitergeht.",
   cta_h: "Deine Freunde warten.", cta_p: "Lade Tandem herunter, schick deinen Freunden diese Seite und such dir eine Karte aus.",
-  foot_made: "Gemacht von mhmd8p", foot_support: "Die App unterstützen",
+  foot_made: "Gemacht von mhmd8p", foot_support: "Die App unterstützen", foot_privacy: "Datenschutz", foot_terms: "Nutzungsbedingungen", foot_mail: "E-Mail", about_label: "Über",
   foot_legal: "BeamNG.drive ist eine Marke der BeamNG GmbH, Assetto Corsa eine Marke von Kunos Simulazioni. Tandem ist eine Fan-App und mit keinem von beiden verbunden.",
   v_friends_now: "Freunde, die gerade hosten", v_hosting: "{name} hostet", v_join: "Beitreten", v_full: "Voll", v_ofmax: "{n} von {max}", v_joining: "Trete {name} bei",
   v_ask: "Beitritt anfragen", v_waiting: "Warte auf den Host", v_in: "Du bist drin", v_getting: "{map} wird vom Host geholt", v_added: "Zu deinem Spiel hinzugefügt",
@@ -1575,7 +1582,7 @@ ja: {
   comm_h: "コミュニティに参加", comm_p: "一緒に走る仲間を見つけたり、助けてもらったり、次の予定をチェックしたり。",
   d_discord: "セッション探し、質問、不具合の報告はここで。", d_instagram: "最新情報とクリップ。", d_tiktok: "ショート動画。", d_youtube: "動画。", d_github: "すべてのリリースと変更点。", d_support: "Tandem は無料です。応援が開発の支えになります。",
   cta_h: "フレンドが待っています。", cta_p: "Tandem をダウンロードして、このページをフレンドに送り、マップを選びましょう。",
-  foot_made: "制作：mhmd8p", foot_support: "アプリを応援する",
+  foot_made: "制作：mhmd8p", foot_support: "アプリを応援する", foot_privacy: "プライバシー", foot_terms: "利用規約", foot_mail: "メール", about_label: "概要",
   foot_legal: "BeamNG.drive は BeamNG GmbH の商標、Assetto Corsa は Kunos Simulazioni の商標です。Tandem はファンが作ったアプリで、いずれの会社とも関係ありません。",
   v_friends_now: "ホスト中のフレンド", v_hosting: "{name} がホスト中", v_join: "参加", v_full: "満員", v_ofmax: "{n} / {max}", v_joining: "{name} のセッションに参加中",
   v_ask: "参加をリクエスト", v_waiting: "ホストを待っています", v_in: "参加しました", v_getting: "ホストから {map} を取得中", v_added: "ゲームに追加しました",
@@ -1653,7 +1660,7 @@ ko: {
   comm_h: "커뮤니티에 참여하세요", comm_p: "함께 달릴 사람을 찾고, 도움을 받고, 다음 소식을 확인하세요.",
   d_discord: "세션 찾기, 도움 요청, 버그 신고.", d_instagram: "업데이트와 클립.", d_tiktok: "짧은 영상.", d_youtube: "영상.", d_github: "모든 릴리스와 변경 사항.", d_support: "Tandem은 무료입니다. 후원이 개발을 이어가게 합니다.",
   cta_h: "친구들이 기다리고 있어요.", cta_p: "Tandem을 다운로드하고, 이 페이지를 친구에게 보낸 뒤 맵을 고르세요.",
-  foot_made: "만든 사람: mhmd8p", foot_support: "앱 후원하기",
+  foot_made: "만든 사람: mhmd8p", foot_support: "앱 후원하기", foot_privacy: "개인정보", foot_terms: "이용 약관", foot_mail: "이메일", about_label: "정보",
   foot_legal: "BeamNG.drive는 BeamNG GmbH의 상표이고 Assetto Corsa는 Kunos Simulazioni의 상표입니다. Tandem은 팬이 만든 앱으로 두 회사와 관계가 없습니다.",
   v_friends_now: "지금 호스트 중인 친구", v_hosting: "{name} 님이 호스트 중", v_join: "참가", v_full: "가득 참", v_ofmax: "{n} / {max}", v_joining: "{name} 님의 세션에 참가 중",
   v_ask: "참가 요청", v_waiting: "호스트를 기다리는 중", v_in: "참가 완료", v_getting: "호스트에게서 {map} 받는 중", v_added: "게임에 추가됨",
@@ -1731,7 +1738,7 @@ pl: {
   comm_h: "Dołącz do społeczności", comm_p: "Znajdź ludzi do wspólnej jazdy, uzyskaj pomoc i zobacz, co nadchodzi.",
   d_discord: "Znajdź sesje, poproś o pomoc i zgłoś błędy.", d_instagram: "Nowości i klipy.", d_tiktok: "Krótkie klipy.", d_youtube: "Filmy.", d_github: "Każde wydanie z opisem zmian.", d_support: "Tandem jest darmowy. Napiwek pomaga go rozwijać.",
   cta_h: "Znajomi czekają.", cta_p: "Pobierz Tandem, wyślij znajomym tę stronę i wybierz mapę.",
-  foot_made: "Stworzone przez mhmd8p", foot_support: "Wesprzyj aplikację",
+  foot_made: "Stworzone przez mhmd8p", foot_support: "Wesprzyj aplikację", foot_privacy: "Prywatność", foot_terms: "Warunki korzystania", foot_mail: "E-mail", about_label: "O aplikacji",
   foot_legal: "BeamNG.drive jest znakiem towarowym BeamNG GmbH, a Assetto Corsa znakiem Kunos Simulazioni. Tandem to aplikacja fana, niezwiązana z żadną z tych firm.",
   v_friends_now: "Znajomi, którzy teraz hostują", v_hosting: "{name} hostuje", v_join: "Dołącz", v_full: "Pełne", v_ofmax: "{n} z {max}", v_joining: "Dołączanie do {name}",
   v_ask: "Poproś o dołączenie", v_waiting: "Czekanie na hosta", v_in: "Jesteś w środku", v_getting: "Pobieranie {map} od hosta", v_added: "Dodano do twojej gry",
@@ -1809,7 +1816,7 @@ pt: {
   comm_h: "Entre na comunidade", comm_p: "Encontre com quem dirigir, peça ajuda e veja o que vem por aí.",
   d_discord: "Encontre sessões, peça ajuda e relate bugs.", d_instagram: "Novidades e clipes.", d_tiktok: "Clipes curtos.", d_youtube: "Vídeos.", d_github: "Cada versão com suas notas.", d_support: "O Tandem é grátis. Uma contribuição ajuda a mantê-lo.",
   cta_h: "Seus amigos estão esperando.", cta_p: "Baixe o Tandem, mande esta página para seus amigos e escolha um mapa.",
-  foot_made: "Feito por mhmd8p", foot_support: "Apoiar o app",
+  foot_made: "Feito por mhmd8p", foot_support: "Apoiar o app", foot_privacy: "Privacidade", foot_terms: "Termos de uso", foot_mail: "E-mail", about_label: "Sobre",
   foot_legal: "BeamNG.drive é marca da BeamNG GmbH e Assetto Corsa é marca da Kunos Simulazioni. O Tandem é um app feito por um fã, sem ligação com nenhuma delas.",
   v_friends_now: "Amigos hospedando agora", v_hosting: "{name} está hospedando", v_join: "Entrar", v_full: "Lotado", v_ofmax: "{n} de {max}", v_joining: "Entrando na sessão de {name}",
   v_ask: "Pedir para entrar", v_waiting: "Aguardando o anfitrião", v_in: "Você entrou", v_getting: "Baixando {map} do anfitrião", v_added: "Adicionado ao seu jogo",
@@ -1887,7 +1894,7 @@ ru: {
   comm_h: "Присоединяйся к сообществу", comm_p: "Найди, с кем покататься, получи помощь и узнай, что будет дальше.",
   d_discord: "Ищи сессии, проси помощи и сообщай об ошибках.", d_instagram: "Новости и клипы.", d_tiktok: "Короткие клипы.", d_youtube: "Видео.", d_github: "Каждый выпуск с описанием изменений.", d_support: "Tandem бесплатный. Поддержка помогает ему развиваться.",
   cta_h: "Друзья ждут.", cta_p: "Скачай Tandem, отправь друзьям эту страницу и выбери карту.",
-  foot_made: "Создано mhmd8p", foot_support: "Поддержать приложение",
+  foot_made: "Создано mhmd8p", foot_support: "Поддержать приложение", foot_privacy: "Конфиденциальность", foot_terms: "Условия использования", foot_mail: "Почта", about_label: "О приложении",
   foot_legal: "BeamNG.drive является товарным знаком BeamNG GmbH, Assetto Corsa является товарным знаком Kunos Simulazioni. Tandem сделан фанатом и не связан ни с одной из этих компаний.",
   v_friends_now: "Друзья, которые сейчас хостят", v_hosting: "{name} хостит", v_join: "Войти", v_full: "Заполнено", v_ofmax: "{n} из {max}", v_joining: "Входим к {name}",
   v_ask: "Попроситься войти", v_waiting: "Ждём хоста", v_in: "Ты внутри", v_getting: "Получаем {map} от хоста", v_added: "Добавлено в твою игру",
@@ -1965,7 +1972,7 @@ es: {
   comm_h: "Únete a la comunidad", comm_p: "Encuentra con quién conducir, pide ayuda y mira lo que viene.",
   d_discord: "Encuentra sesiones, pide ayuda e informa de errores.", d_instagram: "Novedades y clips.", d_tiktok: "Clips cortos.", d_youtube: "Vídeos.", d_github: "Cada versión con sus notas.", d_support: "Tandem es gratis. Una propina ayuda a que siga adelante.",
   cta_h: "Tus amigos te esperan.", cta_p: "Descarga Tandem, envía esta página a tus amigos y elige un mapa.",
-  foot_made: "Hecho por mhmd8p", foot_support: "Apoyar la app",
+  foot_made: "Hecho por mhmd8p", foot_support: "Apoyar la app", foot_privacy: "Privacidad", foot_terms: "Términos de uso", foot_mail: "Correo", about_label: "Acerca de",
   foot_legal: "BeamNG.drive es una marca de BeamNG GmbH y Assetto Corsa de Kunos Simulazioni. Tandem es una app hecha por un fan y no está afiliada a ninguna de ellas.",
   v_friends_now: "Amigos alojando ahora", v_hosting: "{name} está alojando", v_join: "Unirse", v_full: "Completo", v_ofmax: "{n} de {max}", v_joining: "Uniéndote a {name}",
   v_ask: "Pedir unirse", v_waiting: "Esperando al anfitrión", v_in: "Ya estás dentro", v_getting: "Obteniendo {map} del anfitrión", v_added: "Añadido a tu juego",
@@ -2125,7 +2132,7 @@ tr: {
   d_support: "Tandem ücretsizdir. Bir bahşiş devam etmesine yardımcı olur.",
   cta_h: "Arkadaşların bekliyor.",
   cta_p: "Tandem’i indir, bu sayfayı arkadaşlarına gönder ve bir harita seç.",
-  foot_made: "Yapan: mhmd8p",
+  foot_made: "Yapan: mhmd8p", foot_privacy: "Gizlilik", foot_terms: "Kullanım koşulları", foot_mail: "E-posta", about_label: "Hakkında",
   foot_support: "Uygulamayı destekle",
   foot_legal: "BeamNG.drive, BeamNG GmbH’nin; Assetto Corsa ise Kunos Simulazioni’nin ticari markasıdır. Tandem hayranlar tarafından yapılmış bir uygulamadır ve ikisiyle de bağlantılı değildir.",
   v_friends_now: "Şu an oturumu açık olan arkadaşlar",
@@ -2169,7 +2176,9 @@ tr: {
   const store = { get(k) { try { return localStorage.getItem(k); } catch { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch { /* private window */ } } };
   let lang = 'en';
   // ("Playing now", further down. Declared here because the language is applied, and the list drawn, before that part runs.)
-  const SESSIONS = 'https://tandem-sessions.mhmd8p.workers.dev';
+  // (Tandem's service under the website's own name; its first address as a spare, for a network that cannot reach the first yet.)
+  const SERVICE = ['https://play.tandembeamng.com', 'https://tandem-sessions.mhmd8p.workers.dev'];
+  let SESSIONS = SERVICE[0];
   const GAMES = { beamng: 'BeamNG.drive', assetto: 'Assetto Corsa' };
   let playing = [];
 
@@ -2277,8 +2286,14 @@ tr: {
   async function readPlaying() {
     if (document.hidden) return;
     try {
-      const response = await fetch(`${SESSIONS}/v1/public/list-web`, { headers: { Accept: 'application/json' } });
-      const data = response.ok ? await response.json() : null;
+      let data = null;
+      for (const base of [SESSIONS, ...SERVICE.filter(one => one !== SESSIONS)]) {
+        try {
+          const response = await fetch(`${base}/v1/public/list-web`, { headers: { Accept: 'application/json' } });
+          if (!response.ok) continue;
+          data = await response.json(); SESSIONS = base; break;
+        } catch { /* the next address */ }
+      }
       // (Everything is checked again here: only plain text of a sane length, and an id that can only be an id.)
       playing = (data && Array.isArray(data.sessions) ? data.sessions : []).filter(one => one && typeof one.name === 'string' && one.name.length <= 80 && typeof one.id === 'string' && /^[0-9a-f]{32}$/.test(one.id) && GAMES[one.game])
         .slice(0, 12).map(one => ({ id: one.id, name: one.name, game: one.game, map: typeof one.map === 'string' ? one.map.slice(0, 60) : '', players: Number(one.players) || 0, seats: Number(one.seats) || 0 }));
